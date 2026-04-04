@@ -32,11 +32,10 @@ function CodeSectionSkipFab() {
       <button
         type="button"
         className="pointer-events-auto rounded-full border border-white/20 bg-zinc-950/92 px-4 py-2.5 text-sm font-medium text-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:border-white/40 hover:bg-zinc-900/95"
-        onClick={() =>
-          document
-            .getElementById("process")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
+        onClick={() => {
+          document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.history.replaceState(null, "", "#pricing");
+        }}
       >
         Skip the code bit?
       </button>
