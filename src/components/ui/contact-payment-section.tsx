@@ -190,7 +190,13 @@ export function ContactPaymentSection() {
       });
       const data = (await response.json()) as { url?: string; sessionId?: string; error?: string };
       if (!response.ok || !data.url || !data.sessionId) {
-        throw new Error(data.error || "Unable to create checkout session");
+        setCheckoutUrl(null);
+        setCheckoutSessionId(null);
+        setCheckoutPrepareError(
+          data.error?.trim() ||
+            "Checkout could not be prepared. Check your connection, then try again."
+        );
+        return;
       }
       setCheckoutUrl(data.url);
       setCheckoutSessionId(data.sessionId);
