@@ -19,6 +19,17 @@ const intentLabels: Record<ContactIntent, string> = {
 };
 
 const purchasable: ContactIntent[] = ["basic", "standard", "premium", "care"];
+
+/** Stripe checkout applies */
+function needsPaymentStep(intent: ContactIntent | ""): boolean {
+  return !!intent && purchasable.includes(intent);
+}
+
+/** Project Google Form on finish (site builds only) */
+function needsProjectFormStep(intent: ContactIntent | ""): boolean {
+  return intent === "basic" || intent === "standard" || intent === "premium";
+}
+
 /** Display labels aligned with Stripe products / prices.csv */
 const planDisplayPrices: Record<PurchasePlan, string> = {
   basic: "£75.00",
@@ -76,10 +87,17 @@ export function ContactPaymentSection() {
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [verifyFeedback, setVerifyFeedback] = useState<string | null>(null);
   const [toastMounted, setToastMounted] = useState(false);
+  const [checkoutPrepareError, setCheckoutPrepareError] = useState<string | null>(null);
   const draftByIntentRef = useRef<Partial<Record<ContactIntent, { name: string; email: string; message: string }>>>({});
+  const autoCheckoutAttemptedRef = useRef(false);
 
   const resolvedIntent = intent || null;
-  const needsPayment = !!resolvedIntent && purchasable.includes(resolvedIntent);
+  const intentChosen = !!resolvedIntent;
+  const needsPayment = needsPaymentStep(resolvedIntent ?? "");
+  const needsForm = needsProjectFormStep(resolvedIntent ?? "");
+  /** Stepper only: N/A + yellow rings after user picks an option */
+  const payApplies = intentChosen && needsPayment;
+  const formApplies = intentChosen && needsForm;
   const selectedPlan = needsPayment ? (resolvedIntent as PurchasePlan) : null;
   const validEmail = EMAIL_RE.test(email.trim());
 
@@ -87,8 +105,8 @@ export function ContactPaymentSection() {
     const planLabel = selectedPlan ? intentLabels[selectedPlan] : "—";
     return paymentVerificationErrorMailto(name, email, planLabel);
   }, [name, email, selectedPlan]);
-  const totalSteps = 4;
-  const progress = useMemo(() => (step / totalSteps) * 100, [step, totalSteps]);
+
+  const progress = useMemo(() => (step / 4) * 100, [step]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -96,7 +114,6 @@ export function ContactPaymentSection() {
     const checkout = params.get("checkout");
     const stored = window.sessionStorage.getItem("contact-payment-draft");
 
-    // Pricing "Book now" links: always use ?plan=… and ignore stale checkout draft.
     if (planFromPricing) {
       window.sessionStorage.removeItem("contact-payment-draft");
       setIntent(planFromPricing);
@@ -109,7 +126,6 @@ export function ContactPaymentSection() {
       return;
     }
 
-    // Only restore typed draft when returning from Stripe cancel (not on every visit — avoids stuck "Basic" + locked fields).
     if (checkout === "cancel" && stored) {
       try {
         const parsed = JSON.parse(stored) as {
@@ -139,6 +155,13 @@ export function ContactPaymentSection() {
     setMessage(`I am contacting you about: ${intentLabels[intent]}.\n\nDetails:`);
   }, [intent, message]);
 
+  /** Guard: never stay on payment step when this option has no payment */
+  useEffect(() => {
+    if (step === 3 && resolvedIntent && !needsPaymentStep(resolvedIntent)) {
+      setStep(2);
+    }
+  }, [step, resolvedIntent]);
+
   const canSendEmailDraft =
     !!resolvedIntent &&
     name.trim().length > 1 &&
@@ -154,6 +177,7 @@ export function ContactPaymentSection() {
   const createCheckoutSession = async () => {
     if (!selectedPlan || !canSendEmailDraft) return;
     setLoadingCheckout(true);
+    setCheckoutPrepareError(null);
     try {
       const response = await fetch("/api/stripe/create-checkout-session", {
         method: "POST",
@@ -170,9 +194,13 @@ export function ContactPaymentSection() {
       }
       setCheckoutUrl(data.url);
       setCheckoutSessionId(data.sessionId);
+      setCheckoutPrepareError(null);
     } catch {
       setCheckoutUrl(null);
       setCheckoutSessionId(null);
+      setCheckoutPrepareError(
+        "Checkout could not be prepared. Check your connection, then try again."
+      );
     } finally {
       setLoadingCheckout(false);
     }
@@ -203,7 +231,16 @@ export function ContactPaymentSection() {
   };
 
   useEffect(() => {
+    if (step !== 3) {
+      autoCheckoutAttemptedRef.current = false;
+      setCheckoutPrepareError(null);
+    }
+  }, [step]);
+
+  useEffect(() => {
     if (step !== 3 || !selectedPlan || checkoutUrl || loadingCheckout) return;
+    if (autoCheckoutAttemptedRef.current) return;
+    autoCheckoutAttemptedRef.current = true;
     void createCheckoutSession();
   }, [step, selectedPlan, checkoutUrl, loadingCheckout]);
 
@@ -276,14 +313,58 @@ export function ContactPaymentSection() {
     window.location.href = `mailto:ben@bgg.studio?subject=${subject}&body=${body}`;
     setEmailDraftOpened(true);
     if (!needsPayment) {
-      setStep(1);
-      setIntent("");
-      setAgreeTerms(false);
-      setCheckoutUrl(null);
-      setCheckoutSessionId(null);
-      setPaymentVerified(false);
-      window.sessionStorage.removeItem("contact-payment-draft");
+      return;
     }
+  };
+
+  const stepColumnLabel = (col: 1 | 2 | 3 | 4) => {
+    if (col === 1) return "Choose";
+    if (col === 2) return "Details";
+    if (col === 3) {
+      if (!intentChosen) return "Payment";
+      return payApplies ? (
+        "Payment"
+      ) : (
+        <span className="font-medium text-yellow-400">N/A</span>
+      );
+    }
+    if (col === 4) {
+      if (!intentChosen) return "Project form";
+      return formApplies ? (
+        "Project form"
+      ) : (
+        <span className="font-medium text-yellow-400">N/A</span>
+      );
+    }
+    return null;
+  };
+
+  const columnRing = (col: 1 | 2 | 3 | 4): "upcoming" | "active" | "done" | "skipped" => {
+    if (!intentChosen) {
+      if (step === col) return "active";
+      if (step > col) return "done";
+      return "upcoming";
+    }
+    if (col === 3 && !payApplies) return "skipped";
+    /** N/A project form: keep yellow skipped styling on step 4 too (never violet “active”) */
+    if (col === 4 && !formApplies) return "skipped";
+    if (step === col) return "active";
+    if (step > col) return "done";
+    return "upcoming";
+  };
+
+  const circleClassForColumn = (col: 1 | 2 | 3 | 4) => {
+    const st = columnRing(col);
+    if (st === "active") {
+      return "border-violet-400 bg-violet-500/20 text-white ring-2 ring-violet-400/40";
+    }
+    if (st === "done") {
+      return "border-violet-400 bg-violet-500/20 text-white";
+    }
+    if (st === "skipped") {
+      return "border-yellow-500/45 bg-yellow-500/10 text-yellow-200/90";
+    }
+    return "border-white/20 text-white/60";
   };
 
   return (
@@ -303,21 +384,19 @@ export function ContactPaymentSection() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className={cn("grid gap-2", totalSteps === 4 ? "grid-cols-4" : "grid-cols-3")}>
-            {Array.from({ length: totalSteps }, (_, i) => i + 1).map((n) => (
+          <div className="grid grid-cols-4 gap-2">
+            {([1, 2, 3, 4] as const).map((n) => (
               <div key={n} className="flex flex-col items-center gap-2">
                 <div
                   className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold",
-                    step >= n
-                      ? "border-violet-400 bg-violet-500/20 text-white"
-                      : "border-white/20 text-white/60"
+                    "flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold transition-colors",
+                    circleClassForColumn(n)
                   )}
                 >
                   {n}
                 </div>
-                <p className="text-[11px] text-white/60">
-                  {n === 1 ? "Choose" : n === 2 ? "Details" : n === 3 ? "Payment" : "Finish"}
+                <p className="min-h-[2rem] text-center text-[11px] leading-tight text-white/60">
+                  {stepColumnLabel(n)}
                 </p>
               </div>
             ))}
@@ -334,9 +413,13 @@ export function ContactPaymentSection() {
               className="w-full appearance-none rounded-xl border border-white/20 bg-zinc-950 px-4 py-3 text-sm text-white outline-none ring-0 focus:border-violet-400"
               style={{ colorScheme: "dark" }}
             >
-              <option value="" className="bg-zinc-950 text-white">Select an option</option>
+              <option value="" className="bg-zinc-950 text-white">
+                Select an option
+              </option>
               {(["basic", "standard", "premium", "care", "special", "general"] as ContactIntent[]).map((k) => (
-                <option key={k} value={k} className="bg-zinc-950 text-white">{intentLabels[k]}</option>
+                <option key={k} value={k} className="bg-zinc-950 text-white">
+                  {intentLabels[k]}
+                </option>
               ))}
             </select>
             <div className="flex justify-center">
@@ -357,11 +440,7 @@ export function ContactPaymentSection() {
             <p className="text-center text-sm text-white/60">
               Fill this in, then send the email draft.
             </p>
-            {!needsPayment ? (
-              <p className="text-center text-xs text-amber-300/90">
-                Payment and Google form steps are not used for this option.
-              </p>
-            ) : null}
+
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -417,7 +496,10 @@ export function ContactPaymentSection() {
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 type="button"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10")}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10"
+                )}
                 onClick={() => setStep(1)}
               >
                 Back
@@ -439,82 +521,99 @@ export function ContactPaymentSection() {
                 >
                   Next
                 </button>
-              ) : null}
+              ) : (
+                <button
+                  type="button"
+                  disabled={!emailDraftOpened}
+                  className={cn(buttonVariants({ size: "lg" }), "rounded-full disabled:opacity-50")}
+                  onClick={() => setStep(4)}
+                >
+                  Next
+                </button>
+              )}
             </div>
           </div>
         ) : null}
 
-        {step === 3 ? (
+        {step === 3 && needsPayment ? (
           <div className="mt-8 flex flex-col items-center gap-4 text-center">
             <CreditCard className="size-10 text-violet-300" />
-            {needsPayment ? (
-              <>
-                <p className="text-white/85">
-                  Use the Stripe payment link for your selected plan.
+            <p className="text-white/85">Use the Stripe payment link for your selected plan.</p>
+            {selectedPlan ? (
+              <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-violet-400/25 bg-gradient-to-br from-violet-500/[0.14] via-fuchsia-500/[0.06] to-transparent p-5 text-left shadow-[0_12px_40px_-16px_rgba(139,92,246,0.45)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200/90">
+                  Secure Stripe checkout
                 </p>
-                {selectedPlan ? (
-                  <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-violet-400/25 bg-gradient-to-br from-violet-500/[0.14] via-fuchsia-500/[0.06] to-transparent p-5 text-left shadow-[0_12px_40px_-16px_rgba(139,92,246,0.45)]">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200/90">
-                      Secure Stripe checkout
-                    </p>
-                    <div className="mt-3 rounded-xl border border-white/10 bg-black/35 px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.16em] text-white/50">Plan price</p>
-                      <p className="mt-1 text-2xl font-semibold text-white">{planDisplayPrices[selectedPlan]}</p>
-                    </div>
-                    {loadingCheckout ? (
-                      <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-black/40 px-4 py-3.5 text-sm text-white/80">
-                        <Loader2 className="size-4 animate-spin" />
-                        Preparing checkout...
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        disabled={!checkoutUrl}
-                        className={cn(buttonVariants({ size: "lg" }), "mt-4 w-full rounded-xl disabled:opacity-50")}
-                        onClick={() => {
-                          if (!checkoutUrl) return;
-                          saveDraftForCheckout();
-                          window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-                        }}
-                      >
-                        Open Stripe checkout
-                      </button>
-                    )}
-                    <div className="mt-3 flex w-full flex-col gap-3">
-                      <button
-                        type="button"
-                        disabled={!checkoutSessionId || verifyingPayment}
-                        className={cn(
-                          buttonVariants({ variant: "outline", size: "lg" }),
-                          "w-full rounded-xl border-white/25 bg-black/30 text-white hover:bg-white/10 disabled:opacity-50"
-                        )}
-                        onClick={() => {
-                          if (!checkoutSessionId) return;
-                          void verifyPayment(checkoutSessionId);
-                        }}
-                      >
-                        {verifyingPayment ? "Verifying..." : "I paid - verify now"}
-                      </button>
-                    </div>
+                <div className="mt-3 rounded-xl border border-white/10 bg-black/35 px-4 py-3">
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/50">Plan price</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{planDisplayPrices[selectedPlan]}</p>
+                </div>
+                {loadingCheckout ? (
+                  <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-black/40 px-4 py-3.5 text-sm text-white/80">
+                    <Loader2 className="size-4 animate-spin" />
+                    Preparing checkout...
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={!checkoutUrl}
+                    className={cn(buttonVariants({ size: "lg" }), "mt-4 w-full rounded-xl disabled:opacity-50")}
+                    onClick={() => {
+                      if (!checkoutUrl) return;
+                      saveDraftForCheckout();
+                      window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+                    }}
+                  >
+                    Open Stripe checkout
+                  </button>
+                )}
+                {checkoutPrepareError ? (
+                  <div className="mt-3 rounded-xl border border-red-400/35 bg-red-950/40 px-4 py-3 text-left text-sm text-red-100/95">
+                    <p>{checkoutPrepareError}</p>
+                    <button
+                      type="button"
+                      className={cn(
+                        buttonVariants({ variant: "outline", size: "sm" }),
+                        "mt-3 w-full border-white/25 bg-black/40 text-white hover:bg-white/10"
+                      )}
+                      onClick={() => void createCheckoutSession()}
+                    >
+                      Try again
+                    </button>
                   </div>
                 ) : null}
-              </>
-            ) : (
-              <div className="w-full max-w-xl rounded-xl border border-white/15 bg-black/30 p-4 text-left text-sm text-white/70">
-                <p>This option does not require payment. Continue to finish.</p>
+                <div className="mt-3 flex w-full flex-col gap-3">
+                  <button
+                    type="button"
+                    disabled={!checkoutSessionId || verifyingPayment}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "lg" }),
+                      "w-full rounded-xl border-white/25 bg-black/30 text-white hover:bg-white/10 disabled:opacity-50"
+                    )}
+                    onClick={() => {
+                      if (!checkoutSessionId) return;
+                      void verifyPayment(checkoutSessionId);
+                    }}
+                  >
+                    {verifyingPayment ? "Verifying..." : "I paid - verify now"}
+                  </button>
+                </div>
               </div>
-            )}
+            ) : null}
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 type="button"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10")}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10"
+                )}
                 onClick={() => setStep(2)}
               >
                 Back
               </button>
               <button
                 type="button"
-                disabled={needsPayment && !paymentVerified}
+                disabled={!paymentVerified}
                 className={cn(buttonVariants({ size: "lg" }), "rounded-full disabled:opacity-50")}
                 onClick={() => setStep(4)}
               >
@@ -527,7 +626,13 @@ export function ContactPaymentSection() {
         {step === 4 ? (
           <div className="mt-8 flex flex-col items-center gap-4 text-center">
             <CheckCircle2 className="size-10 text-emerald-400" />
-            {needsPayment ? (
+            {needsPayment && selectedPlan === "care" ? (
+              <>
+                <p className="max-w-md text-white/85">
+                  Your Care Plan subscription is confirmed. I will follow up by email.
+                </p>
+              </>
+            ) : needsPayment && needsForm ? (
               <>
                 <p className="text-white/85">
                   Payment is confirmed by Stripe. You can now continue to the project form.
@@ -548,7 +653,10 @@ export function ContactPaymentSection() {
                 </p>
                 <button
                   type="button"
-                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10")}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "rounded-full border-white/20 bg-transparent text-white hover:bg-white/10"
+                  )}
                   onClick={() => setStep(2)}
                 >
                   Back

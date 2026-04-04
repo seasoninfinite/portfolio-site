@@ -40,9 +40,6 @@ export function PortfolioBelowFold() {
         <div className="mx-auto grid w-full max-w-6xl gap-10 md:grid-cols-3">
           <div>
             <p className="text-base font-semibold text-white">BGG Website Design</p>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/55">
-              UK-based builds: clear structure, modern layouts, and sites that still feel fast on a phone.
-            </p>
             <p className="mt-4">
               <a
                 className="font-medium text-white/80 underline underline-offset-4 transition hover:text-white"

@@ -214,3 +214,34 @@ body {
 .work-marquee-track-reverse {
   animation-direction: reverse;
 }
+
+/* Orbital loader: compositor-friendly CSS spin (avoids JS-driven animation jank during hero/WebGL load) */
+@keyframes orbital-rotate-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbital-rotate-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbital-ring-cw {
+  animation: orbital-rotate-cw 1s linear infinite;
+}
+.orbital-ring-ccw {
+  animation: orbital-rotate-ccw 1.5s linear infinite;
+}
+.orbital-ring-cw-fast {
+  animation: orbital-rotate-cw 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbital-ring-cw,
+  .orbital-ring-ccw,
+  .orbital-ring-cw-fast {
+    animation: none;
+    opacity: 0.75;
+  }
+}

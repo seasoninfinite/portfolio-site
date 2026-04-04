@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build"
+
+# Next.js on Netlify: SSR, API routes (/api/stripe/*), and env at runtime
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
