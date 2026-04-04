@@ -25,14 +25,14 @@ const hoverHints: Record<string, string> = {
   Contact: "Lets start building your site today",
 };
 
-function BrandMark() {
+function DotMark() {
   return (
     <a
       href="#top"
       aria-label="BGG-Website Design — Back to top"
-      className="shrink-0 text-[13px] font-semibold tracking-tight text-gray-100 transition-colors hover:text-white sm:text-sm"
+      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 bg-white/[0.06] text-[12px] font-semibold leading-none tracking-normal text-gray-200 transition-colors hover:bg-white/10 hover:text-white"
     >
-      BGG-Website Design
+      BGG
     </a>
   );
 }
@@ -116,7 +116,7 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
         className={`fixed top-3 left-1/2 z-20 w-[calc(100%-1.25rem)] max-w-none -translate-x-1/2 transform border border-[#333] bg-[#1a1a1a]/92 py-2 pl-3 pr-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] backdrop-blur-md transition-[border-radius] duration-0 ease-in-out sm:top-4 sm:w-max sm:px-4 ${headerShapeClass}`}
       >
         <nav className="hidden items-center gap-3 sm:flex sm:gap-4 md:gap-5">
-          <BrandMark />
+          <DotMark />
           {links.map((link) => (
             <AnimatedNavLink
               key={`${link.label}-${link.href}`}
@@ -131,7 +131,7 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
 
         <div className="flex items-center justify-between gap-3 sm:hidden">
           <div className="flex min-w-0 items-center gap-2">
-            <BrandMark />
+            <DotMark />
             <AnimatedNavLink
               href={links[0]?.href ?? "#top"}
               onClick={(event) => handleNavClick(event, links[0]?.href ?? "#top")}
