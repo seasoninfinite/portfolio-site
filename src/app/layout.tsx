@@ -28,8 +28,8 @@ const displaySerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Portfolio landing page",
+  title: "BGG-Website Design",
+  description: "Web design and development — modern, functional sites for your business.",
 };
 
 export default function RootLayout({
