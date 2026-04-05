@@ -33,6 +33,20 @@ const SPLASH_SEEN_KEY = "portfolio-splash-seen";
 /** Never block the user longer than this if assets stall. */
 const SPLASH_MAX_WAIT_MS = 28_000;
 
+/** Shown in rotation while the splash waits (fonts, aurora, priority videos). */
+const SPLASH_MESSAGES = [
+  "Loading BGG Website Design…",
+  "Getting things ready…",
+  "Almost there.",
+  "Polishing the hero…",
+  "Thanks for waiting…",
+  "Nearly ready…",
+  "Just a moment more…",
+  "Wrapping up…",
+] as const;
+
+const SPLASH_MESSAGE_INTERVAL_MS = 2400;
+
 type SplashPhase = "show" | "fade" | "gone";
 
 const DemoOne = () => {
@@ -48,6 +62,7 @@ const DemoOne = () => {
   );
   const [priorityVid0, setPriorityVid0] = useState(false);
   const [priorityVid1, setPriorityVid1] = useState(false);
+  const [splashMessageIndex, setSplashMessageIndex] = useState(0);
 
   const handleAuroraFirstFrame = useCallback(() => {
     setAuroraReady(true);
@@ -99,7 +114,16 @@ const DemoOne = () => {
     return () => window.clearTimeout(t);
   }, [phase]);
 
+  useEffect(() => {
+    if (phase !== "show") return;
+    const id = window.setInterval(() => {
+      setSplashMessageIndex((i) => (i + 1) % SPLASH_MESSAGES.length);
+    }, SPLASH_MESSAGE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [phase]);
+
   const showSplash = phase !== "gone";
+  const splashMessage = SPLASH_MESSAGES[splashMessageIndex];
 
   return (
     <>
@@ -141,7 +165,7 @@ const DemoOne = () => {
         <div
           role="status"
           aria-live="polite"
-          aria-label="Loading site"
+          aria-label={splashMessage}
           className={`fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950 text-white transition-opacity duration-200 ease-out motion-reduce:duration-100 ${
             phase === "fade" ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
@@ -162,7 +186,7 @@ const DemoOne = () => {
           }}
         >
           <div className="text-white [&_.border-t-foreground]:border-t-white/90">
-            <OrbitalLoader message="Loading.." messagePlacement="top" />
+            <OrbitalLoader message={splashMessage} messagePlacement="top" />
           </div>
         </div>
       ) : null}
