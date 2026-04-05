@@ -316,7 +316,7 @@ export function ContactPaymentSection() {
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nIntent: ${intentLabels[resolvedIntent]}\nTerms agreed: ${agreeTerms ? "Yes" : "No"}\n\nMessage:\n${message}`
     );
-    window.location.href = `mailto:ben@bgg.studio?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
     setEmailDraftOpened(true);
     if (!needsPayment) {
       return;

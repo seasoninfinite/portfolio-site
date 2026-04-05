@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from "react";
 export type NavbarLinkItem = { label: string; href: string };
 
 const defaultLinks: NavbarLinkItem[] = [
-  { label: "Home", href: "#top" },
   { label: "About", href: "#my-story" },
   { label: "Code", href: "#code" },
   { label: "Services", href: "#pricing" },
@@ -16,7 +15,6 @@ const defaultLinks: NavbarLinkItem[] = [
 ];
 
 const hoverHints: Record<string, string> = {
-  Home: "Back to the top",
   About: "My story and what I do",
   Code: "What is your website going to be made of?",
   Work: "Examples of websites I have built",
@@ -133,10 +131,12 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
           <div className="flex min-w-0 items-center gap-2">
             <DotMark />
             <AnimatedNavLink
-              href={links[0]?.href ?? "#top"}
-              onClick={(event) => handleNavClick(event, links[0]?.href ?? "#top")}
+              href={links[0]?.href ?? "#my-story"}
+              onClick={(event) =>
+                handleNavClick(event, links[0]?.href ?? "#my-story")
+              }
             >
-              {links[0]?.label ?? "Home"}
+              {links[0]?.label ?? "About"}
             </AnimatedNavLink>
           </div>
           <button

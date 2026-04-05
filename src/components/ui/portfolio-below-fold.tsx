@@ -58,7 +58,7 @@ export function PortfolioBelowFold() {
             <ul className="mt-4 grid gap-2">
               <li>
                 <a className="hover:text-white" href="#top">
-                  Home
+                  Top
                 </a>
               </li>
               <li>
