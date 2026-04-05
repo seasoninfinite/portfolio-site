@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 export type NavbarLinkItem = { label: string; href: string };
 
 const defaultLinks: NavbarLinkItem[] = [
+  { label: "Home", href: "#top" },
   { label: "About", href: "#my-story" },
   { label: "Code", href: "#code" },
   { label: "Services", href: "#pricing" },
@@ -15,6 +16,7 @@ const defaultLinks: NavbarLinkItem[] = [
 ];
 
 const hoverHints: Record<string, string> = {
+  Home: "Back to the top",
   About: "My story and what I do",
   Code: "What is your website going to be made of?",
   Work: "Examples of websites I have built",
@@ -127,18 +129,8 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
           ))}
         </nav>
 
-        <div className="flex items-center justify-between gap-3 sm:hidden">
-          <div className="flex min-w-0 items-center gap-2">
-            <DotMark />
-            <AnimatedNavLink
-              href={links[0]?.href ?? "#my-story"}
-              onClick={(event) =>
-                handleNavClick(event, links[0]?.href ?? "#my-story")
-              }
-            >
-              {links[0]?.label ?? "About"}
-            </AnimatedNavLink>
-          </div>
+        <div className="flex w-full items-center justify-between gap-3 sm:hidden">
+          <DotMark />
           <button
             type="button"
             className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
@@ -159,7 +151,7 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
           }`}
         >
           <nav className="flex flex-col gap-2 border-t border-white/10 pt-3 text-center text-sm">
-            {links.slice(1).map((link) => (
+            {links.map((link) => (
               <a
                 key={`${link.label}-${link.href}-m`}
                 href={link.href}
