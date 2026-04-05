@@ -2,9 +2,16 @@
 
 import { useEffect, useRef } from "react";
 
-/** WebGL aurora; loads `three` only after mount so hero text and shell can paint first. */
-export function AuroraBackground() {
+/** WebGL aurora; waits for browser idle (capped) so hero text and videos win the network/CPU first. */
+export function AuroraBackground({
+  onFirstFrame,
+}: {
+  /** Fires once after the first successful WebGL frame (for splash / readiness gates). */
+  onFirstFrame?: () => void;
+}) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const onFirstFrameRef = useRef(onFirstFrame);
+  onFirstFrameRef.current = onFirstFrame;
 
   useEffect(() => {
     const mountEl = mountRef.current;
@@ -13,8 +20,13 @@ export function AuroraBackground() {
     let animationFrameId = 0;
     let disposed = false;
     let teardown: (() => void) | null = null;
+    let scheduleId = 0;
+    let scheduledWithIdleCallback = false;
 
-    void (async () => {
+    const startWebGL = () => {
+      if (disposed) return;
+
+      void (async () => {
       const THREE = await import("three");
       if (disposed || !mountRef.current || mountRef.current !== mountEl) return;
 
@@ -53,10 +65,15 @@ export function AuroraBackground() {
       const mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
 
+      let firstFrameReported = false;
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
         material.uniforms.iTime.value += 0.016;
         renderer.render(scene, camera);
+        if (!firstFrameReported) {
+          firstFrameReported = true;
+          queueMicrotask(() => onFirstFrameRef.current?.());
+        }
       };
 
       const handleResize = () => {
@@ -80,9 +97,24 @@ export function AuroraBackground() {
         geometry.dispose();
       };
     })();
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      scheduledWithIdleCallback = true;
+      scheduleId = window.requestIdleCallback(startWebGL, { timeout: 450 });
+    } else {
+      scheduleId = window.setTimeout(startWebGL, 1) as unknown as number;
+    }
 
     return () => {
       disposed = true;
+      if (scheduleId) {
+        if (scheduledWithIdleCallback) {
+          window.cancelIdleCallback(scheduleId);
+        } else {
+          window.clearTimeout(scheduleId as unknown as ReturnType<typeof setTimeout>);
+        }
+      }
       teardown?.();
     };
   }, []);

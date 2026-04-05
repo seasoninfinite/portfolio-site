@@ -21,6 +21,8 @@ function WorkCardImage({ site }: { site: StaticWorkItem }) {
       <img
         src={src}
         alt=""
+        loading="lazy"
+        decoding="async"
         className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.01]"
         onError={() => {
           if (src !== site.fallbackImageSrc) setSrc(site.fallbackImageSrc);

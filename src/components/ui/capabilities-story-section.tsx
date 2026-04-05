@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { PRIORITY_CAPABILITY_VIDEO_SRCS } from "@/data/priority-videos";
 import { ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 function GhostCta({
   children,
@@ -39,21 +41,45 @@ function CapabilitySiteVideo({
   src: string;
   label: string;
 }) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShouldLoad(true);
+          obs.disconnect();
+        }
+      },
+      { root: null, rootMargin: "80px 0px", threshold: 0.08 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <figure
+      ref={rootRef}
       className="relative m-0 aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/[0.12] bg-zinc-950 shadow-[0_0_100px_-30px_rgba(120,140,255,0.35)]"
       aria-label={label}
     >
-      <video
-        className="h-full w-full object-cover"
-        src={src}
-        muted
-        playsInline
-        loop
-        autoPlay
-        preload="metadata"
-        aria-label={label}
-      />
+      {shouldLoad ? (
+        <video
+          className="h-full w-full object-cover"
+          src={src}
+          muted
+          playsInline
+          loop
+          autoPlay
+          preload="metadata"
+          aria-label={label}
+        />
+      ) : (
+        <div className="h-full w-full bg-zinc-900/90" aria-hidden />
+      )}
     </figure>
   );
 }
@@ -86,7 +112,7 @@ export function CapabilitiesStorySection() {
           </div>
           <div className="order-1 md:order-2">
             <CapabilitySiteVideo
-              src="/work/loops/logoipsum.mp4"
+              src={PRIORITY_CAPABILITY_VIDEO_SRCS[0]}
               label="Animated site preview: Logoipsum"
             />
           </div>
@@ -95,7 +121,7 @@ export function CapabilitiesStorySection() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
           <div className="order-1">
             <CapabilitySiteVideo
-              src="/work/loops/logoipsum2.mp4"
+              src={PRIORITY_CAPABILITY_VIDEO_SRCS[1]}
               label="Animated site preview: Logoipsum build two"
             />
           </div>

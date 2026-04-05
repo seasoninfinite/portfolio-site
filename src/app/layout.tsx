@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
+
+import { getSiteOrigin } from "@/lib/site-url";
+
 import "./globals.css";
+
+const siteOrigin = getSiteOrigin();
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +32,78 @@ const displaySerif = Instrument_Serif({
   display: "swap",
 });
 
+const siteTitle = "BGG Website Design";
+const siteDescription =
+  "UK freelance web designer and developer — custom websites, modern UI, and fast builds for businesses across the United Kingdom. Hire a website maker for premium, conversion-focused sites.";
+
 export const metadata: Metadata = {
-  title: "BGG-Website Design",
-  description: "Web design and development — modern, functional sites for your business.",
+  metadataBase: new URL(siteOrigin),
+  title: {
+    default: `${siteTitle} | UK Web Designer & Website Developer`,
+    template: `%s | ${siteTitle}`,
+  },
+  description: siteDescription,
+  applicationName: siteTitle,
+  authors: [{ name: "Ben", url: siteOrigin }],
+  creator: "BGG Website Design",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_GB",
+    url: "/",
+    siteName: siteTitle,
+    title: `${siteTitle} | UK Web Designer & Website Maker`,
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteTitle} | UK Web Designer`,
+    description: siteDescription,
+  },
+  category: "technology",
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteOrigin}/#website`,
+      url: siteOrigin,
+      name: siteTitle,
+      description: siteDescription,
+      inLanguage: "en-GB",
+      publisher: { "@id": `${siteOrigin}/#organization` },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteOrigin}/#organization`,
+      name: siteTitle,
+      description: siteDescription,
+      url: siteOrigin,
+      email: "bggwebsitedesign@gmail.com",
+      areaServed: {
+        "@type": "Country",
+        name: "United Kingdom",
+      },
+      knowsAbout: [
+        "Web design",
+        "Website development",
+        "Freelance web designer",
+        "Custom websites",
+        "Small business websites",
+        "Responsive web design",
+      ],
+      serviceType: ["Web design", "Web development", "Website design"],
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -39,10 +113,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-GB"
       className={`dark ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${displaySerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
         {children}
       </body>
     </html>

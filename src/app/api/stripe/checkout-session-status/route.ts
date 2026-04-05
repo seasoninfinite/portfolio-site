@@ -20,6 +20,12 @@ export async function GET(request: NextRequest) {
       session.payment_status === "paid" ||
       (session.mode === "subscription" && session.status === "complete");
 
+    console.info("[stripe verify session]", sessionId, {
+      paid,
+      payment_status: session.payment_status,
+      mode: session.mode,
+    });
+
     return NextResponse.json({
       paid,
       sessionId: session.id,

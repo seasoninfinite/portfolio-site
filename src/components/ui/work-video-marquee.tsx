@@ -1,12 +1,11 @@
 "use client";
 
 import { animatedLoopVideos } from "@/data/work-content";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function LoopCard({
   src,
   label,
-  matte,
   crop,
 }: {
   src: string;
@@ -15,7 +14,25 @@ function LoopCard({
   crop?: "trimY";
 }) {
   const [failed, setFailed] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
   const cropClass = crop === "trimY" ? "scale-[1.08]" : "";
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShouldLoad(true);
+          obs.disconnect();
+        }
+      },
+      { root: null, rootMargin: "120px 0px", threshold: 0.01 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   if (failed) {
     return (
@@ -32,19 +49,29 @@ function LoopCard({
   }
 
   return (
-    <div className="group relative w-[min(100vw-3rem,22rem)] shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-[0_0_40px_-12px_rgba(139,92,246,0.35)]">
+    <div
+      ref={rootRef}
+      className="group relative w-[min(100vw-3rem,22rem)] shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-[0_0_40px_-12px_rgba(139,92,246,0.35)]"
+    >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-950">
-        <video
-          className={`absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] ${cropClass}`}
-          src={src}
-          muted
-          playsInline
-          loop
-          autoPlay
-          preload="metadata"
-          aria-label={label}
-          onError={() => setFailed(true)}
-        />
+        {shouldLoad ? (
+          <video
+            className={`absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] ${cropClass}`}
+            src={src}
+            muted
+            playsInline
+            loop
+            autoPlay
+            preload="metadata"
+            aria-label={label}
+            onError={() => setFailed(true)}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-zinc-900/90"
+            aria-hidden
+          />
+        )}
       </div>
     </div>
   );

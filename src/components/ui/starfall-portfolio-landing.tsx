@@ -67,6 +67,8 @@ export interface PortfolioPageProps {
   projects?: Project[];
   stats?: Stat[];
   showAnimatedBackground?: boolean;
+  /** Called once the WebGL aurora has painted its first frame (splash / load gates). */
+  onAuroraFirstFrame?: () => void;
 }
 
 const defaultData = {
@@ -95,6 +97,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
   projects = [],
   stats = [],
   showAnimatedBackground = true,
+  onAuroraFirstFrame,
 }) => {
   const showCtas =
     ctaButtons?.primary?.label || ctaButtons?.secondary?.label;
@@ -106,7 +109,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
       id="top"
       className="bg-background text-foreground geist-font min-h-screen flex flex-col"
     >
-      {showAnimatedBackground ? <AuroraBackgroundLazy /> : null}
+      {showAnimatedBackground ? (
+        <AuroraBackgroundLazy onFirstFrame={onAuroraFirstFrame} />
+      ) : null}
       <div className="relative z-10 flex flex-col flex-1">
         <Navbar links={navLinks} />
 
