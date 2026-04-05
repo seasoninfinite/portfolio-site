@@ -1,13 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
   PortfolioPage,
   type PortfolioPageProps,
 } from "@/components/ui/starfall-portfolio-landing";
-import { PRIORITY_CAPABILITY_VIDEO_SRCS } from "@/data/priority-videos";
-import { OrbitalLoader } from "@/components/ui/orbital-loader";
 
 const customPortfolioData: PortfolioPageProps = {
   navLinks: [
@@ -30,22 +28,10 @@ const customPortfolioData: PortfolioPageProps = {
 
 const SPLASH_SEEN_KEY = "portfolio-splash-seen";
 
-/** Never block the user longer than this if assets stall. */
-const SPLASH_MAX_WAIT_MS = 28_000;
-
-/** Shown in rotation while the splash waits (fonts, aurora, priority videos). */
-const SPLASH_MESSAGES = [
-  "Loading BGG Website Design…",
-  "Getting things ready…",
-  "Almost there.",
-  "Polishing the hero…",
-  "Thanks for waiting…",
-  "Nearly ready…",
-  "Just a moment more…",
-  "Wrapping up…",
-] as const;
-
-const SPLASH_MESSAGE_INTERVAL_MS = 2400;
+/** Short splash: hero fonts + brief aurora attempt, hard cap. */
+const SPLASH_MIN_MS = 280;
+const SPLASH_AURORA_GIVEUP_MS = 900;
+const SPLASH_MAX_MS = 2400;
 
 type SplashPhase = "show" | "fade" | "gone";
 
@@ -60,13 +46,23 @@ const DemoOne = () => {
   const [auroraReady, setAuroraReady] = useState(
     !customPortfolioData.showAnimatedBackground
   );
-  const [priorityVid0, setPriorityVid0] = useState(false);
-  const [priorityVid1, setPriorityVid1] = useState(false);
-  const [splashMessageIndex, setSplashMessageIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const splashStartedAt = useRef<number | null>(null);
+  const finishingRef = useRef(false);
 
   const handleAuroraFirstFrame = useCallback(() => {
     setAuroraReady(true);
   }, []);
+
+  useLayoutEffect(() => {
+    if (phase === "show") {
+      splashStartedAt.current ??= performance.now();
+    } else if (phase === "gone") {
+      splashStartedAt.current = null;
+      finishingRef.current = false;
+    }
+  }, [phase]);
 
   useEffect(() => {
     if (phase === "gone") return;
@@ -91,39 +87,52 @@ const DemoOne = () => {
 
   useEffect(() => {
     if (!customPortfolioData.showAnimatedBackground) return;
-    const t = window.setTimeout(() => setAuroraReady(true), 10_000);
+    const t = window.setTimeout(() => setAuroraReady(true), SPLASH_AURORA_GIVEUP_MS);
     return () => window.clearTimeout(t);
   }, []);
 
   useEffect(() => {
     if (phase !== "show") return;
-    if (
-      !textAndFontsReady ||
-      !auroraReady ||
-      !priorityVid0 ||
-      !priorityVid1
-    ) {
-      return;
-    }
-    setPhase("fade");
-  }, [phase, textAndFontsReady, auroraReady, priorityVid0, priorityVid1]);
 
-  useEffect(() => {
-    if (phase !== "show") return;
-    const t = window.setTimeout(() => setPhase("fade"), SPLASH_MAX_WAIT_MS);
-    return () => window.clearTimeout(t);
-  }, [phase]);
+    const tick = () => {
+      const start = splashStartedAt.current;
+      if (start === null) return;
+      if (finishingRef.current) {
+        setProgress(100);
+        return;
+      }
 
-  useEffect(() => {
-    if (phase !== "show") return;
-    const id = window.setInterval(() => {
-      setSplashMessageIndex((i) => (i + 1) % SPLASH_MESSAGES.length);
-    }, SPLASH_MESSAGE_INTERVAL_MS);
+      const elapsed = performance.now() - start;
+
+      let target = 0;
+      target += textAndFontsReady
+        ? 44
+        : Math.min(14, (elapsed / 400) * 14);
+      target += auroraReady
+        ? 36
+        : Math.min(22, (elapsed / 700) * 22);
+      target += Math.min(20, (elapsed / SPLASH_MAX_MS) * 20);
+      target = Math.min(99, Math.round(target));
+      setProgress((p) => (target > p ? target : p));
+
+      const auroraOk = auroraReady || elapsed >= SPLASH_AURORA_GIVEUP_MS;
+      const canFinish =
+        textAndFontsReady && auroraOk && elapsed >= SPLASH_MIN_MS;
+      const mustFinish = elapsed >= SPLASH_MAX_MS;
+
+      if ((canFinish || mustFinish) && !finishingRef.current) {
+        finishingRef.current = true;
+        setProgress(100);
+        window.setTimeout(() => setPhase("fade"), 120);
+      }
+    };
+
+    const id = window.setInterval(tick, 48);
+    tick();
     return () => window.clearInterval(id);
-  }, [phase]);
+  }, [phase, textAndFontsReady, auroraReady]);
 
   const showSplash = phase !== "gone";
-  const splashMessage = SPLASH_MESSAGES[splashMessageIndex];
 
   return (
     <>
@@ -139,33 +148,12 @@ const DemoOne = () => {
       </div>
 
       {showSplash ? (
-        <>
-          {PRIORITY_CAPABILITY_VIDEO_SRCS.map((src, index) => {
-            const markReady = () =>
-              index === 0 ? setPriorityVid0(true) : setPriorityVid1(true);
-            return (
-              <video
-                key={src}
-                className="pointer-events-none fixed left-0 top-0 h-px w-px opacity-0"
-                aria-hidden
-                src={src}
-                preload="auto"
-                muted
-                playsInline
-                onCanPlayThrough={markReady}
-                onLoadedData={markReady}
-                onError={markReady}
-              />
-            );
-          })}
-        </>
-      ) : null}
-
-      {showSplash ? (
         <div
-          role="status"
-          aria-live="polite"
-          aria-label={splashMessage}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress}
+          aria-label="Loading BGG Website Design"
           className={`fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950 text-white transition-opacity duration-200 ease-out motion-reduce:duration-100 ${
             phase === "fade" ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
@@ -185,8 +173,19 @@ const DemoOne = () => {
             });
           }}
         >
-          <div className="text-white [&_.border-t-foreground]:border-t-white/90">
-            <OrbitalLoader message={splashMessage} messagePlacement="top" />
+          <div className="w-[min(20rem,86vw)] px-4">
+            <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-white/45">
+              BGG Website Design
+            </p>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-white/[0.08]">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[width] duration-100 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p className="mt-2 text-center text-sm tabular-nums text-white/70">
+              {progress}%
+            </p>
           </div>
         </div>
       ) : null}

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { DemoOne } from "@/components/demo";
 
 export const metadata: Metadata = {
-  title: "UK Web Designer & Website Maker",
+  title: { absolute: "BGG Website Design" },
   keywords: [
     "web designer UK",
     "website designer UK",

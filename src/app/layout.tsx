@@ -39,7 +39,7 @@ const siteDescription =
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
-    default: `${siteTitle} | UK Web Designer & Website Developer`,
+    default: siteTitle,
     template: `%s | ${siteTitle}`,
   },
   description: siteDescription,
