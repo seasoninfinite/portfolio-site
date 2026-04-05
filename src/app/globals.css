@@ -215,6 +215,25 @@ body {
   animation-direction: reverse;
 }
 
+@media (max-width: 639px) {
+  .work-marquee-mobile {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+}
+
 /* Orbital loader: compositor-friendly CSS spin (avoids JS-driven animation jank during hero/WebGL load) */
 @keyframes orbital-rotate-cw {
   to {

@@ -10,7 +10,7 @@ export function WorkSitesSection() {
       className="border-t border-white/10 bg-black px-6 py-16 md:py-20"
       aria-labelledby="sites-heading"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl overflow-x-hidden">
         <header className="mb-6 text-center md:mb-10">
           <h2
             id="sites-heading"
@@ -23,11 +23,11 @@ export function WorkSitesSection() {
           </p>
         </header>
 
-        <div className="mt-2 md:mt-4">
+        <div className="relative -mx-6 mt-2 overflow-x-hidden px-0 sm:mx-0 md:mt-4">
           <WorkVideoMarquee />
         </div>
 
-        <p className="mx-auto mt-12 max-w-2xl text-center text-sm text-white/60 md:mt-16 md:text-base">
+        <p className="mx-auto mt-12 max-w-2xl px-1 text-center text-sm text-white/60 md:mt-16 md:text-base">
           Below are static shots of live builds.{" "}
           <span className="text-white/85">Click a card</span> when a live link is
           available to open the site in a new tab.

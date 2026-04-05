@@ -118,7 +118,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
         <div className="relative flex min-h-0 flex-1 flex-col">
           <main
             id="about"
-            className="relative flex min-h-[100dvh] w-full flex-col px-6 pb-16 pt-24 md:pb-20 md:pt-28"
+            className="relative flex min-h-[100dvh] w-full flex-col px-6 pb-16 pt-[max(6rem,calc(env(safe-area-inset-top,0px)+4.75rem))] md:pb-20 md:pt-[max(7rem,calc(env(safe-area-inset-top,0px)+5.25rem))]"
           >
             <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center">
               <div className="w-full text-center">

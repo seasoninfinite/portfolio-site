@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 
 import { getSiteOrigin } from "@/lib/site-url";
@@ -31,6 +31,12 @@ const displaySerif = Instrument_Serif({
   variable: "--font-display",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 const siteTitle = "BGG Website Design";
 const siteDescription =

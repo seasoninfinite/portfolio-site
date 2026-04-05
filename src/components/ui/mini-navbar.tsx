@@ -113,7 +113,7 @@ export function Navbar({ links = defaultLinks }: NavbarProps) {
   return (
     <>
       <header
-        className={`fixed top-3 left-1/2 z-20 w-[calc(100%-1.25rem)] max-w-none -translate-x-1/2 transform border border-[#333] bg-[#1a1a1a]/92 py-2 pl-3 pr-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] backdrop-blur-md transition-[border-radius] duration-0 ease-in-out sm:top-4 sm:w-max sm:px-4 ${headerShapeClass}`}
+        className={`fixed left-1/2 z-20 w-[calc(100%-1.25rem)] max-w-none -translate-x-1/2 transform border border-[#333] bg-[#1a1a1a]/92 py-2 pl-3 pr-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] backdrop-blur-md transition-[border-radius] duration-0 ease-in-out sm:w-max sm:px-4 ${headerShapeClass} top-[max(0.75rem,env(safe-area-inset-top,0px))] sm:top-[max(1rem,env(safe-area-inset-top,0px))]`}
       >
         <nav className="hidden items-center gap-3 sm:flex sm:gap-4 md:gap-5">
           <DotMark />
