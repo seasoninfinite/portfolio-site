@@ -148,6 +148,16 @@ export type StaticWorkItem = {
 
 export const staticWorkItems: StaticWorkItem[] = [
   {
+    id: "london-dietitian",
+    title: "London Dietitian",
+    businessLine: "Dietitian",
+    tier: "standard",
+    imageSrc: "/work/screenshots/london_dietitian.png",
+    fallbackImageSrc:
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80",
+    href: "https://londondietitian.netlify.app",
+  },
+  {
     id: "power-ai",
     title: "Power AI",
     businessLine: "Business AI",
