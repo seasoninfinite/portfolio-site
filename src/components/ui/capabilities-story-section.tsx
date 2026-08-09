@@ -59,7 +59,6 @@ function CapabilitySiteVideo({
           loop
           autoPlay
           preload="auto"
-          loading="lazy"
           aria-label={label}
         />
       ) : (
