@@ -41,24 +41,8 @@ function CapabilitySiteVideo({
   src: string;
   label: string;
 }) {
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(true);
   const rootRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setShouldLoad(true);
-          obs.disconnect();
-        }
-      },
-      { root: null, rootMargin: "80px 0px", threshold: 0.08 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
 
   return (
     <figure
@@ -74,7 +58,8 @@ function CapabilitySiteVideo({
           playsInline
           loop
           autoPlay
-          preload="metadata"
+          preload="auto"
+          loading="lazy"
           aria-label={label}
         />
       ) : (
@@ -108,7 +93,7 @@ export function CapabilitiesStorySection() {
               messy. If you want something that feels premium and modern, this is
               the kind of direction I can take.
             </p>
-            <GhostCta href="#work">See more</GhostCta>
+            <GhostCta href="#sites">See more</GhostCta>
           </div>
           <div className="order-1 md:order-2">
             <CapabilitySiteVideo
@@ -135,7 +120,7 @@ export function CapabilitiesStorySection() {
               (hovers, buttons, little transitions). I treat each project like its
               own brand, not a copy paste template.
             </p>
-            <GhostCta href="#work">See more</GhostCta>
+            <GhostCta href="#sites">See more</GhostCta>
           </div>
         </div>
       </div>

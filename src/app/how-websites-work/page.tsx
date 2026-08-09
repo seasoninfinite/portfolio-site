@@ -1,36 +1,41 @@
-"use client";
-
-import { CapabilitiesStorySection } from "@/components/ui/capabilities-story-section";
-import { GlassmorphismPortfolioBlock } from "@/components/ui/glassmorphism-portfolio-block-shadcnui";
-import { HomeProjectStages } from "@/components/ui/home-project-stages";
-import { PortfolioClientsBlock } from "@/components/ui/testimonial-card";
-import { PortfolioPricingSection } from "@/components/ui/portfolio-pricing-section";
-import { WorkSitesSection } from "@/components/ui/work-sites-section";
-import { ContactPaymentSection } from "@/components/ui/contact-payment-section";
+import type { Metadata } from "next";
+import { DeveloperCodeShowcase } from "@/components/ui/developer-code-showcase";
+import { Navbar } from "@/components/ui/mini-navbar";
 import { FooterEmailComposer } from "@/components/ui/footer-email-composer";
+import { ArrowLeft } from "lucide-react";
 
-export function PortfolioBelowFold() {
+export const metadata: Metadata = {
+  title: "How Websites Work - BGG Website Design",
+  description: "What websites are actually made of - Learn about HTML, CSS, JavaScript, and TypeScript.",
+};
+
+const howWebsitesWorkNavLinks = [
+  { label: "Home", href: "/" },
+  { label: "Expertise", href: "/expertise" },
+  { label: "How Websites Work", href: "/how-websites-work" },
+  { label: "Work", href: "/#sites" },
+  { label: "Contact", href: "/#contact" },
+];
+
+export default function HowWebsitesWorkPage() {
   return (
-    <>
-      <section
-        id="capabilities"
-        className="relative z-10 bg-black text-white"
-        aria-labelledby="capabilities-heading"
-      >
-        <CapabilitiesStorySection />
-      </section>
-
-      <div
-        id="work"
-        className="relative z-10 bg-black pb-12 pt-6 md:pb-16 md:pt-10"
-      >
-        <GlassmorphismPortfolioBlock />
-        <PortfolioPricingSection />
-        <WorkSitesSection />
-        <PortfolioClientsBlock />
-        <HomeProjectStages />
-        <ContactPaymentSection />
-      </div>
+    <div className="bg-background text-foreground geist-font min-h-screen flex flex-col">
+      <Navbar links={howWebsitesWorkNavLinks} />
+      
+      <main className="relative flex min-h-0 flex-1 flex-col">
+        <div className="border-t border-white/10 bg-black px-6 py-8 md:py-12">
+          <div className="mx-auto max-w-6xl">
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </a>
+          </div>
+        </div>
+        <DeveloperCodeShowcase />
+      </main>
 
       <footer className="relative z-10 border-t border-white/10 bg-black px-6 py-10 text-sm text-white/60">
         <div className="mx-auto grid w-full max-w-6xl gap-10 md:grid-cols-3">
@@ -53,7 +58,7 @@ export function PortfolioBelowFold() {
             </p>
             <ul className="mt-4 grid gap-2">
               <li>
-                <a className="hover:text-white" href="#top">
+                <a className="hover:text-white" href="/">
                   Home
                 </a>
               </li>
@@ -68,22 +73,17 @@ export function PortfolioBelowFold() {
                 </a>
               </li>
               <li>
-                <a className="hover:text-white" href="#pricing">
+                <a className="hover:text-white" href="/#pricing">
                   Services
                 </a>
               </li>
               <li>
-                <a className="hover:text-white" href="#sites">
+                <a className="hover:text-white" href="/#sites">
                   Work
                 </a>
               </li>
               <li>
-                <a className="hover:text-white" href="#testimonials">
-                  Testimonials
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-white" href="#contact">
+                <a className="hover:text-white" href="/#contact">
                   Contact
                 </a>
               </li>
@@ -113,6 +113,6 @@ export function PortfolioBelowFold() {
           <p>© {new Date().getFullYear()} BGG Studio. All rights reserved.</p>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

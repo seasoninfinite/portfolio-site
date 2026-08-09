@@ -1,6 +1,6 @@
 /**
  * Screenshots: public/work/screenshots/
- * Loops: public/work/loops/
+ * Loops: public/work/loops/ (temporary - will migrate to CDN after DNS propagation)
  */
 
 export type WebsiteTier = "basic" | "standard" | "advanced";

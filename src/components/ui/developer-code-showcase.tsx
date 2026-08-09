@@ -7,41 +7,7 @@ import {
 } from "@/components/ui/code-block";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
-import { useEffect, useState } from "react";
-
-function CodeSectionSkipFab() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const el = document.getElementById("code");
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        setShow(entry.isIntersecting && entry.intersectionRatio > 0.08);
-      },
-      { threshold: [0, 0.08, 0.2] }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  if (!show) return null;
-
-  return (
-    <div className="pointer-events-none fixed bottom-6 right-4 z-[38] sm:bottom-8 sm:right-6">
-      <button
-        type="button"
-        className="pointer-events-auto rounded-full border border-white/20 bg-zinc-950/92 px-4 py-2.5 text-sm font-medium text-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:border-white/40 hover:bg-zinc-900/95"
-        onClick={() => {
-          document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          window.history.replaceState(null, "", "#pricing");
-        }}
-      >
-        Skip the code bit?
-      </button>
-    </div>
-  );
-}
+import { useState } from "react";
 
 type LangSample = {
   badge: string;
@@ -195,7 +161,6 @@ function MiniCodeCard({ sample }: { sample: LangSample }) {
 export function DeveloperCodeShowcase() {
   return (
     <section
-      id="code"
       className="relative border-t border-white/5 bg-black px-4 py-16 md:px-6 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
@@ -244,7 +209,6 @@ export function DeveloperCodeShowcase() {
           ))}
         </div>
       </div>
-      <CodeSectionSkipFab />
     </section>
   );
 }

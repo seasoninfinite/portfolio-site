@@ -10,8 +10,8 @@ import {
 const customPortfolioData: PortfolioPageProps = {
   navLinks: [
     { label: "Home", href: "#top" },
-    { label: "About", href: "#my-story" },
-    { label: "Code", href: "#code" },
+    { label: "Expertise", href: "/expertise" },
+    { label: "How Websites Work", href: "/how-websites-work" },
     { label: "Services", href: "#pricing" },
     { label: "Work", href: "#sites" },
     { label: "Testimonials", href: "#testimonials" },
