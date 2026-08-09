@@ -11,9 +11,10 @@ export const metadata: Metadata = {
 
 const expertiseNavLinks = [
   { label: "Home", href: "/" },
-  { label: "Expertise", href: "/expertise" },
-  { label: "How Websites Work", href: "/how-websites-work" },
+  { label: "About", href: "/#my-story" },
+  { label: "Services", href: "/#pricing" },
   { label: "Work", href: "/#sites" },
+  { label: "Testimonials", href: "/#testimonials" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -22,7 +23,7 @@ export default function ExpertisePage() {
     <div className="bg-background text-foreground geist-font min-h-screen flex flex-col">
       <Navbar links={expertiseNavLinks} />
       
-      <main className="relative flex min-h-0 flex-1 flex-col">
+      <main className="relative flex min-h-0 flex-1 flex-col pt-8">
         <section
           id="expertise"
           className="border-t border-white/10 bg-black px-6 py-16 md:py-20"
@@ -101,6 +102,11 @@ export default function ExpertisePage() {
               <li>
                 <a className="hover:text-white" href="/#sites">
                   Work
+                </a>
+              </li>
+              <li>
+                <a className="hover:text-white" href="/#testimonials">
+                  Testimonials
                 </a>
               </li>
               <li>
