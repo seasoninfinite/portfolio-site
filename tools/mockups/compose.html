@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mockup board</title>
+<style>
+  * { box-sizing:border-box; margin:0; }
+  html, body { overflow:hidden; }
+  body { position:relative; font-family:-apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif; }
+  .layout { display:none; position:absolute; inset:0; }
+  body[data-l="devices"] .devices, body[data-l="phones"] .phones, body[data-l="fan4"] .fan4 { display:block; }
+  body[data-l="devices"] { width:1200px; height:750px; }
+  body[data-l="phones"] { width:900px; height:900px; }
+  body[data-l="fan4"] { width:1000px; height:820px; }
+
+  .bg { position:absolute; inset:0; background:var(--tile); }
+  .bg::before { content:""; position:absolute; inset:0; background:radial-gradient(70% 65% at 50% 38%, rgba(255,255,255,var(--glow)) 0%, rgba(255,255,255,0) 70%); }
+  .bg::after { content:""; position:absolute; inset:0; background:radial-gradient(120% 80% at 50% 120%, rgba(0,0,0,var(--vign)) 0%, rgba(0,0,0,0) 60%); }
+
+  img { display:block; width:100%; object-fit:cover; object-position:top; }
+
+  /* status bar (iOS) */
+  .sb { display:flex; align-items:center; justify-content:space-between; font-weight:600; letter-spacing:-.01em; flex:none; }
+  .sb .ic { display:flex; gap:.32em; align-items:center; }
+  .sb svg { height:.8em; width:auto; }
+
+  /* ---------- device parts ---------- */
+  .scr { position:relative; overflow:hidden; display:flex; flex-direction:column; background:#fff; }
+  .scr img { flex:1; min-height:0; }
+  .scr::after { content:""; position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 32%); pointer-events:none; }
+
+  .monitor { position:absolute; left:290px; top:84px; width:620px; }
+  .monitor .bez { padding:11px; border-radius:15px; background:#0b0b0c; box-shadow:0 0 0 1.5px #b9bbbf, 0 0 0 2.5px #e3e4e6, 0 34px 56px -22px rgba(0,0,0,.45); }
+  .monitor .scr { aspect-ratio:16/10; border-radius:4px; }
+  .monitor .chin { height:30px; background:linear-gradient(#e2e3e5,#c9cacd); border-radius:0 0 13px 13px; margin-top:-6px; position:relative; z-index:-1; }
+  .monitor .neck { width:120px; height:86px; margin:0 auto; background:linear-gradient(90deg,#b4b6ba,#dcdde0 50%,#b4b6ba); clip-path:polygon(18% 0,82% 0,100% 100%,0 100%); }
+  .monitor .foot { width:220px; height:12px; margin:0 auto; border-radius:6px 6px 10px 10px; background:linear-gradient(#dcdde0,#b7b9bd); box-shadow:0 16px 26px -8px rgba(0,0,0,.4); }
+
+  .laptop { position:absolute; left:742px; top:368px; width:400px; }
+  .laptop .bez { padding:10px 10px 13px; border-radius:15px 15px 4px 4px; background:#0b0b0c; box-shadow:0 0 0 1.5px #b7b9bd, 0 0 0 2.4px #e4e5e7; position:relative; }
+  .laptop .bez::before { content:""; position:absolute; top:4px; left:50%; width:5px; height:5px; margin-left:-2.5px; border-radius:50%; background:#1d2630; }
+  .laptop .scr { aspect-ratio:16/10; border-radius:2px; }
+  .laptop .base { height:15px; margin:0 -42px; border-radius:2px 2px 14px 14px / 2px 2px 9px 9px; background:linear-gradient(#f0f1f3,#d3d5d8 30%,#b4b6ba 75%,#8f9196); position:relative; box-shadow:inset 0 1px 0 #fff, 0 20px 30px -10px rgba(0,0,0,.45); }
+  .laptop .base::before { content:""; position:absolute; left:50%; top:0; width:90px; margin-left:-45px; height:5px; border-radius:0 0 7px 7px; background:linear-gradient(#a6a8ac,#c3c5c8); }
+
+  .tablet { position:absolute; left:92px; top:290px; width:262px; }
+  .tablet .bez { padding:12px; border-radius:28px; background:#0b0b0c; box-shadow:0 0 0 2px #a8aaaf, 0 0 0 3.2px #e1e2e5, 0 34px 54px -18px rgba(0,0,0,.5); position:relative; }
+  .tablet .bez::before { content:""; position:absolute; top:4.5px; left:50%; width:4px; height:4px; margin-left:-2px; border-radius:50%; background:#1d2630; }
+  .tablet .scr { aspect-ratio:820/1204; border-radius:14px; }
+  .tablet .sb { height:24px; padding:0 16px; font-size:9px; }
+
+  .phone { position:absolute; }
+  .phone .bez { padding:3.4%; border-radius:15.5% / 7.2%; background:#0b0b0c; box-shadow:0 0 0 2px #9ea1a7, 0 0 0 3.6px #e2e3e6, 0 30px 46px -14px rgba(0,0,0,.5); position:relative; }
+  .phone .bez::before, .phone .bez::after { content:""; position:absolute; width:3px; border-radius:2px; background:linear-gradient(90deg,#8e9196,#d4d6da); }
+  .phone .bez::before { left:-5px; top:22%; height:12%; box-shadow:0 -34px 0 #b7b9bd; }
+  .phone .bez::after { right:-5px; top:28%; height:17%; }
+  .phone .scr { aspect-ratio:390/891; border-radius:12.5% / 5.6%; }
+  .phone .island { position:absolute; z-index:3; top:2.1%; left:50%; width:31%; height:4%; transform:translateX(-50%); border-radius:30px; background:#000; }
+  .phone .sb { height:5.3%; padding:0 9% 0 10%; font-size:var(--sbf, 11px); }
+
+  .devices .phone { left:332px; top:392px; width:146px; --sbf:7.2px; }
+  .devices .monitor, .devices .tablet, .devices .laptop, .devices .phone { margin-left:-22px; }
+
+  .phones .phone { width:268px; --sbf:13px; }
+  .phones .a { left:62px; top:150px; transform:rotate(-5deg); }
+  .phones .b { left:309px; top:92px; width:282px; z-index:3; --sbf:13.5px; }
+  .phones .c { left:572px; top:150px; transform:rotate(5deg); }
+  .phones .floor { position:absolute; left:50%; top:815px; width:700px; height:46px; margin-left:-350px; border-radius:50%; background:radial-gradient(closest-side, rgba(0,0,0,.28), transparent); filter:blur(6px); }
+
+  .fan4 .phone { width:228px; --sbf:11px; }
+  .fan4 .f1 { left:70px;  top:150px; transform:rotate(-9deg); z-index:4; }
+  .fan4 .f2 { left:285px; top:92px;  transform:rotate(-3deg); z-index:3; }
+  .fan4 .f3 { left:497px; top:92px;  transform:rotate(3deg);  z-index:2; }
+  .fan4 .f4 { left:710px; top:150px; transform:rotate(9deg);  z-index:1; }
+  .fan4 .floor { position:absolute; left:50%; top:730px; width:820px; height:44px; margin-left:-410px; border-radius:50%; background:radial-gradient(closest-side, rgba(40,60,50,.25), transparent); filter:blur(6px); }
+</style>
+</head>
+<body>
+<template id="sbt">
+  <div class="sb"><span>9:41</span><span class="ic">
+    <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+    <svg viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.6c2.3 0 4.4.9 6 2.4l1.3-1.4A10.3 10.3 0 0 0 8 .6C5.2.6 2.6 1.7.7 3.6L2 5c1.6-1.5 3.7-2.4 6-2.4Zm0 3.8c1.3 0 2.5.5 3.4 1.3l1.3-1.4A6.9 6.9 0 0 0 8 4.4c-1.8 0-3.4.7-4.7 1.9l1.3 1.4C5.5 6.9 6.7 6.4 8 6.4Zm0 3.7 2-2.1A2.9 2.9 0 0 0 8 8.2c-.8 0-1.5.3-2 .8l2 2.1Z"/></svg>
+    <svg viewBox="0 0 27 12" fill="none"><rect x=".5" y=".5" width="22" height="11" rx="3.2" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="19" height="8" rx="2" fill="currentColor"/><path d="M24.5 4v4c.8-.3 1.5-1 1.5-2s-.7-1.7-1.5-2Z" fill="currentColor" opacity=".5"/></svg>
+  </span></div>
+</template>
+
+<div class="layout devices"><div class="bg"></div>
+  <div class="monitor"><div class="bez"><div class="scr"><img data-src="p1"></div></div><div class="chin"></div><div class="neck"></div><div class="foot"></div></div>
+  <div class="tablet"><div class="bez"><div class="scr" data-sb="t"><img data-src="tab1"></div></div></div>
+  <div class="laptop"><div class="bez"><div class="scr"><img data-src="p2"></div></div><div class="base"></div></div>
+  <div class="phone"><div class="bez"><div class="scr" data-sb="p"><span class="island"></span><img data-src="ph1"></div></div></div>
+</div>
+
+<div class="layout phones"><div class="bg"></div>
+  <div class="phone a"><div class="bez"><div class="scr" data-sb="p"><span class="island"></span><img data-src="ph2"></div></div></div>
+  <div class="phone b"><div class="bez"><div class="scr" data-sb="p"><span class="island"></span><img data-src="ph1"></div></div></div>
+  <div class="phone c"><div class="bez"><div class="scr" data-sb="p"><span class="island"></span><img data-src="ph3"></div></div></div>
+  <div class="floor"></div>
+</div>
+
+<div class="layout fan4"><div class="bg"></div>
+  <div class="phone f1"><div class="bez"><div class="scr" data-sb="p" data-k="0"><span class="island"></span><img data-fan="0"></div></div></div>
+  <div class="phone f2"><div class="bez"><div class="scr" data-sb="p" data-k="1"><span class="island"></span><img data-fan="1"></div></div></div>
+  <div class="phone f3"><div class="bez"><div class="scr" data-sb="p" data-k="2"><span class="island"></span><img data-fan="2"></div></div></div>
+  <div class="phone f4"><div class="bez"><div class="scr" data-sb="p" data-k="3"><span class="island"></span><img data-fan="3"></div></div></div>
+  <div class="floor"></div>
+</div>
+
+<script>
+  // ?l=devices|phones|fan4 &dir=<folder>/ &tile=#hex &glow=.16 &vign=.18 &pb=#hex&pd=1 &tb=#hex&td=1
+  // fan4: &fan=a,b,c,d (folders) &bars=#hex:1,#hex:0,...
+  const q = new URLSearchParams(location.search);
+  const L = q.get('l') || 'devices';
+  document.body.dataset.l = L;
+  const root = document.documentElement.style;
+  root.setProperty('--tile', q.get('tile') || '#ece9e3');
+  root.setProperty('--glow', q.get('glow') || '.18');
+  root.setProperty('--vign', q.get('vign') || '.12');
+  const dir = q.get('dir') || '';
+  document.querySelectorAll('img[data-src]').forEach(i => i.src = dir + i.dataset.src + '.png');
+  const fan = (q.get('fan') || '').split(',');
+  document.querySelectorAll('img[data-fan]').forEach(i => i.src = fan[+i.dataset.fan] + '/ph1.png');
+  const bars = (q.get('bars') || '').split(',').map(s => s.split(':'));
+  const tpl = document.getElementById('sbt');
+  document.querySelectorAll('[data-sb]').forEach(scr => {
+    const sb = tpl.content.firstElementChild.cloneNode(true);
+    let bg, dark;
+    if (scr.dataset.k !== undefined) { [bg, dark] = bars[+scr.dataset.k]; }
+    else if (scr.dataset.sb === 't') { bg = q.get('tb'); dark = q.get('td'); }
+    else { bg = q.get('pb'); dark = q.get('pd'); }
+    sb.style.background = bg || '#fff';
+    sb.style.color = dark === '1' ? '#fff' : '#0b0b0c';
+    const img = scr.querySelector('img');
+    scr.insertBefore(sb, img);
+  });
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-import { STRIPE_MODE_BY_PLAN, STRIPE_PRICE_ID_BY_PLAN, type PurchasePlan } from "@/lib/stripe-config";
+import { isPurchasePlan, stripeLineItem } from "@/lib/stripe-config";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeSecretKey ? new Stripe(stripeSecretKey) : null;
@@ -24,10 +24,6 @@ function isRateLimited(key: string): boolean {
   recent.push(now);
   requestLog.set(key, recent);
   return recent.length > rateLimitMax;
-}
-
-function isPurchasePlan(value: string): value is PurchasePlan {
-  return value === "basic" || value === "standard" || value === "premium" || value === "care";
 }
 
 /** Map Stripe errors to a safe client message; always log detail for Netlify/host logs. */
@@ -78,12 +74,13 @@ export async function POST(request: NextRequest) {
     }
 
     const origin = request.nextUrl.origin;
+    const { mode, lineItem } = stripeLineItem(body.plan);
     const session = await stripe.checkout.sessions.create({
-      mode: STRIPE_MODE_BY_PLAN[body.plan],
-      line_items: [{ price: STRIPE_PRICE_ID_BY_PLAN[body.plan], quantity: 1 }],
+      mode,
+      line_items: [lineItem],
       customer_email: body.customerEmail?.trim()?.toLowerCase() || undefined,
-      success_url: `${origin}/?checkout=success&session_id={CHECKOUT_SESSION_ID}#contact`,
-      cancel_url: `${origin}/?checkout=cancel#contact`,
+      success_url: `${origin}/contact?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/contact?checkout=cancel`,
       metadata: {
         plan: body.plan,
         customerName: (body.customerName || "").trim().slice(0, 100),

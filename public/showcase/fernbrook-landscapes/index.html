@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernbrook Landscapes | Gardens, Patios &amp; Driveways</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Landscaping company website designed by BGG Website Design.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --forest:#1E3A2A; --moss:#4D7A3A; --stone:#F1F0EA; --paper:#FFFFFF; --ink:#1B211D; --muted:#5B655E;
+  --sun:#E3A72F; --sun-ink:#1B211D; --line:#DEDFD6;
+  --display:"Outfit","Segoe UI",system-ui,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
+.demo{background:var(--forest);color:#fff;font-size:13.5px;text-align:center;padding:8px 16px}
+.demo a{color:var(--sun);font-weight:600}
+header{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:19px;color:var(--forest);letter-spacing:-.01em}
+.logo svg{flex:none}
+.logo small{display:block;font:500 11px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--moss)}
+.nav nav{display:flex;gap:24px;font-weight:500;font-size:15px}
+.nav nav a{text-decoration:none;color:var(--muted)} .nav nav a:hover{color:var(--forest)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px var(--body);text-decoration:none;border-radius:10px;padding:14px 22px;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-sun{background:var(--sun);color:var(--sun-ink);box-shadow:0 6px 18px rgba(227,167,47,.35)}
+.btn-ghost{border-color:rgba(255,255,255,.7);color:#fff}
+.btn-small{padding:10px 16px;font-size:15px}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+.hero{position:relative;color:#fff;min-height:620px;display:flex;align-items:flex-end;background:#2b3a2f url("https://images.unsplash.com/photo-1763909129689-0ef3655fc03c?w=2000&q=70&auto=format&fit=crop") center/cover}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,30,20,.15) 0%,rgba(15,30,20,.55) 45%,rgba(12,24,16,.88) 100%)}
+.hero .wrap{position:relative;padding-top:120px;padding-bottom:64px;width:100%}
+.eyebrow{font:600 13px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--sun)}
+.hero h1{font-size:clamp(40px,6.4vw,76px);font-weight:800;letter-spacing:-.025em;max-width:13ch;margin:14px 0 18px}
+.hero p{font-size:clamp(17px,2vw,20px);max-width:52ch;color:rgba(255,255,255,.9);margin:0 0 28px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:36px;padding-top:22px;border-top:1px solid rgba(255,255,255,.25);font-size:15px;color:rgba(255,255,255,.88)}
+.proof b{color:#fff;font-family:var(--display);font-size:22px;margin-right:6px}
+
+section{padding:88px 0}
+.head{display:grid;gap:12px;max-width:640px;margin-bottom:44px}
+.head h2{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.02em;color:var(--forest)}
+.head p{color:var(--muted);margin:0}
+
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.svc{background:var(--stone);border-radius:16px;padding:26px;display:grid;gap:10px;align-content:start}
+.svc .ic{width:44px;height:44px;border-radius:12px;background:var(--forest);display:grid;place-items:center}
+.svc h3{font-size:21px;font-weight:700;color:var(--forest)}
+.svc p{margin:0;color:var(--muted);font-size:15.5px}
+.svc.feature{grid-row:span 2;padding:0;overflow:hidden;background:var(--forest);color:#fff}
+.svc.feature img{height:260px;width:100%;object-fit:cover}
+.svc.feature div{padding:26px;display:grid;gap:10px}
+.svc.feature h3{color:#fff} .svc.feature p{color:rgba(255,255,255,.82)}
+
+.steps{background:var(--forest);color:#fff}
+.steps .head h2{color:#fff} .steps .head p{color:rgba(255,255,255,.78)}
+.steplist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;counter-reset:s;list-style:none;margin:0;padding:0}
+.steplist li{counter-increment:s;border-top:2px solid rgba(255,255,255,.22);padding-top:20px}
+.steplist li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:44px;color:var(--sun);line-height:1;display:block;margin-bottom:12px}
+.steplist h3{font-size:22px;margin-bottom:8px}
+.steplist p{margin:0;color:rgba(255,255,255,.8);font-size:16px}
+
+.reviews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+blockquote{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;gap:14px;box-shadow:0 10px 30px rgba(30,58,42,.06)}
+.stars{color:var(--sun);letter-spacing:3px;font-size:18px}
+blockquote p{margin:0;font-size:18px;font-family:var(--display);font-weight:500;line-height:1.45}
+blockquote footer{color:var(--muted);font-size:14.5px}
+
+.gallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:240px 240px;gap:14px}
+.gallery figure{margin:0;border-radius:16px;overflow:hidden;position:relative;background:var(--stone)}
+.gallery figure:first-child{grid-row:span 2}
+.gallery img{width:100%;height:100%;object-fit:cover}
+.gallery figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);color:var(--forest);font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}
+.note{color:var(--muted);font-size:14px;margin-top:12px}
+
+.quote{background:var(--stone)}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.qgrid ul{padding:0;margin:20px 0 0;list-style:none;display:grid;gap:10px}
+.qgrid li{display:flex;gap:10px;align-items:flex-start}
+.qgrid li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;border-radius:50%;background:var(--moss) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+form{background:var(--paper);border-radius:18px;padding:28px;display:grid;gap:14px;box-shadow:0 16px 40px rgba(30,58,42,.1)}
+label{font-size:14px;font-weight:600;display:grid;gap:6px}
+input,select,textarea{font:16px var(--body);padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--moss)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+form .btn{border:0;cursor:pointer;width:100%}
+.formnote{font-size:13px;color:var(--muted);margin:0}
+
+footer.site{background:#13261B;color:rgba(255,255,255,.75);padding:44px 0;font-size:14.5px}
+footer.site .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer.site strong{color:#fff;font-family:var(--display);font-size:18px}
+.credits{font-size:12.5px;color:rgba(255,255,255,.5)}
+
+@media (max-width:900px){
+  .nav nav{display:none}
+  .services{grid-template-columns:1fr 1fr} .svc.feature{grid-column:span 2;grid-row:auto}
+  .steplist{grid-template-columns:1fr} .reviews{grid-template-columns:1fr}
+  .qgrid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  body{font-size:16px} section{padding:64px 0}
+  .hero{min-height:560px} .hero .wrap{padding-bottom:44px}
+  .services{grid-template-columns:1fr} .svc.feature{grid-column:auto}
+  .gallery{grid-template-columns:1fr;grid-template-rows:220px 180px 180px} .gallery figure:first-child{grid-row:auto}
+  .row2{grid-template-columns:1fr}
+  .logo{font-size:17px} .nav .btn-small{padding:9px 12px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Fernbrook Landscapes, home">
+      <svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="10" fill="#1E3A2A"/><path d="M8 27h22M11 27l5-9 3 5 4-8 5 12" fill="none" stroke="#E3A72F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Fernbrook<small>Landscapes</small></span>
+    </a>
+    <nav aria-label="Main"><a href="#services">Services</a><a href="#how">How it works</a><a href="#reviews">Reviews</a><a href="#quote">Free quote</a></nav>
+    <a class="btn btn-sun btn-small" href="#quote">Free design visit</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <span class="eyebrow">Landscaping &amp; driveways · Warwick &amp; Leamington</span>
+      <h1 id="h1">Gardens, patios and driveways, built properly.</h1>
+      <p>Your local landscaping team for garden makeovers, patios, driveways, turfing, fencing and decking. Start with a free design visit and a no-obligation quote.</p>
+      <div class="ctas">
+        <a class="btn btn-sun" href="#quote">Book a free design visit</a>
+        <a class="btn btn-ghost" href="#reviews">See our latest work</a>
+      </div>
+      <div class="proof">
+        <span><b>4.9★</b>on Google</span>
+        <span><b>Free</b>design &amp; quote</span>
+        <span><b>10 yr</b>guarantee on patios</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" aria-labelledby="sv">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow" style="color:var(--moss)">What we do</span><h2 id="sv">Everything outside your back door</h2><p>One team from the first sketch to the last sweep, so you're not chasing three different trades.</p></div>
+      <div class="services">
+        <article class="svc feature">
+          <img src="https://images.unsplash.com/photo-1719324923613-ff0884b031ed?w=1000&q=70&auto=format&fit=crop" alt="A finished stone patio with garden furniture" loading="lazy">
+          <div><h3>Garden makeovers</h3><p>Tired, overgrown or just never finished? We redesign the whole space around how you actually use it, then build it.</p></div>
+        </article>
+        <article class="svc"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 8h16M3 14h16M8 3v16M14 3v16" stroke="#E3A72F" stroke-width="2" fill="none"/></svg></span><h3>Patios</h3><p>Porcelain, natural stone and block paving, laid on a proper base so it stays level for years.</p></article>
+        <article class="svc"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M4 18L8 4h6l4 14M11 7v2M11 12v2" stroke="#E3A72F" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><h3>Driveways</h3><p>Block paving, tarmac and resin-bound driveways with the drainage done right first time.</p></article>
+        <article class="svc"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 17c2-5 3-5 4 0 1-6 3-6 4 0 1-5 3-5 4 0 1-4 2-4 4 0" stroke="#E3A72F" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><h3>Turfing</h3><p>Ground prepared and levelled, then fresh turf laid for a lawn that takes properly.</p></article>
+        <article class="svc"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M4 19V6l2-2 2 2v13M14 19V6l2-2 2 2v13M3 10h16M3 15h16" stroke="#E3A72F" stroke-width="2" fill="none" stroke-linejoin="round"/></svg></span><h3>Fencing</h3><p>Old, leaning or storm-damaged fences replaced with panels and posts built to stand up.</p></article>
+        <article class="svc"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 9h16v4H3zM5 13v6M17 13v6M3 9l8-5 8 5" stroke="#E3A72F" stroke-width="2" fill="none" stroke-linejoin="round"/></svg></span><h3>Decking</h3><p>Timber and composite decks for that spot in the garden that gets the evening sun.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="steps" aria-labelledby="hw">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">How it works</span><h2 id="hw">Three steps, no surprises</h2><p>You'll know exactly what you're getting before any work starts.</p></div>
+      <ol class="steplist">
+        <li><h3>Free design visit</h3><p>We come out, measure up and talk through what you want from the space.</p></li>
+        <li><h3>No-obligation quote</h3><p>A clear quote for the job. Take your time, there's no pressure to say yes.</p></li>
+        <li><h3>We build it</h3><p>Our team gets it done and leaves the site tidy, ready for you to enjoy.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="reviews" aria-labelledby="rv">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow" style="color:var(--moss)">Reviews</span><h2 id="rv">What local customers say</h2></div>
+      <div class="reviews">
+        <blockquote><span class="stars" aria-label="Recommended">★★★★★</span><p>“Sam and the team replaced our old fence in a single day. Great communication from the first visit to the final tidy-up.”</p><footer>Rachel T. · Fence replacement</footer></blockquote>
+        <blockquote><span class="stars" aria-label="Recommended">★★★★★</span><p>“Our new deck is even better than the drawings. Friendly lads, tidy work, and finished when they said it would be.”</p><footer>Daniel K. · New decking</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="gl" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow" style="color:var(--moss)">Recent work</span><h2 id="gl">Before you book, have a look</h2></div>
+      <div class="gallery">
+        <figure><img src="https://images.unsplash.com/photo-1763909129689-0ef3655fc03c?w=1200&q=70&auto=format&fit=crop" alt="Brick garden path through neat planting" loading="lazy"><figcaption>Garden path</figcaption></figure>
+        <figure><img src="https://images.unsplash.com/photo-1719324923613-ff0884b031ed?w=900&q=70&auto=format&fit=crop" alt="Paved patio with table and chairs" loading="lazy"><figcaption>Patio</figcaption></figure>
+        <figure><img src="https://images.unsplash.com/photo-1605263368801-30cd5cd1e954?w=900&q=70&auto=format&fit=crop" alt="Brick path between lawns" loading="lazy"><figcaption>Paving &amp; turf</figcaption></figure>
+      </div>
+      <p class="note">Photos from Unsplash. On a real site these would be your own before-and-after project photos.</p>
+    </div>
+  </section>
+
+  <section id="quote" class="quote" aria-labelledby="qt">
+    <div class="wrap qgrid">
+      <div>
+        <span class="eyebrow" style="color:var(--moss)">Free design visit</span>
+        <h2 id="qt" style="font-size:clamp(30px,4vw,44px);color:var(--forest);margin-top:12px">Tell us about your garden</h2>
+        <ul>
+          <li>Free design visit and measure-up</li>
+          <li>No-obligation quote</li>
+          <li>One team for the whole job</li>
+          <li>Local to Warwick, Leamington and Kenilworth</li>
+        </ul>
+        <p style="margin-top:24px"><a class="btn btn-sun" href="#reviews">Read our reviews</a></p>
+      </div>
+      <form onsubmit="event.preventDefault();this.querySelector('.formnote').textContent='Thanks! This demo form doesn&#39;t send, but on your site it goes straight to your inbox.'">
+        <div class="row2"><label for="n">Your name<input id="n" autocomplete="name" required></label><label for="p">Phone<input id="p" type="tel" autocomplete="tel" required></label></div>
+        <label for="pc">Postcode<input id="pc" autocomplete="postal-code"></label>
+        <label for="j">What's the job?<select id="j"><option>Garden makeover</option><option>Patio</option><option>Driveway</option><option>Turfing</option><option>Fencing</option><option>Decking</option><option>Something else</option></select></label>
+        <label for="m">Anything else we should know?<textarea id="m" rows="3"></textarea></label>
+        <button class="btn btn-sun" type="submit">Request my free design visit</button>
+        <p class="formnote">We'll get back to you to arrange a time.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div><strong>Fernbrook Landscapes</strong><br>Your local landscaping and driveway company.</div>
+    <div class="credits">Website design by BGG Website Design · Photos: Unsplash (Tile Merchant Ireland, Alexander Mass and others)</div>
+  </div>
+</footer>
+</body>
+</html>

@@ -8,6 +8,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Concept demo sites (/showcase/) stay crawlable so Google sees their noindex tag.
+      disallow: ["/api/", "/__forms.html"],
     },
     sitemap: `${base}/sitemap.xml`,
   };

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alder &amp; Finch Dental | Private Dentist in Moseley</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Private dental practice website designed by BGG Website Design.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2B1433">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Direction "Porcelain & Plum": a bright, clinical-calm canvas; one deep plum band per page rhythm;
+   the signature motif is the smile arc, a single curved stroke used as divider, underline and frame. */
+:root{
+  --porcelain:#F7F5F8; --white:#FFFFFF; --ink:#1E1424; --muted:#5F5468; --line:#E6E0EA;
+  --plum:#6E2A80; --plum-deep:#2B1433; --plum-soft:#F1E8F4; --mint:#BFE7DA; --gold:#E9B949;
+  --display:"Urbanist","Segoe UI",system-ui,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --r:22px; --shadow:0 24px 60px -28px rgba(43,20,51,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--porcelain);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.eyebrow{font:600 12.5px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--plum)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font:600 16px var(--body);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn-plum{background:var(--plum);color:#fff;box-shadow:0 12px 28px -10px rgba(110,42,128,.6)}
+.btn-plum:hover{background:#5b2169}
+.btn-line{border:1.5px solid var(--line);background:var(--white);color:var(--ink)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.35);color:#fff}
+.btn svg{width:18px;height:18px;flex:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+.demo{background:var(--plum-deep);color:rgba(255,255,255,.82);font-size:13px;text-align:center;padding:8px 16px}
+.demo b{color:#fff}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(247,245,248,.86);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--display);font-size:22px;letter-spacing:.04em;color:var(--plum-deep)}
+.logo b{font-weight:800}.logo span{font-weight:500}
+.logo i{width:3px;height:30px;background:var(--plum);border-radius:2px}
+.nav nav{display:flex;gap:30px;font-size:15px;font-weight:500}
+.nav nav a{text-decoration:none;color:var(--muted)}.nav nav a:hover{color:var(--plum)}
+.nav .actions{display:flex;gap:18px;align-items:center}.nav .actions .btn{min-height:44px;padding:0 20px;font-size:15px;box-shadow:none}
+.phone-link{font-weight:600;font-size:15px;text-decoration:none;color:var(--plum-deep)}
+
+/* hero */
+.hero{padding:56px 0 40px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,6.2vw,84px);font-weight:800;color:var(--plum-deep);margin:18px 0 22px}
+.hero h1 em{font-style:normal;color:var(--plum);position:relative;white-space:nowrap}
+.hero h1 em svg{position:absolute;left:-2%;bottom:-.22em;width:104%;height:.38em;overflow:visible}
+.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:520px;margin:0 0 30px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.review-chip{display:inline-flex;align-items:center;gap:12px;margin-top:30px;padding:10px 16px 10px 10px;background:var(--white);border:1px solid var(--line);border-radius:999px;text-decoration:none;box-shadow:0 8px 24px -16px rgba(43,20,51,.4)}
+.review-chip .g{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;border:1px solid var(--line)}
+.stars{color:var(--gold);letter-spacing:2px;font-size:15px}
+.review-chip small{display:block;color:var(--muted);font-size:13px;line-height:1.2}
+.review-chip strong{font-size:15px;line-height:1.2}
+
+.hero-art{position:relative;aspect-ratio:1000/900;max-width:600px;justify-self:end;width:100%}
+.team-hero{position:absolute;inset:0 0 10% 0;border-radius:260px 260px var(--r) var(--r);overflow:hidden;background:#d9d9d9;box-shadow:var(--shadow)}
+.team-hero img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.photo{position:absolute;inset:0 0 0 8%;border-radius:200px 200px var(--r) var(--r);overflow:hidden;background:linear-gradient(160deg,#efe6f2,#d9c8df 55%,#b99ac4);box-shadow:var(--shadow)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(43,20,51,.45);font:600 14px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.arc-ring{position:absolute;inset:-18px -18px auto auto;width:62%;opacity:.9;pointer-events:none}
+.arch{position:absolute;overflow:hidden;border-radius:999px 999px 0 0;background:linear-gradient(180deg,#ece6ef,#f7f5f8);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.arch.a1{left:31%;top:0;width:42%;height:80%;z-index:2;box-shadow:0 0 0 8px var(--porcelain)}
+.arch.a2{left:2%;top:20%;width:32%;height:62%;z-index:1}
+.arch.a3{right:0;top:26%;width:32%;height:62%;z-index:1}
+.float-card.award{padding:8px;background:#000}.float-card.award img{width:150px;height:auto;border-radius:10px}
+.float-card{position:absolute;z-index:3;background:var(--white);border-radius:18px;box-shadow:var(--shadow);padding:16px 18px;display:flex;gap:12px;align-items:center}
+.float-card.a{left:-4%;bottom:16%}
+.float-card.b{right:-3%;bottom:0;top:auto}
+.float-card .ic{width:42px;height:42px;border-radius:12px;background:var(--plum-soft);display:grid;place-items:center;color:var(--plum)}
+.float-card b{display:block;font-family:var(--display);font-size:22px;line-height:1;color:var(--plum-deep)}
+.float-card span{font-size:13px;color:var(--muted)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.stat{padding:26px 28px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:var(--display);font-size:clamp(30px,3.4vw,42px);font-weight:800;color:var(--plum-deep);letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:14.5px}
+
+/* accreditation logos */
+.logos{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
+.logos img{width:100%;height:68px;object-fit:contain;background:var(--white);border:1px solid var(--line);border-radius:16px;padding:10px 16px;filter:grayscale(1);opacity:.75;transition:filter .2s,opacity .2s}
+.logos img:hover{filter:none;opacity:1}
+/* trust logos */
+.trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 34px;padding:34px 0 0;color:var(--muted);font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.trust span{display:flex;align-items:center;gap:8px}
+.trust span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mint)}
+
+section{padding:110px 0}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:48px}
+.head h2{font-size:clamp(34px,4.4vw,56px);font-weight:800;color:var(--plum-deep);margin-top:14px}
+.head p{color:var(--muted);margin:0;max-width:460px;justify-self:end}
+
+/* treatments */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.t{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:28px 26px 24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;transition:transform .25s ease,box-shadow .25s ease,border-color .25s}
+.t:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.t h3{font-size:24px;font-weight:700;color:var(--plum-deep)}
+.t p{margin:0;color:var(--muted);font-size:15.5px;flex:1}
+.t .price{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;color:var(--muted)}
+.t .price b{font-family:var(--display);font-size:22px;color:var(--plum)}
+.t.feature{grid-row:span 2;background:var(--plum-deep);border-color:var(--plum-deep);color:#fff;justify-content:flex-end;min-height:420px;overflow:hidden}
+.t.feature h3{color:#fff;font-size:34px}
+.t.feature p{color:rgba(255,255,255,.78)}
+.t.feature .price{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
+.t.feature .price b{color:var(--mint)}
+.t.feature p{flex:none}.t.feature h3{margin-top:auto}
+.t .quote{font-weight:600;color:var(--mint)}
+.t.feature .feat-img{position:relative;margin:0 -26px 6px;width:calc(100% + 52px);height:230px;object-fit:cover;object-position:50% 18%;-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent);mask-image:linear-gradient(180deg,#000 60%,transparent);border-radius:var(--r) var(--r) 0 0}
+.t.feature .bigarc{position:absolute;top:-40px;right:-60px;width:360px;opacity:.5}
+.t.has-img{padding-right:120px;overflow:hidden}.t .t-img{position:absolute;right:0;bottom:0;width:120px;height:170px;object-fit:cover;object-position:50% 20%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
+.t .tag{align-self:flex-start;font:600 12px var(--body);letter-spacing:.06em;text-transform:uppercase;background:var(--plum-soft);color:var(--plum);padding:5px 10px;border-radius:999px}
+.t.feature .tag{background:rgba(191,231,218,.16);color:var(--mint)}
+.fees-note{margin-top:18px;font-size:13.5px;color:var(--muted)}
+
+/* why */
+.why{background:var(--plum-deep);color:#fff;border-radius:40px;margin:0 max(12px,env(safe-area-inset-left))}
+.why .head h2{color:#fff}.why .head p{color:rgba(255,255,255,.72)}.why .eyebrow{color:var(--mint)}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.w{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:30px}
+.w .n{font-family:var(--display);font-size:15px;color:var(--mint);font-weight:700}
+.w h3{font-size:26px;margin:14px 0 10px}
+.w p{margin:0;color:rgba(255,255,255,.75);font-size:15.5px}
+.tech{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+.tech div{padding:24px;border-radius:var(--r);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.tech h4{margin:0 0 8px;font:700 18px var(--display)}
+.tech p{margin:0;font-size:14.5px;color:rgba(255,255,255,.7)}
+
+/* team */
+.team{display:block}.team .roles{grid-template-columns:repeat(3,1fr)}
+.team .photo-sq{position:relative;aspect-ratio:1000/813;border-radius:var(--r);overflow:hidden;background:linear-gradient(160deg,#efe6f2,#cbb5d3);box-shadow:var(--shadow)}
+.team .photo-sq img{width:100%;height:100%;object-fit:cover}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.role{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.role h4{margin:0 0 6px;font:700 13px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--plum)}
+.role p{margin:0;font-size:15px;color:var(--ink)}
+
+/* reviews band */
+.rev{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:30px;padding:40px 44px}
+.rev .score{font-family:var(--display);font-size:72px;font-weight:800;color:var(--plum-deep);line-height:1}
+.rev .score small{display:block;font-size:15px;font-weight:600;color:var(--muted);font-family:var(--body);margin-top:8px}
+.rev h3{font-size:clamp(26px,3vw,36px);color:var(--plum-deep);font-weight:800}
+.rev p{margin:10px 0 0;color:var(--muted)}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:34px}
+.card h3{font-size:30px;color:var(--plum-deep);font-weight:800;margin-bottom:16px}
+.hours{width:100%;border-collapse:collapse;font-size:15.5px}
+.hours td{padding:10px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.hours tr.today td{color:var(--plum);font-weight:600}
+.contact-list{display:grid;gap:14px;margin:6px 0 26px}
+.contact-list a,.contact-list div{display:flex;gap:14px;align-items:center;text-decoration:none;font-size:16px}
+.contact-list .ic{width:44px;height:44px;border-radius:14px;background:var(--plum-soft);color:var(--plum);display:grid;place-items:center;flex:none}
+.cta-card{background:linear-gradient(150deg,var(--plum) 0%,var(--plum-deep) 100%);color:#fff;border:0;position:relative;overflow:hidden}
+.cta-card h3{color:#fff}
+.cta-card p{color:rgba(255,255,255,.78);margin:0 0 24px}
+.cta-card .bigarc{position:absolute;right:-80px;bottom:-120px;width:420px;opacity:.35}
+
+footer{padding:56px 0 120px;color:var(--muted);font-size:14px}
+footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:28px}
+
+/* sticky mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;gap:10px;padding:10px max(12px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-right));background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.mbar .btn{flex:1;min-height:50px}
+
+/* reveal */
+.rv{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
+.js .rv:not(.in){opacity:0;transform:translateY(18px)}
+@media (prefers-reduced-motion:reduce){.js .rv:not(.in){opacity:1;transform:none}.btn,.t{transition:none}html{scroll-behavior:auto}}
+
+@media (max-width:1024px){
+  .nav nav{display:none}
+  .hero-grid,.visit{grid-template-columns:1fr}.team .roles{grid-template-columns:1fr 1fr}
+  .hero-art{justify-self:center;max-width:480px}
+  .tgrid{grid-template-columns:1fr 1fr}.logos{grid-template-columns:repeat(3,1fr)}.t.feature{grid-column:span 2;grid-row:auto;min-height:320px}
+  .wgrid{grid-template-columns:1fr}.tech{grid-template-columns:1fr 1fr}
+  .head{grid-template-columns:1fr}.head p{justify-self:start}
+  .rev{grid-template-columns:1fr;text-align:left}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  section{padding:72px 0}
+  .hero{padding-top:28px}
+  .nav{height:64px}.phone-link{display:none}.nav .actions .btn{min-height:40px;padding:0 16px;font-size:14px}
+  .stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .stat{padding:20px}
+  .tgrid,.roles,.team .roles,.tech{grid-template-columns:1fr}.t.feature{grid-column:auto}
+  .why{border-radius:28px;margin:0 8px}
+  .float-card.a{left:0;bottom:14%}.float-card.b{right:0;bottom:0}.float-card{padding:12px 14px}.float-card b{font-size:18px}
+  .logos{grid-template-columns:repeat(3,1fr)}.logos img{height:56px}
+  .t.has-img{padding-right:110px}
+  .trust{justify-content:flex-start}
+  .card{padding:26px}
+  .rev{padding:30px}
+  .mbar{display:flex}
+}
+</style>
+</head>
+<body>
+
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Alder &amp; Finch Dental home"><i></i><b>ALDER&amp;FINCH</b><span>DENTAL</span></a>
+    <nav aria-label="Main">
+      <a href="#treatments">Treatments</a><a href="#why">Why us</a><a href="#team">Team</a><a href="#fees">Fees</a><a href="#visit">Visit</a>
+    </nav>
+    <div class="actions">
+      <a class="phone-link" href="tel:01214960742">0121 496 0742</a>
+      <a class="btn btn-plum" href="#visit">Book online</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="rv">
+          <span class="eyebrow">Private dentistry · Moseley, Birmingham</span>
+          <h1 id="h1">Smile with <em>confidence<svg viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path d="M3 6 Q100 34 197 6" fill="none" stroke="#BFE7DA" stroke-width="7" stroke-linecap="round"/></svg></em>. Private dentistry, redefined.</h1>
+          <p class="lead">Gentle, unhurried dentistry in a bright, modern studio. Check-ups, whitening, aligners and implants, all under one roof and all explained in plain English.</p>
+          <div class="ctas">
+            <a class="btn btn-plum" href="#visit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>Book online</a>
+            <a class="btn btn-line" href="tel:01214960742">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>0121 496 0742</a>
+          </div>
+          <a class="review-chip" href="#visit">
+            <span class="g" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.8 6C12.4 13.7 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.9-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.9 6C6.5 42.6 14.6 48 24 48z"/></svg></span>
+            <span><span class="stars" aria-label="Five stars">★★★★★</span><strong> 4.9 on Google</strong><small>180+ reviews from local patients</small></span>
+          </a>
+        </div>
+        <div class="hero-art rv" aria-hidden="true">
+          <svg class="arc-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" fill="none" stroke="#BFE7DA" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/></svg>
+          <div class="team-hero"><img src="https://images.unsplash.com/photo-1777331903190-341a3dd0441b?w=1100&q=72&auto=format&fit=crop" alt="Dentist talking a patient through their treatment"></div>
+          <div class="float-card a"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z"/></svg></span><div><b>Same week</b><span>new patient slots</span></div></div>
+          <div class="float-card b"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg></span><div><b>Nervous?</b><span>Gentle care &amp; sedation</span></div></div>
+        </div>
+      </div>
+
+      <div class="stats rv" role="list">
+        <div class="stat" role="listitem"><b>2014</b><span>Caring for Moseley</span></div>
+        <div class="stat" role="listitem"><b>6,000+</b><span>Patients registered</span></div>
+        <div class="stat" role="listitem"><b>0%</b><span>Finance on treatments</span></div>
+        <div class="stat" role="listitem"><b>24/7</b><span>Online booking</span></div>
+      </div>
+      <div class="logos rv" aria-label="Accreditations" style="gap:10px;flex-wrap:wrap"><span style="padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)">CQC registered</span><span style="padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)">GDC registered dentists</span><span style="padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)">Clear aligner provider</span><span style="padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)">Dental implants</span><span style="padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)">0% finance</span></div>
+    </div>
+  </section>
+
+  <section id="treatments" aria-labelledby="tr">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="eyebrow">Treatments</span><h2 id="tr">Everything your smile needs, in one calm place.</h2></div>
+        <p>Clear prices up front, honest advice and no pressure. Pick a treatment to see what it costs, then book in seconds.</p>
+      </div>
+      <div class="tgrid">
+        <a class="t feature rv" href="#visit">
+                    <svg class="bigarc" viewBox="0 0 200 200" aria-hidden="true"><path d="M10 60 Q100 190 190 60" fill="none" stroke="#BFE7DA" stroke-width="1.5"/><path d="M30 40 Q100 160 170 40" fill="none" stroke="#BFE7DA" stroke-width="1"/></svg>
+          <span class="tag">Most asked about</span>
+          <h3>Invisalign® Clear Aligners</h3>
+          <p>Discreet, removable aligners that straighten teeth comfortably without metal brackets or wires.</p>
+          <div class="price"><span>Price</span><span class="quote">Quoted at consultation →</span></div>
+        </a>
+        <a class="t rv" href="#fees"><span class="tag">New patients</span><h3>General dentistry</h3><p>From routine check-ups to fillings, we ensure your dental health &amp; comfort is our top priority.</p><div class="price"><span>New patient exam</span><b>£75</b></div></a>
+        <a class="t rv" href="#fees"><span class="tag">Urgent appointments</span><h3>Emergency dentist</h3><p>Fast relief for toothache, broken teeth, and infections. Urgent appointments available.</p><div class="price"><span>Emergency appointment</span><b>£75</b></div></a>
+        <a class="t rv" href="#fees"><h3>Teeth whitening</h3><p>Lift stains and brighten your smile. Safe whitening in-practice or at home.</p><div class="price"><span>Home whitening from</span><b>£249</b></div></a>
+        <a class="t rv" href="#fees"><h3>Porcelain veneers</h3><p>Long-lasting smile transformations with porcelain veneers.</p><div class="price"><span>Per veneer</span><b>£745</b></div></a>
+        <a class="t rv" href="#fees"><h3>Dental implants</h3><p>Permanent, fixed solutions for missing teeth that look, feel, and function like natural teeth.</p><div class="price"><span>Implant fixture</span><b>£1,355</b></div></a>
+        <a class="t rv" href="#fees"><h3>Hygienist</h3><p>Personalised hygiene care and maintenance plans, helping you protect your smile for years to come.</p><div class="price"><span>Scale &amp; polish</span><b>£75</b></div></a>
+        <a class="t rv" href="#fees"><h3>Nervous patients</h3><p>A calm, reassuring environment with gentle dentistry and sedation options for nervous patients.</p><div class="price"><span>Sedation from</span><b>£360</b></div></a>
+      </div>
+      <p class="fees-note" id="fees">Example prices for pay-as-you-go patients. A guide only; your exact quote is confirmed at your consultation. Membership plan patients save on most treatments.</p>
+    </div>
+  </section>
+
+  <section id="why" class="why" aria-labelledby="wy">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="eyebrow">Why Alder &amp; Finch</span><h2 id="wy">Dentistry that fits around your life.</h2></div>
+        <p>Early and late appointments, a team that explains every step, and a plan built around what you actually want from your smile.</p>
+      </div>
+      <div class="wgrid">
+        <div class="w rv"><span class="n">01</span><h3>Warm welcome</h3><p>From the moment you arrive, our friendly team ensures you feel relaxed, valued, and truly cared for.</p></div>
+        <div class="w rv"><span class="n">02</span><h3>Diligent care</h3><p>Our team delivers diligent care with attention to detail, ensuring every treatment is carried out to the highest standard.</p></div>
+        <div class="w rv"><span class="n">03</span><h3>Treatment planning</h3><p>Tailored treatment plans that clearly outline your options, giving you confidence &amp; comfort always.</p></div>
+      </div>
+      <div class="tech">
+        <div class="rv"><h4>Powered by technology</h4><p>Digital scanners, 3D smile design, CBCT imaging and computer-guided implant planning.</p></div>
+        <div class="rv"><h4>Your comfort first</h4><p>Gentle dentistry and sedation options, in modern, calming surroundings.</p></div>
+        <div class="rv"><h4>Specialists in-house</h4><p>Implant, root canal and orthodontic care without a referral elsewhere.</p></div>
+        <div class="rv"><h4>Smiles for life</h4><p>Hygiene care, maintenance plans and ongoing support for the long term.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team" aria-labelledby="tm">
+    <div class="wrap team">
+      <div>
+        <div class="rv"><span class="eyebrow">Meet the team</span><h2 id="tm" style="font-size:clamp(34px,4.4vw,56px);color:var(--plum-deep);font-weight:800;margin:14px 0 18px">A small team that knows your name.</h2>
+        <p style="color:var(--muted);margin:0 0 28px;max-width:560px">Every dentist and hygienist here is GDC registered, and every one of them takes the time to talk you through your options.</p></div>
+        <div class="roles">
+          <div class="role rv"><h4>General dentists</h4><p>Dr Hannah Alder, Dr James Finch, Dr Priya Desai, Dr Tom Okafor</p></div>
+          <div class="role rv"><h4>Endodontics</h4><p>Dr Sofia Marin</p></div>
+          <div class="role rv"><h4>Oral surgery</h4><p>Dr James Finch</p></div>
+          <div class="role rv"><h4>Orthodontics &amp; periodontics</h4><p>Dr Leah Morgan</p></div>
+          <div class="role rv"><h4>Hygienists</h4><p>Grace Hollis, Amira Shah</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="rv" style="padding-top:0">
+    <div class="wrap">
+      <div class="rev rv">
+        <div class="score">4.9<small>on Google</small></div>
+        <div><h3 id="rv">Moseley's friendliest dental studio.</h3><p>Read what our patients say, then book your visit online in under a minute.</p></div>
+        <a class="btn btn-line" href="#visit">Read our reviews</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" aria-labelledby="vs" style="padding-top:0">
+    <div class="wrap visit">
+      <div class="card cta-card rv">
+        <svg class="bigarc" viewBox="0 0 200 200" aria-hidden="true"><path d="M10 60 Q100 190 190 60" fill="none" stroke="#BFE7DA" stroke-width="1.5"/></svg>
+        <span class="eyebrow" style="color:var(--mint)">Visit us</span>
+        <h3 id="vs" style="margin-top:12px">Schedule your consultation.</h3>
+        <p>Our friendly team of dental professionals are here to help.</p>
+        <div class="contact-list">
+          <a href="tel:01214960742"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>0121 496 0742</a>
+          <a href="#visit"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>hello@alderfinch.example</a>
+          <a href="#visit"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>Moseley, Birmingham</a>
+        </div>
+        <a class="btn" style="background:#fff;color:var(--plum-deep)" href="#visit">Book online</a>
+      </div>
+      <div class="card rv">
+        <span class="eyebrow">Opening times</span>
+        <h3 style="margin-top:12px">Open 6 days a week.</h3>
+        <table class="hours" id="hours">
+          <tr data-d="1"><td>Monday</td><td>8:30 am – 5:30 pm</td></tr>
+          <tr data-d="2"><td>Tuesday</td><td>8:30 am – 6:30 pm</td></tr>
+          <tr data-d="3"><td>Wednesday</td><td>8:30 am – 5:30 pm</td></tr>
+          <tr data-d="4"><td>Thursday</td><td>8:30 am – 5:30 pm</td></tr>
+          <tr data-d="5"><td>Friday</td><td>8:30 am – 5:30 pm</td></tr>
+          <tr data-d="6"><td>Saturday</td><td>9:00 am – 1:00 pm</td></tr>
+          <tr data-d="0"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© 2026 Alder &amp; Finch Dental · Moseley, Birmingham</span>
+    <span>Website design by <a href="https://bggwebsitedesign.com" target="_top">BGG Website Design</a></span>
+  </div>
+</footer>
+
+<div class="mbar" role="region" aria-label="Quick actions">
+  <a class="btn btn-line" href="tel:01214960742">Call us</a>
+  <a class="btn btn-plum" href="#visit">Book online</a>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+const only=new URLSearchParams(location.search).get('only');
+if(only){document.querySelectorAll('main > section').forEach(x=>{if(x.id!==only&&!(only==='hero'&&x.classList.contains('hero')))x.style.display='none'});}
+const hdr=document.querySelector('header');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>8),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const t=document.querySelector(`#hours tr[data-d="${new Date().getDay()}"]`); if(t) t.classList.add('today');
+</script>
+</body>
+</html>
