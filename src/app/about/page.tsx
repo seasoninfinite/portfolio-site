@@ -73,7 +73,7 @@ export default function AboutPage() {
             <p>
               Small businesses, sole traders and health practitioners, especially{" "}
               <Link href="/work">dietitians and health practitioners</Link>. I&apos;m based in{" "}
-              <Link href="/web-design-solihull">Solihull</Link> and work with clients all over the UK, by email and
+              <Link href="/web-design-solihull">Solihull</Link>{" "}and work with clients all over the UK, by email and
               video call.
             </p>
             <div className="facts">

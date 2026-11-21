@@ -38,8 +38,8 @@ export default function CostGuide() {
       />
       <article className="wrap wrap--narrow prose" style={{ paddingBottom: 40 }}>
         <p>
-          <strong>Short answer:</strong> most UK small businesses pay between <strong>£400 and £1,500</strong> for a
-          professionally built brochure website from a freelancer, and <strong>£1,500 to £5,000+</strong> from an
+          <strong>Short answer:</strong>{" "}most UK small businesses pay between <strong>£400 and £1,500</strong>{" "}for a
+          professionally built brochure website from a freelancer, and <strong>£1,500 to £5,000+</strong>{" "}from an
           agency. On top of that, expect to pay something every month to keep it online, from about £10 for hosting
           to £50–£100+ for a plan that includes regular changes.
         </p>
@@ -89,21 +89,21 @@ export default function CostGuide() {
         <h2>What pushes the price up?</h2>
         <ul>
           <li>
-            <strong>Number of pages.</strong> A 3-page site is far quicker to design than a 10-page one. Extra pages
+            <strong>Number of pages.</strong>{" "}A 3-page site is far quicker to design than a 10-page one. Extra pages
             typically cost £50–£225 each.
           </li>
           <li>
-            <strong>Custom design vs templates.</strong> A template is cheaper up front, but your site will look like
+            <strong>Custom design vs templates.</strong>{" "}A template is cheaper up front, but your site will look like
             thousands of others. Custom design costs more and makes you stand out.
           </li>
           <li>
-            <strong>Selling online.</strong> Shops, bookings and paid downloads add work: expect £150–£500+ on top.
+            <strong>Selling online.</strong>{" "}Shops, bookings and paid downloads add work: expect £150–£500+ on top.
           </li>
           <li>
-            <strong>Copywriting.</strong> If someone writes your words for you, budget £40–£200 per page.
+            <strong>Copywriting.</strong>{" "}If someone writes your words for you, budget £40–£200 per page.
           </li>
           <li>
-            <strong>SEO setup.</strong> Basic search setup should be included. Full local SEO campaigns are a
+            <strong>SEO setup.</strong>{" "}Basic search setup should be included. Full local SEO campaigns are a
             separate, ongoing cost.
           </li>
         </ul>
@@ -111,22 +111,22 @@ export default function CostGuide() {
         <h2>The hidden costs to watch for</h2>
         <ul>
           <li>
-            <strong>VAT.</strong> Many agencies quote prices &ldquo;+VAT&rdquo;, adding 20% to the bill.
+            <strong>VAT.</strong>{" "}Many agencies quote prices &ldquo;+VAT&rdquo;, adding 20% to the bill.
           </li>
           <li>
-            <strong>Renting instead of owning.</strong> Some &ldquo;£0 upfront&rdquo; deals charge £50–£130 a month
+            <strong>Renting instead of owning.</strong>{" "}Some &ldquo;£0 upfront&rdquo; deals charge £50–£130 a month
             on a 12-month minimum, and you never own the site.
           </li>
           <li>
-            <strong>Plugin and theme renewals.</strong> WordPress sites often rely on paid plugins that renew every
+            <strong>Plugin and theme renewals.</strong>{" "}WordPress sites often rely on paid plugins that renew every
             year and need updating to stay secure.
           </li>
           <li>
-            <strong>Your domain.</strong> Make sure it&apos;s registered in your name. It usually costs £10–£15 a
+            <strong>Your domain.</strong>{" "}Make sure it&apos;s registered in your name. It usually costs £10–£15 a
             year.
           </li>
           <li>
-            <strong>Changes after launch.</strong> Ad-hoc edits are often charged at £25–£75 an hour. A care plan is
+            <strong>Changes after launch.</strong>{" "}Ad-hoc edits are often charged at £25–£75 an hour. A care plan is
             usually cheaper if you update your site regularly.
           </li>
         </ul>
@@ -145,23 +145,23 @@ export default function CostGuide() {
         </p>
         <ul>
           <li>
-            <strong>Starter: £199.99</strong> for up to 3 pages, live in 3 days
+            <strong>Starter: £199.99</strong>{" "}for up to 3 pages, live in 3 days
           </li>
           <li>
-            <strong>Growth: £349.99</strong> for up to 6 pages with local SEO, booking or enquiry forms and
+            <strong>Growth: £349.99</strong>{" "}for up to 6 pages with local SEO, booking or enquiry forms and
             animations
           </li>
           <li>
-            <strong>Premium: £499.99</strong> for up to 10 pages with a blog, online payments and advanced SEO, live in 10 days or less
+            <strong>Premium: £499.99</strong>{" "}for up to 10 pages with a blog, online payments and advanced SEO, live in 10 days or less
           </li>
           <li>
-            <strong>Care plans</strong> from £10 a month (hosting, security, backups), or £25 a month with up to 5
+            <strong>Care plans</strong>{" "}from £10 a month (hosting, security, backups), or £25 a month with up to 5
             changes
           </li>
         </ul>
         <p>
           No VAT to add, a 50% deposit and the rest only when you&apos;re happy. <Link href="/pricing">See full
-          pricing</Link> or <Link href="/contact">ask for a free quote</Link>.
+          pricing</Link>{" "}or <Link href="/contact">ask for a free quote</Link>.
         </p>
       </article>
       <CtaBand title="Get a fixed price for your website." />

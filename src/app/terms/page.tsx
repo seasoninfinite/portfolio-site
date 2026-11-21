@@ -69,7 +69,13 @@ export default function TermsPage() {
         eyebrow={`Last updated ${L.termsUpdated}`}
         title="Terms & conditions"
         lead="These terms cover every website, care plan, add-on and free preview from BGG Website Design, and your use of this website. They're written to be read, not to trip you up."
-      />
+      >
+        <p className="legal-download">
+          <a href="/legal/bgg-website-design-terms-and-conditions.pdf" className="btn btn--ghost btn--sm" download>
+            Download PDF
+          </a>
+        </p>
+      </PageHead>
 
       <div className="wrap legal">
         <Toc items={TOC} />
@@ -78,16 +84,16 @@ export default function TermsPage() {
           <Summary>
             <ul>
               <li>
-                You pay a <strong>50% deposit</strong> to start and the <strong>rest before your site goes live</strong>
+                You pay a <strong>50% deposit</strong>{" "}to start and the <strong>rest before your site goes live</strong>
                 , once you&apos;ve seen it and you&apos;re happy.
               </li>
               <li>
-                Prices are fixed and there&apos;s <strong>no VAT</strong> to add. Anything extra is quoted and agreed in
+                Prices are fixed and there&apos;s <strong>no VAT</strong>{" "}to add. Anything extra is quoted and agreed in
                 writing before I do it.
               </li>
               <li>
                 Once you&apos;ve paid in full, <strong>you own your website&apos;s design and code</strong>. Your domain is
-                always registered in <strong>your</strong> name.
+                always registered in <strong>your</strong>{" "}name.
               </li>
               <li>
                 Timescales start when I have your content. If you go quiet for 14 days the project pauses; after 60
@@ -134,31 +140,31 @@ export default function TermsPage() {
           <Sec id="definitions" n="2" title="Words we use">
             <ul>
               <li>
-                <strong>&ldquo;You&rdquo;</strong> means the person or business buying from us. If you are buying for a
+                <strong>&ldquo;You&rdquo;</strong>{" "}means the person or business buying from us. If you are buying for a
                 business, &ldquo;you&rdquo; includes that business.
               </li>
               <li>
-                <strong>&ldquo;Consumer&rdquo;</strong> means an individual buying wholly or mainly for purposes outside
-                their trade, business, craft or profession. <strong>&ldquo;Business customer&rdquo;</strong> means
+                <strong>&ldquo;Consumer&rdquo;</strong>{" "}means an individual buying wholly or mainly for purposes outside
+                their trade, business, craft or profession. <strong>&ldquo;Business customer&rdquo;</strong>{" "}means
                 anyone who is not a consumer, including sole traders buying for their business.
               </li>
               <li>
-                <strong>&ldquo;Project&rdquo;</strong> means the website design and build work described in the package
+                <strong>&ldquo;Project&rdquo;</strong>{" "}means the website design and build work described in the package
                 or quote you buy.
               </li>
               <li>
-                <strong>&ldquo;Website&rdquo;</strong> means the website we design and build for you, including its
+                <strong>&ldquo;Website&rdquo;</strong>{" "}means the website we design and build for you, including its
                 design, code, layout and any files we create for it.
               </li>
               <li>
-                <strong>&ldquo;Your Content&rdquo;</strong> means anything you give us or ask us to use: text, photos,
+                <strong>&ldquo;Your Content&rdquo;</strong>{" "}means anything you give us or ask us to use: text, photos,
                 logos, videos, documents, data, product details, prices and log-ins.
               </li>
               <li>
-                <strong>&ldquo;Working day&rdquo;</strong> means Monday to Friday, excluding bank holidays in England.
+                <strong>&ldquo;Working day&rdquo;</strong>{" "}means Monday to Friday, excluding bank holidays in England.
               </li>
               <li>
-                <strong>&ldquo;In writing&rdquo;</strong> includes email.
+                <strong>&ldquo;In writing&rdquo;</strong>{" "}includes email.
               </li>
             </ul>
           </Sec>
@@ -197,8 +203,8 @@ export default function TermsPage() {
 
           <Sec id="services" n="5" title="Our services and packages">
             <p>
-              5.1 <strong>Website packages.</strong> We offer the following one-off packages. What&apos;s included in
-              each is exactly what is listed on our <Link href="/pricing">pricing page</Link> on the date you order:
+              5.1 <strong>Website packages.</strong>{" "}We offer the following one-off packages. What&apos;s included in
+              each is exactly what is listed on our <Link href="/pricing">pricing page</Link>{" "}on the date you order:
             </p>
             <table>
               <thead>
@@ -223,17 +229,17 @@ export default function TermsPage() {
               </tbody>
             </table>
             <p>
-              5.2 <strong>Pages.</strong> A &ldquo;page&rdquo; is one unique page layout reachable by its own web
+              5.2 <strong>Pages.</strong>{" "}A &ldquo;page&rdquo; is one unique page layout reachable by its own web
               address (for example Home, About, Services, Contact). Individual blog posts, product pages generated
               from the same template, and legal pages using a standard template count as one page between them unless
               we agree otherwise.
             </p>
             <p>
-              5.3 <strong>Care plans</strong> ({essential.name} at {formatGBP(essential.pricePence)} a month and{" "}
+              5.3 <strong>Care plans</strong>{" "}({essential.name} at {formatGBP(essential.pricePence)} a month and{" "}
               {priority.name} at {formatGBP(priority.pricePence)} a month) are described in Part 14.
             </p>
             <p>
-              5.4 <strong>Add-ons and custom work</strong> (for example extra pages, online shops, booking systems,
+              5.4 <strong>Add-ons and custom work</strong>{" "}(for example extra pages, online shops, booking systems,
               copywriting, logo design, Google Business Profile setup and rush delivery) are charged at the prices on
               our pricing page or in our written quote.
             </p>
@@ -254,17 +260,17 @@ export default function TermsPage() {
               6.1 All prices are in pounds sterling (GBP). No VAT is charged (see 1.3).
             </p>
             <p>
-              6.2 <strong>Website packages:</strong> you pay a <strong>50% deposit</strong> when you order. We start
-              work once the deposit has cleared. The <strong>remaining 50%</strong> is due once we have shown you the
-              finished website for approval and <strong>before it is launched</strong> on your domain or handed over to
+              6.2 <strong>Website packages:</strong>{" "}you pay a <strong>50% deposit</strong>{" "}when you order. We start
+              work once the deposit has cleared. The <strong>remaining 50%</strong>{" "}is due once we have shown you the
+              finished website for approval and <strong>before it is launched</strong>{" "}on your domain or handed over to
               you.
             </p>
             <p>
-              6.3 <strong>Custom quotes and add-ons</strong> are paid on the terms in the quote. If the quote
+              6.3 <strong>Custom quotes and add-ons</strong>{" "}are paid on the terms in the quote. If the quote
               doesn&apos;t say, the same 50% / 50% split applies. Work over £1,000 may be split into stages.
             </p>
             <p>
-              6.4 <strong>Care plans</strong> are paid monthly in advance by card through Stripe, starting on the day
+              6.4 <strong>Care plans</strong>{" "}are paid monthly in advance by card through Stripe, starting on the day
               you subscribe (or on the launch date if we agree that), and on the same date each month after that.
             </p>
             <p>
@@ -272,19 +278,19 @@ export default function TermsPage() {
               Invoices we send are payable within 14 days of the invoice date unless the invoice says otherwise.
             </p>
             <p>
-              6.6 <strong>Late payment (business customers).</strong> If a business customer pays late, we may charge
+              6.6 <strong>Late payment (business customers).</strong>{" "}If a business customer pays late, we may charge
               statutory interest and fixed compensation under the Late Payment of Commercial Debts (Interest) Act 1998
               (currently 8% a year above the Bank of England base rate, plus £40, £70 or £100 depending on the size of
               the debt), and recover reasonable costs of collecting the debt.
             </p>
             <p>
-              6.7 <strong>Late payment (all customers).</strong> If any payment is more than 14 days overdue, we will
+              6.7 <strong>Late payment (all customers).</strong>{" "}If any payment is more than 14 days overdue, we will
               remind you in writing. If it is still unpaid 7 days after that reminder, we may pause work, delay the
               launch, or (for care plans) suspend hosting and services until the account is paid. We will always warn
               you before taking a website offline.
             </p>
             <p>
-              6.8 <strong>Chargebacks.</strong> If you have a problem with a payment, please contact us first and we
+              6.8 <strong>Chargebacks.</strong>{" "}If you have a problem with a payment, please contact us first and we
               will put it right. If you raise a chargeback or payment dispute for a charge that was properly due, we
               may suspend services and recover the amount owed, plus any fees the card provider charges us. This does
               not affect your rights if a payment was taken in error or without authority.
@@ -306,9 +312,9 @@ export default function TermsPage() {
               <li>We connect your domain and launch your website.</li>
             </ol>
             <p>
-              7.2 <strong>Timescales.</strong> The launch times on our website (for example &ldquo;Live in 3
+              7.2 <strong>Timescales.</strong>{" "}The launch times on our website (for example &ldquo;Live in 3
               days&rdquo;) are good-faith estimates for a typical project. They run from the date we have received
-              your deposit <strong>and</strong> all the content and information we need. They do not include time
+              your deposit <strong>and</strong>{" "}all the content and information we need. They do not include time
               spent waiting for your feedback, approvals, content, log-ins or payments, or for third parties (such as
               domain registrars). Time is not of the essence unless we agree a fixed deadline in writing.
             </p>
@@ -317,7 +323,7 @@ export default function TermsPage() {
               fixed deadline if we confirm it in writing. Rush delivery is available as a paid add-on.
             </p>
             <p>
-              7.4 <strong>If you go quiet.</strong> Projects need your input. If we don&apos;t hear from you for 14
+              7.4 <strong>If you go quiet.</strong>{" "}Projects need your input. If we don&apos;t hear from you for 14
               days after we have asked for content, feedback or approval, we may pause your project and move on to
               other work. We will tell you when this happens. Restarting a paused project depends on our availability
               and may move your launch date.
@@ -384,16 +390,16 @@ export default function TermsPage() {
 
           <Sec id="revisions" n="10" title="Revisions">
             <p>
-              10.1 Each package includes a set number of <strong>rounds of changes</strong> ({starter.name}: 2,{" "}
+              10.1 Each package includes a set number of <strong>rounds of changes</strong>{" "}({starter.name}: 2,{" "}
               {growth.name}: 3, {premium.name}: 5).
             </p>
             <p>
-              10.2 A <strong>round</strong> is one consolidated list of changes sent to us in one go (one email or one
+              10.2 A <strong>round</strong>{" "}is one consolidated list of changes sent to us in one go (one email or one
               document). Please collect everyone&apos;s feedback before you send it. Changes sent in several separate
               messages may count as several rounds.
             </p>
             <p>
-              10.3 A <strong>revision</strong> is a reasonable change to the agreed design and content, for example
+              10.3 A <strong>revision</strong>{" "}is a reasonable change to the agreed design and content, for example
               changing text, swapping photos, adjusting colours, reordering sections or tweaking spacing. A complete
               redesign, a new page, a new feature or a change of direction after you have approved the design is not
               a revision; it is extra work under Part 11.
@@ -411,7 +417,7 @@ export default function TermsPage() {
             <p>
               11.1 If you ask for something not included in your package or quote (for example extra pages, features,
               integrations, copywriting or a redesign), we will tell you it&apos;s extra and give you a price and any
-              effect on timescales <strong>before</strong> doing it. We will only do the extra work once you have
+              effect on timescales <strong>before</strong>{" "}doing it. We will only do the extra work once you have
               agreed in writing.
             </p>
             <p>
@@ -426,7 +432,7 @@ export default function TermsPage() {
               your business best.
             </p>
             <p>
-              12.2 Your website is <strong>approved</strong> when you tell us in writing that you are happy for it to
+              12.2 Your website is <strong>approved</strong>{" "}when you tell us in writing that you are happy for it to
               go live, or when you pay the balance, or when it goes live at your request.
             </p>
             <p>
@@ -435,7 +441,7 @@ export default function TermsPage() {
               becomes due, unless you have told us about something that doesn&apos;t match what we agreed.
             </p>
             <p>
-              12.4 <strong>Snagging.</strong> For 30 days after launch we will fix, free of charge, any bug or error
+              12.4 <strong>Snagging.</strong>{" "}For 30 days after launch we will fix, free of charge, any bug or error
               caused by our work that you report to us. This doesn&apos;t cover changes to content or design you
               approved, problems caused by someone else changing the website, or problems with third-party services.
             </p>
@@ -446,7 +452,7 @@ export default function TermsPage() {
 
           <Sec id="domains" n="13" title="Domains, hosting and email">
             <p>
-              13.1 <strong>Your domain is yours.</strong> Domain names (for example yourbusiness.co.uk) are registered
+              13.1 <strong>Your domain is yours.</strong>{" "}Domain names (for example yourbusiness.co.uk) are registered
               in your name and paid for by you directly with a registrar of your choice. Domains are not included in
               any package or care plan. If you ask us to register a domain on your behalf, we will register it in your
               name and pass on the cost with no mark-up.
@@ -456,12 +462,12 @@ export default function TermsPage() {
               not responsible if a domain expires or is lost because it wasn&apos;t renewed.
             </p>
             <p>
-              13.3 <strong>Hosting.</strong> Websites we host are hosted on reputable third-party platforms such as
+              13.3 <strong>Hosting.</strong>{" "}Websites we host are hosted on reputable third-party platforms such as
               Netlify. Hosting is included in our care plans. If you don&apos;t take a care plan, we will either hand
               your website over to you (see 17.4) or, if you prefer, help you set up hosting in your own name.
             </p>
             <p>
-              13.4 <strong>Email.</strong> We do not provide email accounts. We can help you connect your domain to an
+              13.4 <strong>Email.</strong>{" "}We do not provide email accounts. We can help you connect your domain to an
               email provider such as Google Workspace or Microsoft 365, which you pay for directly.
             </p>
             <p>
@@ -476,18 +482,18 @@ export default function TermsPage() {
               look after. We do not provide care plans for website builders such as Wix or Squarespace.
             </p>
             <p>
-              14.2 <strong>{essential.name} ({formatGBP(essential.pricePence)} a month)</strong> includes: hosting
+              14.2 <strong>{essential.name} ({formatGBP(essential.pricePence)} a month)</strong>{" "}includes: hosting
               with an SSL certificate on our hosting platform; uptime and security monitoring; backups of your
               website&apos;s code and content; one small change a month; and fixing bugs in our work.
             </p>
             <p>
-              14.3 <strong>{priority.name} ({formatGBP(priority.pricePence)} a month)</strong> includes everything in{" "}
+              14.3 <strong>{priority.name} ({formatGBP(priority.pricePence)} a month)</strong>{" "}includes everything in{" "}
               {essential.name}, plus: up to five changes a month; priority support with replies within one working
               day; a monthly health check of speed, security and search basics; help keeping your Google Business
               Profile up to date; and larger redesign work at a discounted rate.
             </p>
             <p>
-              14.4 <strong>What counts as a change.</strong> A change is a small update that takes us up to about 30
+              14.4 <strong>What counts as a change.</strong>{" "}A change is a small update that takes us up to about 30
               minutes, for example updating text, prices or opening hours, swapping or adding images, adding a
               testimonial, or making a small layout tweak. A new page, a new feature, a redesign of a section or a
               large batch of edits may count as several changes or be quoted as extra work. We will always tell you
@@ -501,29 +507,29 @@ export default function TermsPage() {
               day). Urgent problems, such as your website being down, are prioritised.
             </p>
             <p>
-              14.7 <strong>Not included</strong> in any care plan unless agreed: domain names, email accounts, paid
+              14.7 <strong>Not included</strong>{" "}in any care plan unless agreed: domain names, email accounts, paid
               third-party software or subscriptions, copywriting, photography, new websites, full redesigns, and
               support for changes made to the website by anyone other than us.
             </p>
             <p>
-              14.8 <strong>Fair use.</strong> Care plans are for reasonable use by one business. If requests are
+              14.8 <strong>Fair use.</strong>{" "}Care plans are for reasonable use by one business. If requests are
               persistently far beyond what&apos;s included, we will talk to you about moving to a higher plan or quoting
               the extra work, rather than refusing without explanation.
             </p>
             <p>
-              14.9 <strong>Cancelling a care plan.</strong> Care plans have no minimum term. You can cancel at any time
+              14.9 <strong>Cancelling a care plan.</strong>{" "}Care plans have no minimum term. You can cancel at any time
               by emailing us with 30 days&apos; notice. Your plan ends at the end of the notice period and you
               won&apos;t be charged after that. Payments already made for the current month are not refunded, except
               where the law requires it (see Part 25).
             </p>
             <p>
-              14.10 <strong>When a care plan ends,</strong> we will (once all payments are up to date) give you a copy
+              14.10 <strong>When a care plan ends,</strong>{" "}we will (once all payments are up to date) give you a copy
               of your website&apos;s files and reasonable help moving it to a new host. If you would like us to keep it
               online, you need to start a new plan. We may take the website off our hosting 30 days after the plan
               ends. Your domain stays yours throughout.
             </p>
             <p>
-              14.11 <strong>Price changes.</strong> We may change care plan prices or what&apos;s included by giving
+              14.11 <strong>Price changes.</strong>{" "}We may change care plan prices or what&apos;s included by giving
               you at least 30 days&apos; notice in writing. If you don&apos;t want to continue, you can cancel before the
               change takes effect.
             </p>
@@ -574,12 +580,12 @@ export default function TermsPage() {
 
           <Sec id="ip" n="17" title="Who owns what (intellectual property)">
             <p>
-              17.1 <strong>Your Content stays yours.</strong> You give us a non-exclusive licence to use, copy, edit
+              17.1 <strong>Your Content stays yours.</strong>{" "}You give us a non-exclusive licence to use, copy, edit
               and adapt Your Content only as needed to deliver our services to you (and, under Part 18, to show your
               website in our portfolio).
             </p>
             <p>
-              17.2 <strong>Your website becomes yours when you&apos;ve paid in full.</strong> Once we have received
+              17.2 <strong>Your website becomes yours when you&apos;ve paid in full.</strong>{" "}Once we have received
               full payment for the Project, we assign to you all copyright and other intellectual property rights we
               own in the bespoke design and code we created specifically for your website. The assignment takes effect
               when we email you to confirm payment in full, and that email (together with these terms) is our signed
@@ -591,18 +597,18 @@ export default function TermsPage() {
               to view and review it for the Project only.
             </p>
             <p>
-              17.4 <strong>Handover.</strong> Once you have paid in full, you can ask for a copy of your website&apos;s
+              17.4 <strong>Handover.</strong>{" "}Once you have paid in full, you can ask for a copy of your website&apos;s
               files at any time. We will provide them within 14 days in a standard format.
             </p>
             <p>
-              17.5 <strong>Our background tools.</strong> We keep ownership of our general know-how, techniques, code
+              17.5 <strong>Our background tools.</strong>{" "}We keep ownership of our general know-how, techniques, code
               libraries, components, templates and tools that we developed before or separately from your Project, and
               that we use across many websites. We give you a permanent, royalty-free, non-exclusive licence to use any
               of these that are built into your website, for the purpose of running, changing and maintaining that
               website.
             </p>
             <p>
-              17.6 <strong>Third-party materials</strong> (such as open-source code, fonts, icons and stock photos)
+              17.6 <strong>Third-party materials</strong>{" "}(such as open-source code, fonts, icons and stock photos)
               remain owned by their creators and are used under their own licences, which we will choose to be
               suitable for commercial use. You must keep to those licences.
             </p>
@@ -695,7 +701,7 @@ export default function TermsPage() {
 
           <Sec id="ecommerce" n="22" title="Shops, bookings and payments on your site">
             <p>
-              22.1 If your website sells products, services, bookings or downloads, <strong>you</strong> are the
+              22.1 If your website sells products, services, bookings or downloads, <strong>you</strong>{" "}are the
               seller. You are responsible for your own terms of sale, prices, taxes (including VAT if you are
               registered), refunds, delivery, customer service and compliance with consumer law towards your
               customers.
@@ -713,13 +719,13 @@ export default function TermsPage() {
           <Sec id="data" n="23" title="Data protection">
             <p>
               23.1 We handle personal data about you (for example your name, email and project details) as a
-              controller, in line with UK data protection law. Our <Link href="/privacy">privacy policy</Link> explains
+              controller, in line with UK data protection law. Our <Link href="/privacy">privacy policy</Link>{" "}explains
               how.
             </p>
             <p>
               23.2 If we host or maintain your website, or set up forms that collect your customers&apos; details, we
               may process personal data on your behalf. In that case you are the controller and we are your processor,
-              and the data processing terms in <a href="#dpa">Schedule 2</a> apply.
+              and the data processing terms in <a href="#dpa">Schedule 2</a>{" "}apply.
             </p>
             <p>
               23.3 You are responsible for having a lawful basis to collect and use your customers&apos; data and for
@@ -752,24 +758,24 @@ export default function TermsPage() {
             </p>
             <p>
               25.3 To cancel, tell us of your decision by a clear statement, for example an email to{" "}
-              <a href={`mailto:${E}`}>{E}</a> or a letter to {L.address}. You may use the{" "}
-              <a href="#cancellation-form">model cancellation form</a> in Schedule 1, but you don&apos;t have to. To meet
+              <a href={`mailto:${E}`}>{E}</a>{" "}or a letter to {L.address}. You may use the{" "}
+              <a href="#cancellation-form">model cancellation form</a>{" "}in Schedule 1, but you don&apos;t have to. To meet
               the deadline, you only need to send your message before the 14 days end.
             </p>
             <p>
-              25.4 <strong>Starting work within the 14 days.</strong> Most clients want us to start straight away.
+              25.4 <strong>Starting work within the 14 days.</strong>{" "}Most clients want us to start straight away.
               If you ask us to start work during the cancellation period (for example by paying your deposit and
               ticking the box that asks us to begin), and you then cancel, you will have to pay us an amount in
               proportion to the work we have done up to the time you tell us you are cancelling, compared with the
               full service.
             </p>
             <p>
-              25.5 If the service has been <strong>fully performed</strong> within the 14 days at your express request,
+              25.5 If the service has been <strong>fully performed</strong>{" "}within the 14 days at your express request,
               and you acknowledged that you would lose your right to cancel once it was fully performed, you will no
               longer have the right to cancel.
             </p>
             <p>
-              25.6 <strong>Effects of cancellation.</strong> If you cancel, we will refund all payments received from
+              25.6 <strong>Effects of cancellation.</strong>{" "}If you cancel, we will refund all payments received from
               you, less any amount due under 25.4, without undue delay and no later than 14 days after the day we are
               informed of your decision to cancel. We will use the same payment method you used, unless you have
               expressly agreed otherwise, and you will not pay any fees for the refund.
@@ -781,7 +787,7 @@ export default function TermsPage() {
 
           <Sec id="ending" n="26" title="Ending the contract">
             <p>
-              26.1 <strong>You can end a Project</strong> at any time by telling us in writing. We will stop work and
+              26.1 <strong>You can end a Project</strong>{" "}at any time by telling us in writing. We will stop work and
               you will pay for the work done up to that point (calculated as a fair proportion of the price, based on
               the stage the Project has reached), plus any costs we have already committed to on your behalf. If you
               have paid more than that, we will refund the difference. Consumers also have the rights in Part 25 and
@@ -815,7 +821,7 @@ export default function TermsPage() {
               </tbody>
             </table>
             <p>
-              26.3 <strong>We can end a Project or care plan</strong> by telling you in writing if: (a) you
+              26.3 <strong>We can end a Project or care plan</strong>{" "}by telling you in writing if: (a) you
               don&apos;t pay an amount due within 14 days of a written reminder; (b) you seriously or repeatedly break
               these terms and (if it can be fixed) don&apos;t fix it within 14 days of us asking; (c) you ask us to
               publish content that breaks Part 9; (d) you or your staff are abusive or threatening; or (e) you become
@@ -932,7 +938,7 @@ export default function TermsPage() {
           <Sec id="complaints" n="32" title="Complaints">
             <p>
               32.1 If you&apos;re unhappy with anything, please tell us straight away by emailing{" "}
-              <a href={`mailto:${E}`}>{E}</a> with your name, what went wrong and what you would like us to do. We
+              <a href={`mailto:${E}`}>{E}</a>{" "}with your name, what went wrong and what you would like us to do. We
               will acknowledge your complaint within 2 working days and aim to resolve it within 14 days.
             </p>
             <p>
@@ -963,35 +969,35 @@ export default function TermsPage() {
 
           <Sec id="general" n="35" title="General legal terms">
             <p>
-              35.1 <strong>Entire agreement.</strong> For business customers, these terms and the documents in 4.4 are
+              35.1 <strong>Entire agreement.</strong>{" "}For business customers, these terms and the documents in 4.4 are
               the whole agreement between us and replace any earlier discussions. Neither of us relies on anything not
               written in them. This doesn&apos;t limit liability for fraud.
             </p>
             <p>
-              35.2 <strong>Transfer.</strong> We may transfer our rights and obligations to another business (for
+              35.2 <strong>Transfer.</strong>{" "}We may transfer our rights and obligations to another business (for
               example if BGG Website Design becomes a limited company). We will tell you in writing, and it won&apos;t
               reduce your rights. You may only transfer your rights to someone else with our written agreement, which
               we won&apos;t unreasonably refuse.
             </p>
             <p>
-              35.3 <strong>No third-party rights.</strong> This contract is between you and us. No one else has any
+              35.3 <strong>No third-party rights.</strong>{" "}This contract is between you and us. No one else has any
               right to enforce any of its terms under the Contracts (Rights of Third Parties) Act 1999.
             </p>
             <p>
-              35.4 <strong>Severance.</strong> If a court decides that part of these terms is unlawful or unenforceable,
+              35.4 <strong>Severance.</strong>{" "}If a court decides that part of these terms is unlawful or unenforceable,
               the rest will continue in full force.
             </p>
             <p>
-              35.5 <strong>No waiver.</strong> If we don&apos;t insist straight away that you do something you are
+              35.5 <strong>No waiver.</strong>{" "}If we don&apos;t insist straight away that you do something you are
               required to do, or delay taking action, that doesn&apos;t mean we have given up our rights.
             </p>
             <p>
-              35.6 <strong>Notices.</strong> Notices under these terms may be sent by email to the address you gave us
+              35.6 <strong>Notices.</strong>{" "}Notices under these terms may be sent by email to the address you gave us
               (or, for us, to <a href={`mailto:${E}`}>{E}</a>). An email is treated as received on the next working
               day after it is sent, unless the sender gets a delivery failure message.
             </p>
             <p>
-              35.7 <strong>We are independent.</strong> Nothing in these terms creates a partnership, employment or
+              35.7 <strong>We are independent.</strong>{" "}Nothing in these terms creates a partnership, employment or
               agency relationship between us.
             </p>
           </Sec>
@@ -1014,37 +1020,37 @@ export default function TermsPage() {
               agree to them.
             </p>
             <p>
-              37.2 <strong>Information.</strong> We keep this website accurate and up to date, but the content is for
+              37.2 <strong>Information.</strong>{" "}We keep this website accurate and up to date, but the content is for
               general information and isn&apos;t advice. Prices, packages and timescales may change; the version shown
               when you order applies (see Part 4).
             </p>
             <p>
-              37.3 <strong>Our content.</strong> The design, text, graphics, code and mockups on this website belong to
+              37.3 <strong>Our content.</strong>{" "}The design, text, graphics, code and mockups on this website belong to
               us or our licensors. Websites shown in our portfolio belong to the businesses concerned and are shown
               with their permission or as examples of our work. You may view and print pages for your personal use,
               but you may not copy, reproduce or reuse our content or designs for commercial purposes without our
               written permission.
             </p>
             <p>
-              37.4 <strong>Acceptable use.</strong> You must not misuse this website, including by: trying to gain
+              37.4 <strong>Acceptable use.</strong>{" "}You must not misuse this website, including by: trying to gain
               unauthorised access; introducing viruses or harmful code; scraping or copying content in bulk; sending
               spam or abusive messages through our forms; or using it for anything unlawful.
             </p>
             <p>
-              37.5 <strong>Links.</strong> This website links to client websites and other sites we don&apos;t control.
+              37.5 <strong>Links.</strong>{" "}This website links to client websites and other sites we don&apos;t control.
               We aren&apos;t responsible for their content, availability or privacy practices.
             </p>
             <p>
-              37.6 <strong>Availability.</strong> We don&apos;t guarantee this website will always be available or free
+              37.6 <strong>Availability.</strong>{" "}We don&apos;t guarantee this website will always be available or free
               from errors or viruses. Please use your own virus protection.
             </p>
             <p>
-              37.7 <strong>Liability.</strong> We are not liable for any loss arising from use of, or reliance on, this
+              37.7 <strong>Liability.</strong>{" "}We are not liable for any loss arising from use of, or reliance on, this
               website, except where the law does not allow us to exclude it (for example for death or personal injury
               caused by negligence, or fraud).
             </p>
             <p>
-              37.8 <strong>Privacy.</strong> How we use information collected through this website is explained in our{" "}
+              37.8 <strong>Privacy.</strong>{" "}How we use information collected through this website is explained in our{" "}
               <Link href="/privacy">privacy policy</Link>.
             </p>
           </Sec>
@@ -1078,16 +1084,16 @@ export default function TermsPage() {
             </p>
             <ol>
               <li>
-                <strong>Subject matter and duration:</strong> hosting, maintaining and supporting your website and any
+                <strong>Subject matter and duration:</strong>{" "}hosting, maintaining and supporting your website and any
                 forms on it, for as long as we provide those services.
               </li>
               <li>
-                <strong>Nature and purpose:</strong> storing, transmitting and, where needed, viewing personal data
+                <strong>Nature and purpose:</strong>{" "}storing, transmitting and, where needed, viewing personal data
                 submitted through your website (for example enquiry form submissions) so your website works and we can
                 support it.
               </li>
               <li>
-                <strong>Types of personal data and data subjects:</strong> contact details and messages submitted by
+                <strong>Types of personal data and data subjects:</strong>{" "}contact details and messages submitted by
                 your website&apos;s visitors and customers, and any other personal data you choose to put on your
                 website.
               </li>

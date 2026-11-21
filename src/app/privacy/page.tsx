@@ -41,7 +41,13 @@ export default function PrivacyPage() {
         eyebrow={`Last updated ${L.privacyUpdated}`}
         title="Privacy & cookies policy"
         lead="We only collect what we need to answer your enquiry and build your website, we never sell your data, and you're always in control of it."
-      />
+      >
+        <p className="legal-download">
+          <a href="/legal/bgg-website-design-privacy-policy.pdf" className="btn btn--ghost btn--sm" download>
+            Download PDF
+          </a>
+        </p>
+      </PageHead>
 
       <div className="wrap legal">
         <Toc items={TOC} />
@@ -83,23 +89,23 @@ export default function PrivacyPage() {
             <p>2.1 <strong>Information you give us:</strong></p>
             <ul>
               <li>
-                <strong>Enquiries and free preview requests:</strong> your name, email address, business name, current
+                <strong>Enquiries and free preview requests:</strong>{" "}your name, email address, business name, current
                 website, what you need, and anything else you write in our contact form or emails.
               </li>
               <li>
-                <strong>Orders:</strong> the package or plan you choose, your agreement to our{" "}
+                <strong>Orders:</strong>{" "}the package or plan you choose, your agreement to our{" "}
                 <Link href="/terms">terms</Link>, and records of what you have paid.
               </li>
               <li>
-                <strong>Project information:</strong> answers to our project questionnaire, and the content you send
+                <strong>Project information:</strong>{" "}answers to our project questionnaire, and the content you send
                 us for your website (text, photos, logos, and any personal data they contain).
               </li>
               <li>
-                <strong>Account and access details:</strong> log-ins you choose to share with us so we can connect your
+                <strong>Account and access details:</strong>{" "}log-ins you choose to share with us so we can connect your
                 domain or services. We only use these for your project and delete them when they are no longer needed.
               </li>
               <li>
-                <strong>Communications:</strong> emails and messages between us, and any feedback or testimonials you
+                <strong>Communications:</strong>{" "}emails and messages between us, and any feedback or testimonials you
                 give us.
               </li>
             </ul>
@@ -119,7 +125,7 @@ export default function PrivacyPage() {
                 the website running.
               </li>
               <li>
-                We do <strong>not</strong> use analytics tools, advertising pixels or tracking cookies on this website.
+                We do <strong>not</strong>{" "}use analytics tools, advertising pixels or tracking cookies on this website.
                 See Part 8.
               </li>
             </ul>
@@ -186,41 +192,41 @@ export default function PrivacyPage() {
 
           <Sec id="share" n="4" title="Who we share it with">
             <p>
-              4.1 <strong>We never sell your personal data.</strong> We only share it with trusted providers who help
+              4.1 <strong>We never sell your personal data.</strong>{" "}We only share it with trusted providers who help
               us run our business, and only as much as they need:
             </p>
             <ul>
               <li>
-                <strong>Stripe</strong> (payments). Stripe processes payments under its own{" "}
+                <strong>Stripe</strong>{" "}(payments). Stripe processes payments under its own{" "}
                 <a href="https://stripe.com/gb/privacy" target="_blank" rel="noopener noreferrer">
                   privacy policy
                 </a>
                 .
               </li>
               <li>
-                <strong>Netlify</strong> (website hosting and contact form submissions).{" "}
+                <strong>Netlify</strong>{" "}(website hosting and contact form submissions).{" "}
                 <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">
                   Privacy policy
                 </a>
                 .
               </li>
               <li>
-                <strong>Google</strong> (email through Gmail, and our project questionnaire through Google Forms).{" "}
+                <strong>Google</strong>{" "}(email through Gmail, and our project questionnaire through Google Forms).{" "}
                 <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
                   Privacy policy
                 </a>
                 .
               </li>
               <li>
-                <strong>Domain registrars, email and other service providers</strong> you ask us to set up for your
+                <strong>Domain registrars, email and other service providers</strong>{" "}you ask us to set up for your
                 website, when needed to do so.
               </li>
               <li>
-                <strong>Professional advisers</strong> (such as accountants or lawyers), under a duty of
+                <strong>Professional advisers</strong>{" "}(such as accountants or lawyers), under a duty of
                 confidentiality.
               </li>
               <li>
-                <strong>Authorities</strong> such as HMRC, the police or a court, where the law requires it.
+                <strong>Authorities</strong>{" "}such as HMRC, the police or a court, where the law requires it.
               </li>
               <li>
                 <strong>A buyer of our business</strong>, if we sell or restructure it, who would have to use your data
@@ -289,19 +295,19 @@ export default function PrivacyPage() {
             <p>Under UK data protection law you have the right to:</p>
             <ul>
               <li>
-                <strong>access</strong> the personal data we hold about you and receive a copy;
+                <strong>access</strong>{" "}the personal data we hold about you and receive a copy;
               </li>
               <li>
-                have inaccurate data <strong>corrected</strong> or incomplete data completed;
+                have inaccurate data <strong>corrected</strong>{" "}or incomplete data completed;
               </li>
               <li>
-                have your data <strong>erased</strong> in certain circumstances;
+                have your data <strong>erased</strong>{" "}in certain circumstances;
               </li>
               <li>
-                <strong>restrict</strong> how we use your data in certain circumstances;
+                <strong>restrict</strong>{" "}how we use your data in certain circumstances;
               </li>
               <li>
-                <strong>object</strong> to us using your data on the basis of legitimate interests (including portfolio
+                <strong>object</strong>{" "}to us using your data on the basis of legitimate interests (including portfolio
                 use);
               </li>
               <li>
@@ -309,7 +315,7 @@ export default function PrivacyPage() {
                 someone else; and
               </li>
               <li>
-                <strong>withdraw your consent</strong> at any time where we rely on consent (for example testimonials).
+                <strong>withdraw your consent</strong>{" "}at any time where we rely on consent (for example testimonials).
               </li>
             </ul>
             <p>

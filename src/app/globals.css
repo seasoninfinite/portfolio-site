@@ -2294,10 +2294,16 @@ a {
   .site-footer,
   .mobile-cta,
   .legal-toc,
+  .legal-foot,
+  .legal-download,
   .crumbs {
     display: none !important;
   }
   body {
     background: #fff;
   }
+}
+
+.legal-download {
+  margin: 22px 0 0;
 }
