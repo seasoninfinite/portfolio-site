@@ -38,6 +38,12 @@ export function SiteFooter() {
                 <Link href="/web-design-solihull">Web design in Solihull</Link>
               </li>
               <li>
+                <Link href="/web-design-birmingham">Web design in Birmingham</Link>
+              </li>
+              <li>
+                <Link href="/affordable-website-design">Affordable website design</Link>
+              </li>
+              <li>
                 <Link href="/work">Portfolio</Link>
               </li>
               <li>

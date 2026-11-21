@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/pricing", priority: 0.9, freq: "monthly" },
     { path: "/work", priority: 0.9, freq: "weekly" },
     { path: "/web-design-solihull", priority: 0.9, freq: "monthly" },
+    { path: "/web-design-birmingham", priority: 0.9, freq: "monthly" },
+    { path: "/affordable-website-design", priority: 0.8, freq: "monthly" },
     { path: "/contact", priority: 0.8, freq: "monthly" },
     { path: "/about", priority: 0.7, freq: "monthly" },
     { path: "/how-much-does-a-website-cost", priority: 0.7, freq: "monthly" },

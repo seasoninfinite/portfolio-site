@@ -109,6 +109,9 @@ export default function SolihullPage() {
             </ul>
             <h3>Areas I cover</h3>
             <p>{areas.join(" · ")}, plus the rest of the West Midlands and anywhere in the UK by video call.</p>
+            <p>
+              Based in the city? See <Link href="/web-design-birmingham">web design in Birmingham</Link>.
+            </p>
           </div>
         </div>
       </section>

@@ -30,12 +30,12 @@ export const viewport: Viewport = {
 };
 
 const siteDescription =
-  "Websites that turn visitors into paying clients. ✓ Live in as little as 3 days ✓ From £199.99, no VAT ✓ Pay the rest when you're happy. Get a free quote →";
+  "Websites that win you clients, from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Pay the rest when you're happy. Solihull & Birmingham.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
-    default: "Web Designer Solihull | Websites Live in Days from £199.99",
+    default: "Affordable Web Design Solihull & Birmingham | From £199.99",
     template: `%s | ${SITE.name}`,
   },
   description: siteDescription,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "/",
     siteName: SITE.name,
-    title: "Websites that turn visitors into paying clients | BGG Website Design",
+    title: "Affordable web design in Solihull & Birmingham | BGG Website Design",
     description: siteDescription,
   },
   twitter: {
