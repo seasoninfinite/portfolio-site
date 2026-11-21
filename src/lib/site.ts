@@ -18,8 +18,8 @@ export const SITE = {
    * The owner should be an adult (a contract can be cancelled by someone under 18).
    */
   legal: {
-    ownerName: "[Owner's full legal name]",
-    address: "[Postal address for legal notices, Solihull, West Midlands]",
+    ownerName: "Ben Grobler",
+    address: "Solihull, West Midlands, B91",
     icoNumber: "",
     termsUpdated: "20 November 2026",
     privacyUpdated: "20 November 2026",
