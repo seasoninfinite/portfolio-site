@@ -15,9 +15,9 @@ import { pricingFaqs } from "@/data/pricing";
 import { featuredProjects, projects } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: { absolute: "Affordable Web Design Solihull & Birmingham | From £199.99" },
+  title: { absolute: "Websites That Win You Clients | From £199.99, Live in 3 Days" },
   description:
-    "Websites that win you clients, from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Pay the rest when you're happy. Solihull & Birmingham.",
+    "Get a custom, hand-coded website from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Only pay the rest when you're happy. Free quote →",
   alternates: { canonical: "/" },
 };
 

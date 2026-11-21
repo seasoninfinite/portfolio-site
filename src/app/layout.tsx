@@ -30,12 +30,12 @@ export const viewport: Viewport = {
 };
 
 const siteDescription =
-  "Websites that win you clients, from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Pay the rest when you're happy. Solihull & Birmingham.";
+  "Get a custom, hand-coded website from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Only pay the rest when you're happy. Free quote →";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
-    default: "Affordable Web Design Solihull & Birmingham | From £199.99",
+    default: "Websites That Win You Clients | From £199.99, Live in 3 Days",
     template: `%s | ${SITE.name}`,
   },
   description: siteDescription,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "/",
     siteName: SITE.name,
-    title: "Affordable web design in Solihull & Birmingham | BGG Website Design",
+    title: "Websites that win you clients | BGG Website Design",
     description: siteDescription,
   },
   twitter: {
@@ -76,6 +76,7 @@ const structuredData = {
       "@id": `${siteOrigin}/#website`,
       url: siteOrigin,
       name: SITE.name,
+      alternateName: ["BGG", "BGG Web Design"],
       inLanguage: "en-GB",
       publisher: { "@id": `${siteOrigin}/#business` },
     },
