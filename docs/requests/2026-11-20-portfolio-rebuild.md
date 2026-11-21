@@ -85,3 +85,11 @@ bggwebsitedesign.com becomes a multi-page, search-friendly sales site that turns
 - Is CJ's testimonial real? Can you get one-line quotes plus Google reviews from Gemma, Varsha, Claudia and Laura?
 - OK to show Laura's and Varsha's new designs publicly before they launch?
 - Deposit model (50% now, 50% before launch): keep it, or charge in full?
+
+## Terms & privacy (21 Nov 2026)
+- New `/terms` (37 parts + model cancellation form + Art 28 data processing terms, about 7,500 words) and `/privacy` (14 parts, about 1,800 words), replacing the old OneDrive PDF link. Linked from the footer, the checkout tick-box and the sitemap.
+- Checkout now needs two ticks for paid plans: agree to the terms and privacy policy, and ask for work to start within 14 days with the cancellation acknowledgement (Consumer Contracts Regs 2013 reg 36). Both are recorded in the Netlify Forms submission.
+- Old terms carried over: the 14-day no-response rule (now pause, then close at 60 days with a refund for work not done), revisions, scope, ownership on full payment, portfolio use and care plan limits. Care plan notice changed from 7 to 30 days to match the site.
+- MUST DO before going live: fill `SITE.legal.ownerName` and `SITE.legal.address` in `src/lib/site.ts` (an adult owner, not Ben (son)), and add an ICO registration number if one is needed (ICO fee from £52, self-assessment at ico.org.uk).
+- Revisit by Jan 2027: the DMCC Act subscription-contract rules (reminders, easy exit) for consumer care-plan customers.
+- Not legal advice. Have a solicitor or a legal template service check it.

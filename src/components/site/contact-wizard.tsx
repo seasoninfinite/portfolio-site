@@ -52,7 +52,7 @@ const QUERY_TO_INTENT: Record<string, Intent> = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 const DRAFT_KEY = "bgg-contact-draft";
 
-type Draft = { intent: Intent | ""; name: string; email: string; business: string; website: string; message: string; terms: boolean };
+type Draft = { intent: Intent | ""; name: string; email: string; business: string; website: string; message: string; terms: boolean; startNow?: boolean };
 
 function encodeForm(data: Record<string, string>) {
   return Object.entries(data)
@@ -78,6 +78,7 @@ export function ContactWizard({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
   const [website, setWebsite] = useState("");
   const [message, setMessage] = useState("");
   const [terms, setTerms] = useState(false);
+  const [startNow, setStartNow] = useState(false);
   const [touched, setTouched] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
@@ -92,13 +93,14 @@ export function ContactWizard({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
   const build = buildPlans.find((p) => p.id === intent);
   const care = carePlans.find((p) => p.id === intent);
   const validEmail = EMAIL_RE.test(email.trim());
-  const detailsOk = !!intent && name.trim().length > 1 && validEmail && message.trim().length > 4 && (!paid || terms);
+  const detailsOk =
+    !!intent && name.trim().length > 1 && validEmail && message.trim().length > 4 && (!paid || (terms && startNow));
 
   const H = (headingLevel === 2 ? "h2" : "h3") as "h2" | "h3";
 
   const draft: Draft = useMemo(
-    () => ({ intent, name, email, business, website, message, terms }),
-    [intent, name, email, business, website, message, terms]
+    () => ({ intent, name, email, business, website, message, terms, startNow }),
+    [intent, name, email, business, website, message, terms, startNow]
   );
 
   const go = (s: 1 | 2 | 3 | 4) => {
@@ -123,6 +125,7 @@ export function ContactWizard({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
         setWebsite(saved.website);
         setMessage(saved.message);
         setTerms(saved.terms);
+        setStartNow(!!saved.startNow);
       }
       if (checkout === "success" && sid) {
         setSessionId(sid);
@@ -177,7 +180,8 @@ export function ContactWizard({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
           business: business.trim(),
           website: website.trim(),
           message: message.trim(),
-          terms: paid ? (terms ? "Agreed" : "No") : "n/a",
+          terms: paid ? (terms ? `Agreed (terms dated ${SITE.legal.termsUpdated})` : "No") : "n/a",
+          startNow: paid ? (startNow ? "Asked to start within 14 days; acknowledged cancellation terms" : "No") : "n/a",
         }),
       });
       return res.ok;
@@ -403,17 +407,36 @@ export function ContactWizard({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
                 style={{ width: 18, height: 18, marginTop: 3, accentColor: "var(--accent)" }}
               />
               <span>
-                I agree to the{" "}
-                <a href={SITE.termsUrl} target="_blank" rel="noopener noreferrer" className="text-link">
+                I have read and agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-link">
                   terms and conditions
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-link">
+                  privacy policy
                 </a>
                 .
               </span>
             </label>
           ) : null}
-          {paid && touched && !terms ? (
+          {paid ? (
+            <label style={{ display: "flex", gap: 10, marginTop: 12, fontSize: 15, alignItems: "flex-start" }}>
+              <input
+                type="checkbox"
+                checked={startNow}
+                onChange={(e) => setStartNow(e.target.checked)}
+                style={{ width: 18, height: 18, marginTop: 3, accentColor: "var(--accent)" }}
+              />
+              <span>
+                Please start work straight away. I understand that if I&apos;m a consumer and cancel within 14 days, I
+                will pay for the work done up to then, and that I lose my right to cancel once the service has been
+                fully provided.
+              </span>
+            </label>
+          ) : null}
+          {paid && touched && (!terms || !startNow) ? (
             <p className="field__error" style={{ marginTop: 6 }}>
-              Please tick to agree to the terms before paying.
+              Please tick both boxes before paying.
             </p>
           ) : null}
 

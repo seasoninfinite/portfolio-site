@@ -7,11 +7,23 @@ export const SITE = {
   email: "bggwebsitedesign@gmail.com",
   town: "Solihull",
   region: "West Midlands",
-  termsUrl:
-    "https://1drv.ms/b/c/b7227f61a4ced3d4/IQDRGY0SW_bCRIAvsTa2NkqVAbTqaLe-HUi9bsYgeLLfe3A?e=3KN0Ze",
+  termsUrl: "/terms",
   projectFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSclJL3r-v-1n8z49bvHd8TXKg-ty9pu_nA5x2wvi1N0qpbnNA/viewform?usp=sharing&ouid=115643113121012243384",
   areas: ["Solihull", "Birmingham", "Knowle", "Dorridge", "Shirley", "Olton", "Coventry", "Warwickshire"],
+  /**
+   * Legal identity, shown in the Terms and Privacy policy.
+   * FILL IN BEFORE GOING LIVE (Companies Act 2006 s1202 and the E-Commerce Regulations 2002 reg 6
+   * require the owner's name and a postal address for a sole trader using a business name).
+   * The owner should be an adult (a contract can be cancelled by someone under 18).
+   */
+  legal: {
+    ownerName: "[Owner's full legal name]",
+    address: "[Postal address for legal notices, Solihull, West Midlands]",
+    icoNumber: "",
+    termsUpdated: "20 November 2026",
+    privacyUpdated: "20 November 2026",
+  },
 };
 
 export const NAV = [

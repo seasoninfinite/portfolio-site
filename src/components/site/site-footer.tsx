@@ -79,16 +79,21 @@ export function SiteFooter() {
                 <Link href="/contact">Contact</Link>
               </li>
               <li>
-                <a href={SITE.termsUrl} target="_blank" rel="noopener noreferrer">
-                  Terms &amp; conditions (PDF)
-                </a>
+                <Link href="/terms">Terms &amp; conditions</Link>
+              </li>
+              <li>
+                <Link href="/privacy">Privacy &amp; cookies</Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} BGG Website Design. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} BGG Website Design
+            {SITE.legal.ownerName.startsWith("[") ? "" : `, a trading name of ${SITE.legal.ownerName}`}. All rights
+            reserved.
+          </span>
           <span>Web design in Solihull, Birmingham &amp; across the UK</span>
         </div>
       </div>

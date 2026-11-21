@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/contact", priority: 0.8, freq: "monthly" },
     { path: "/about", priority: 0.7, freq: "monthly" },
     { path: "/how-much-does-a-website-cost", priority: 0.7, freq: "monthly" },
+    { path: "/terms", priority: 0.3, freq: "monthly" },
+    { path: "/privacy", priority: 0.3, freq: "monthly" },
     { path: "/expertise", priority: 0.4, freq: "monthly" },
     { path: "/how-websites-work", priority: 0.4, freq: "monthly" },
   ];
