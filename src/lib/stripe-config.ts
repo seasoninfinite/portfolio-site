@@ -2,7 +2,7 @@ import { checkoutAmount, type PurchasePlan } from "@/data/pricing";
 
 export type { PurchasePlan };
 
-export const PURCHASE_PLANS: PurchasePlan[] = ["basic", "standard", "premium", "care", "priority"];
+export const PURCHASE_PLANS: PurchasePlan[] = ["onepage", "basic", "standard", "premium", "care", "priority"];
 
 export function isPurchasePlan(value: string): value is PurchasePlan {
   return (PURCHASE_PLANS as string[]).includes(value);

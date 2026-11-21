@@ -8,9 +8,9 @@ import { PayNote, PriceCards } from "@/components/site/pricing";
 import { abs, breadcrumbLd } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Affordable Website Design UK from £199.99",
+  title: "Affordable Website Design UK from £125",
   description:
-    "Affordable website design for UK small businesses: custom, hand-coded sites from £199.99 with no VAT. Cheap price, premium look. Free homepage preview first.",
+    "Affordable website design for UK small businesses: custom, hand-coded sites from £125 with no VAT. Cheap price, premium look. Free homepage preview first.",
   alternates: { canonical: "/affordable-website-design" },
 };
 
@@ -52,7 +52,7 @@ export default function AffordablePage() {
         crumbs={[{ name: "Affordable website design" }]}
         eyebrow="Affordable website design · UK"
         title="Cheap websites that don't look cheap."
-        lead="A professional website shouldn't cost a month's takings. Get a custom, hand-coded website from £199.99, with no VAT, no templates and no hidden extras, that looks like you paid ten times more."
+        lead="A professional website shouldn't cost a month's takings. Get a custom, hand-coded website from £125, with no VAT, no templates and no hidden extras, that looks like you paid ten times more."
       >
         <div className="hero__actions">
           <Link href="/pricing" className="btn btn--accent">

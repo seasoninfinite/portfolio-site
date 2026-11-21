@@ -5,7 +5,7 @@
  * (see docs/requests/2026-11-20-portfolio-rebuild.md).
  */
 
-export type BuildPlanId = "basic" | "standard" | "premium";
+export type BuildPlanId = "onepage" | "basic" | "standard" | "premium";
 export type CarePlanId = "care" | "priority";
 export type PurchasePlan = BuildPlanId | CarePlanId;
 
@@ -40,6 +40,26 @@ export type CarePlan = {
 };
 
 export const buildPlans: BuildPlan[] = [
+  {
+    id: "onepage",
+    name: "One Page",
+    queryLabel: "One Page Website",
+    tagline: "Everything customers need, on one beautiful page.",
+    pricePence: 12500,
+    depositPence: 6250,
+    pages: "1 page",
+    turnaround: "Live in 2 days",
+    bestFor: "Sole traders and new businesses that just need a professional presence and a way to get in touch.",
+    features: [
+      "One custom-designed page: who you are, what you do, prices and contact",
+      "Looks perfect on every phone, tablet and laptop",
+      "Contact form that lands straight in your inbox",
+      "Click-to-call and map so customers reach you in one tap",
+      "Google-ready basics: title, description and sitemap",
+    ],
+    revisions: "1 round of changes",
+    agencyUpTo: "£800",
+  },
   {
     id: "basic",
     name: "Starter",
@@ -157,6 +177,7 @@ export const addOns: { name: string; price: string; detail: string }[] = [
 ];
 
 export const PLAN_LABELS: Record<PurchasePlan, string> = {
+  onepage: "One Page website",
   basic: "Starter website",
   standard: "Growth website",
   premium: "Premium website",
@@ -194,7 +215,7 @@ export const pricingFaqs: { q: string; a: string }[] = [
   },
   {
     q: "How long does it take?",
-    a: "Starter sites go live in as little as 3 days, Growth in about 5 days and even Premium sites in 10 days or less. The only thing that slows it down is waiting for your words and photos, and I'll help you with those.",
+    a: "One Page sites go live in 2 days, Starter sites in as little as 3 days, Growth in about 5 days and even Premium sites in 10 days or less. The only thing that slows it down is waiting for your words and photos, and I'll help you with those.",
   },
   {
     q: "Do I need a care plan?",

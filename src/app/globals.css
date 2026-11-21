@@ -1068,9 +1068,14 @@ a {
   gap: 18px;
   align-items: stretch;
 }
-@media (min-width: 980px) {
+@media (min-width: 720px) {
   .price-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1240px) {
+  .price-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 .price-card {
@@ -2289,6 +2294,13 @@ a {
   font-size: 15px;
 }
 @media print {
+  .legal-download {
+    display: none !important;
+  }
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
   .site-header,
   .promo-bar,
   .site-footer,

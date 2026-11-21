@@ -59,7 +59,7 @@ const TOC = [
 ];
 
 export default function TermsPage() {
-  const [starter, growth, premium] = buildPlans;
+  const [onePage, starter, growth, premium] = buildPlans;
   const [essential, priority] = carePlans;
   return (
     <>
@@ -217,12 +217,12 @@ export default function TermsPage() {
                 </tr>
               </thead>
               <tbody>
-                {[starter, growth, premium].map((p) => (
+                {[onePage, starter, growth, premium].map((p) => (
                   <tr key={p.id}>
                     <td>{p.name}</td>
                     <td>{formatGBP(p.pricePence)}</td>
                     <td>{p.pages.replace("Up to", "up to")}</td>
-                    <td>{p.revisions.replace(" rounds of changes", "")}</td>
+                    <td>{p.revisions.replace(/ rounds? of changes/, "")}</td>
                     <td>{p.turnaround.replace("Live in ", "")}</td>
                   </tr>
                 ))}
@@ -390,7 +390,7 @@ export default function TermsPage() {
 
           <Sec id="revisions" n="10" title="Revisions">
             <p>
-              10.1 Each package includes a set number of <strong>rounds of changes</strong>{" "}({starter.name}: 2,{" "}
+              10.1 Each package includes a set number of <strong>rounds of changes</strong>{" "}({onePage.name}: 1, {starter.name}: 2,{" "}
               {growth.name}: 3, {premium.name}: 5).
             </p>
             <p>

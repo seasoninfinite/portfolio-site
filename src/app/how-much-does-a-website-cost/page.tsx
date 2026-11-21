@@ -145,6 +145,9 @@ export default function CostGuide() {
         </p>
         <ul>
           <li>
+            <strong>One Page: £125</strong>{" "}for a single page, live in 2 days
+          </li>
+          <li>
             <strong>Starter: £199.99</strong>{" "}for up to 3 pages, live in 3 days
           </li>
           <li>

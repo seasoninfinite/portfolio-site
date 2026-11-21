@@ -21,7 +21,7 @@ export const SITE = {
     ownerName: "Ben Grobler",
     address: "Solihull, West Midlands, B91",
     icoNumber: "",
-    termsUpdated: "20 November 2026",
+    termsUpdated: "21 November 2026",
     privacyUpdated: "20 November 2026",
   },
 };

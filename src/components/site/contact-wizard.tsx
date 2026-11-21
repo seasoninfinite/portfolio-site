@@ -8,9 +8,9 @@ import { SITE } from "@/lib/site";
 
 type Intent = PurchasePlan | "preview" | "general";
 
-const PAID: Intent[] = ["basic", "standard", "premium", "care", "priority"];
+const PAID: Intent[] = ["onepage", "basic", "standard", "premium", "care", "priority"];
 const isPaid = (i: Intent | ""): i is PurchasePlan => !!i && PAID.includes(i);
-const isBuild = (i: Intent | "") => i === "basic" || i === "standard" || i === "premium";
+const isBuild = (i: Intent | "") => i === "onepage" || i === "basic" || i === "standard" || i === "premium";
 
 const CHOICES: { id: Intent; title: string; note: string; price?: string }[] = [
   { id: "preview", title: "Free 1-page preview", note: "Your new homepage designed free. No card, no obligation", price: "Free" },
@@ -37,6 +37,7 @@ const LABELS: Record<Intent, string> = {
 
 /** ?plan= values from pricing links (current names plus the old site's names, so old links still work). */
 const QUERY_TO_INTENT: Record<string, Intent> = {
+  "one page website": "onepage",
   "starter website": "basic",
   "growth website": "standard",
   "premium website": "premium",

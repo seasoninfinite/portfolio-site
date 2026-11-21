@@ -30,12 +30,12 @@ export const viewport: Viewport = {
 };
 
 const siteDescription =
-  "Get a custom, hand-coded website from £199.99 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Only pay the rest when you're happy. Free quote →";
+  "Get a custom, hand-coded website from £125 with no VAT. ✓ Live in 3 days ✓ Free homepage preview ✓ Only pay the rest when you're happy. Free quote →";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
-    default: "Websites That Win You Clients | From £199.99, Live in 3 Days",
+    default: "Websites That Win You Clients | From £125, Live in 3 Days",
     template: `%s | ${SITE.name}`,
   },
   description: siteDescription,
@@ -89,7 +89,7 @@ const structuredData = {
       email: SITE.email,
       logo: `${siteOrigin}/icon.svg`,
       image: `${siteOrigin}/opengraph-image`,
-      priceRange: "£199.99–£499.99",
+      priceRange: "£125–£499.99",
       founder: { "@id": `${siteOrigin}/#ben` },
       address: {
         "@type": "PostalAddress",
