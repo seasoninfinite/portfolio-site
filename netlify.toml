@@ -4,3 +4,13 @@
 # Next.js on Netlify: SSR, API routes (/api/stripe/*), and env at runtime
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Client portal: a static app in public/portal (BGG Onboarding Kit). Serve it at /portal and /portal/.
+[[redirects]]
+  from = "/portal"
+  to = "/portal/index.html"
+  status = 200
+[[redirects]]
+  from = "/portal/"
+  to = "/portal/index.html"
+  status = 200

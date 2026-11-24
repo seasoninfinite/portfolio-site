@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c0c0b">
+<title>Client portal · BGG Website Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0b;--ln:rgba(244,242,236,.1);--tx:#f4f2ec;--mu:rgba(244,242,236,.6);--or:#ff5a1f;--or2:#ff8a52;--ok:#28c840}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+a{color:inherit}button{font:inherit}
+.glow{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+.mono.or{color:var(--or2)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.logo b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--tx);color:var(--bg);font-size:10.5px}
+.logo span{font-weight:500;color:var(--mu)}
+h1,h2,h3{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-.04em;margin:0}
+h1{font-size:clamp(40px,8vw,84px);line-height:.92}h1 em,h2 em{font-style:normal;color:var(--or2)}
+h2{font-size:clamp(28px,4.4vw,44px);line-height:1}
+h3{font-size:22px;letter-spacing:-.02em;line-height:1.15}
+.bx{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid var(--ln);border-radius:20px;padding:22px;position:relative;overflow:hidden}
+.bx.or{background:linear-gradient(140deg,#ff6a2e,#ff5a1f 45%,#b8380b);border-color:rgba(255,255,255,.18);color:#fff}
+.bx.or .mono{color:rgba(255,255,255,.8)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:active{transform:scale(.98)}
+.btn.or{background:var(--or);color:#fff;box-shadow:0 10px 30px rgba(255,90,31,.35)}
+.btn.lt{background:#fff;color:#121210}.btn.gh{background:transparent;color:var(--tx);border:1px solid var(--ln)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible,a:focus-visible,input:focus-visible+span,button:focus-visible{outline:3px solid var(--or2);outline-offset:3px}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=date],input[type=password],textarea{width:100%;font:inherit;font-size:16px;padding:14px 16px;border:1px solid var(--ln);border-radius:14px;background:rgba(255,255,255,.04);color:var(--tx);color-scheme:dark}
+textarea{min-height:110px;resize:vertical}::placeholder{color:rgba(244,242,236,.35)}
+input:focus,textarea:focus{outline:none;border-color:var(--or);background:rgba(255,255,255,.06);box-shadow:0 0 0 4px rgba(255,90,31,.15)}
+.hide{display:none!important}
+/* login */
+#login{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr;position:relative;z-index:1}
+#login .l{padding:28px 6vw;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+#login .r{padding:28px 6vw;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--ln);background:rgba(255,255,255,.015)}
+#login form{width:100%;max-width:400px}
+#login label{display:block;font-weight:600;margin:16px 0 8px}
+.perks{display:grid;gap:10px;max-width:460px}
+.perks div{display:flex;gap:12px;align-items:center;color:var(--mu)}.perks i{width:28px;height:28px;border-radius:9px;background:rgba(255,90,31,.15);color:var(--or2);display:grid;place-items:center;font-style:normal;font-family:'Geist Mono';font-size:12px;flex:none}
+.err{color:#ff8a7a;font-size:14px;min-height:22px;margin-top:10px}
+.remember{display:flex;gap:10px;align-items:center;margin-top:14px;color:var(--mu);font-size:14px}
+.remember input{width:18px;height:18px;accent-color:var(--or)}
+/* app shell */
+#app header{position:sticky;top:0;z-index:20;background:rgba(12,12,11,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+#app header .wrap{display:flex;align-items:center;gap:16px;height:64px}
+nav.tabs{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--mu);font-weight:500;font-size:15px;white-space:nowrap;position:relative}
+nav.tabs a.on{background:rgba(255,255,255,.08);color:var(--tx)}
+.tabs .ico{display:none}
+nav.tabs a .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--or);box-shadow:0 0 8px var(--or)}
+.out{background:none;border:0;color:var(--mu);cursor:pointer;font-size:14px;padding:8px}
+.view{padding:34px 0 60px;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.track{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:28px 0 10px}
+.track i{height:8px;border-radius:9px;background:rgba(244,242,236,.1);position:relative;overflow:hidden;display:block}
+.track i.dn{background:var(--tx)}.track i.nw{background:rgba(255,90,31,.25)}
+.track i.nw:after{content:"";position:absolute;inset:0;width:55%;background:var(--or);border-radius:9px;box-shadow:0 0 14px var(--or);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{width:75%}}
+.labels{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.labels span{font-size:13px;color:var(--mu)}.labels .nw{color:var(--tx);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:22px}
+.c8{grid-column:span 8}.c4{grid-column:span 4}.c6{grid-column:span 6}.c12{grid-column:span 12}.c3{grid-column:span 3}.c5{grid-column:span 5}.c7{grid-column:span 7}
+.next{display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:220px}
+.next p{font-size:clamp(20px,2.4vw,26px);line-height:1.28;margin:10px 0 0;font-weight:500;max-width:600px}
+.count{display:flex;flex-direction:column;justify-content:space-between;min-height:220px}
+.count .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(64px,9vw,104px);line-height:.85;letter-spacing:-.05em}
+.count .n small{font-size:.32em;letter-spacing:-.02em;color:var(--mu);margin-left:6px}
+.stat{min-height:100px;display:flex;flex-direction:column;justify-content:space-between}.stat b{font-size:18px;line-height:1.2;margin-top:10px;display:block}
+.ups{list-style:none;padding:0;margin:14px 0 0}
+.ups li{padding:12px 0 12px 22px;border-top:1px solid var(--ln);position:relative}
+.ups li:before{content:"";position:absolute;left:2px;top:21px;width:8px;height:8px;border-radius:50%;background:rgba(244,242,236,.3)}
+.ups li:first-child:before{background:var(--or);box-shadow:0 0 10px var(--or)}
+.ups time{display:block;font-family:'Geist Mono';font-size:12px;color:var(--mu)}
+.ring{display:flex;align-items:center;gap:18px}
+.ring .big{font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-.04em;line-height:1;display:block;margin-top:4px}
+/* checklist */
+.chk{list-style:none;padding:0;margin:16px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chk li{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--ln);border-radius:14px;background:rgba(255,255,255,.02)}
+.chk li i{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(244,242,236,.4);flex:none;display:grid;place-items:center}
+.chk li.ok{color:var(--mu)}.chk li.ok i{background:var(--ok);border-color:var(--ok)}
+.chk li.ok i:after{content:"";width:9px;height:4.5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+/* docs */
+.doc{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--ln);min-height:60px;background:none;border-left:0;border-right:0;border-bottom:0;color:inherit;width:100%;text-align:left;cursor:pointer}
+.doc .ic{width:40px;height:40px;border-radius:12px;background:rgba(255,90,31,.14);color:var(--or2);display:grid;place-items:center;font-family:'Geist Mono';font-size:11px;flex:none}
+.doc b{flex:1;font-weight:600}.doc small{display:block;color:var(--mu);font-weight:400;font-size:13px}
+.tag{font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;background:rgba(255,90,31,.16);color:var(--or2)}.tag.ok{background:rgba(40,200,64,.14);color:#6fe08a}
+/* preview */
+.pv-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0 14px}
+.seg{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid var(--ln);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;color:var(--mu);padding:8px 16px;border-radius:999px;cursor:pointer;font-weight:500;min-height:40px}
+.seg button.on{background:var(--tx);color:var(--bg)}
+.pv-wrap{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.stagebox{background:radial-gradient(80% 60% at 50% 0%,rgba(255,90,31,.18),transparent),rgba(255,255,255,.02);border:1px solid var(--ln);border-radius:24px;padding:26px;display:flex;justify-content:center;align-items:flex-start;position:relative}
+.device{background:#1b1b18;border-radius:16px;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);overflow:hidden;transition:width .4s ease,height .4s ease;position:relative;max-width:100%}
+.device .bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#23231f}
+.device .bar i{width:10px;height:10px;border-radius:50%;background:#3d3d37}.device .bar i:nth-child(1){background:#ff5f57}.device .bar i:nth-child(2){background:#febc2e}.device .bar i:nth-child(3){background:#28c840}
+.device .bar span{margin-left:10px;font-size:12px;color:var(--mu);background:#30302a;border-radius:6px;padding:3px 14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.device iframe{border:0;display:block;width:100%;background:#fff}
+.device.phone{border-radius:38px;padding:12px;background:#111}.device.phone .bar{display:none}.device.phone iframe{border-radius:28px}
+.pins{position:absolute;inset:0;pointer-events:none}
+.pin{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:var(--or);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 6px rgba(255,90,31,.25),0 6px 18px rgba(0,0,0,.4);pointer-events:auto;cursor:pointer;border:0;animation:ping 2s ease-out infinite}
+.pin.on{background:#fff;color:var(--or)}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,90,31,.55),0 6px 18px rgba(0,0,0,.4)}100%{box-shadow:0 0 0 16px rgba(255,90,31,0),0 6px 18px rgba(0,0,0,.4)}}
+.feat{display:grid;gap:10px}
+.fc{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:16px;border:1px solid var(--ln);border-radius:16px;background:rgba(255,255,255,.02);cursor:pointer;text-align:left;color:inherit;transition:border-color .2s,background .2s}
+.fc.on{border-color:var(--or);background:rgba(255,90,31,.08)}
+.fc .k{width:34px;height:34px;border-radius:50%;background:rgba(255,90,31,.16);color:var(--or2);display:grid;place-items:center;font-weight:700;font-size:14px}
+.fc b{display:block;font-size:16px;margin-bottom:3px}.fc p{margin:0;color:var(--mu);font-size:14.5px;line-height:1.45}
+.fc .win{display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:#6fe08a;font-family:'Geist Mono';letter-spacing:.04em;text-transform:uppercase}
+.empty{text-align:center;padding:70px 20px;color:var(--mu)}
+.empty .orb{width:110px;height:110px;margin:0 auto 22px;border-radius:50%;background:conic-gradient(from 0deg,var(--or),#ffb08a,var(--or));filter:blur(.5px);animation:spin 6s linear infinite;box-shadow:0 0 60px rgba(255,90,31,.5)}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* changes */
+.round{margin-top:14px}
+.round .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.chg{display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:start;padding:14px 0;border-top:1px solid var(--ln)}
+.chg .st{width:22px;height:22px;border-radius:50%;margin-top:2px;border:1.5px solid rgba(244,242,236,.35);display:grid;place-items:center}
+.chg.done .st{background:var(--ok);border-color:var(--ok)}
+.chg.done .st:after{content:"";width:9px;height:4.5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+.chg.doing .st{border-color:var(--or);box-shadow:0 0 0 4px rgba(255,90,31,.15)}
+.chg small{display:block;color:var(--mu);font-size:14px;margin-top:2px}
+.meter{display:flex;gap:6px}.meter i{width:34px;height:10px;border-radius:9px;background:rgba(244,242,236,.14)}.meter i.u{background:var(--or);box-shadow:0 0 10px rgba(255,90,31,.6)}
+/* wizard */
+.dots{display:flex;gap:6px}.dots i{width:26px;height:6px;border-radius:9px;background:rgba(244,242,236,.14);transition:.3s}.dots i.on{background:var(--or);box-shadow:0 0 10px var(--or)}.dots i.dn{background:var(--tx)}
+.panel{display:none;animation:in .35s ease}.panel.on{display:block}
+.panel>p{color:var(--mu);margin:8px 0 22px;max-width:620px}
+.q{margin:0 0 20px}.q>label,.q>.lab{display:block;font-weight:600;margin-bottom:8px}.q small{display:block;font-weight:400;color:var(--mu);font-size:14px;margin-top:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}.opts label{position:relative;cursor:pointer}
+.opts input,.styles input{position:absolute;opacity:0;pointer-events:none}
+.opts span{display:inline-flex;align-items:center;min-height:46px;padding:10px 16px;border-radius:999px;border:1px solid var(--ln);background:rgba(255,255,255,.03);font-size:15px;transition:.15s}
+.opts input:checked+span{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.styles label{cursor:pointer;position:relative}
+.sw{display:block;border-radius:16px;border:1px solid var(--ln);overflow:hidden;transition:.15s}
+.sw .p{height:92px;padding:14px;display:flex;flex-direction:column;justify-content:space-between}.sw .p b{font-size:30px;line-height:1}.sw .p i{width:44px;height:10px;border-radius:9px;display:block}
+.sw .nm{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:14px;font-weight:600;background:rgba(255,255,255,.03)}
+.sw .nm:after{content:"";width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(244,242,236,.35)}
+.styles input:checked+.sw{border-color:var(--or);box-shadow:0 0 0 2px var(--or)}.styles input:checked+.sw .nm:after{background:var(--or);border-color:var(--or)}
+.wz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:18px;margin-top:8px;border-top:1px solid var(--ln)}
+.review div{display:grid;grid-template-columns:200px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--ln);font-size:15px}.review span{color:var(--mu)}.review em{font-style:normal;color:rgba(244,242,236,.35)}
+.sent{text-align:center;padding:40px 10px}
+.tick{width:64px;height:64px;border-radius:50%;background:var(--ok);margin:0 auto 18px;display:grid;place-items:center;box-shadow:0 0 30px rgba(40,200,64,.5)}
+.tick:after{content:"";width:22px;height:11px;border-left:3px solid #fff;border-bottom:3px solid #fff;transform:translateY(-3px) rotate(-45deg)}
+.check-row{display:flex;gap:12px;align-items:flex-start;margin:14px 0;color:var(--mu)}.check-row input{width:20px;height:20px;margin-top:2px;accent-color:var(--or);flex:none}
+footer{padding:30px 0 50px;color:var(--mu);font-size:14px;position:relative;z-index:1}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media(max-width:900px){#login{grid-template-columns:1fr}#login .r{border-left:0;border-top:1px solid var(--ln)}.c8,.c4,.c6,.c5,.c7{grid-column:span 12}.c3{grid-column:span 6}.chk{grid-template-columns:1fr 1fr}.pv-wrap{grid-template-columns:1fr}.styles{grid-template-columns:1fr 1fr}.stagebox{padding:14px}}
+@media(max-width:700px){nav.tabs{position:fixed;left:0;right:0;bottom:0;margin:0;z-index:30;justify-content:space-around;gap:0;background:rgba(16,16,15,.92);backdrop-filter:blur(16px);border-top:1px solid var(--ln);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;font-size:11px;border-radius:12px;flex:1;min-height:52px;justify-content:center}nav.tabs a.on{background:none;color:var(--or2)}.tabs .ico{display:block;width:22px;height:22px}nav.tabs a .dot{top:4px;right:calc(50% - 16px)}.out{margin-left:auto;white-space:nowrap}footer{padding-bottom:110px}#app header{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(12,12,11,.96)}}
+@media(max-width:560px){.labels{display:none}.two{grid-template-columns:1fr}.chk{grid-template-columns:1fr}.review div{grid-template-columns:1fr;gap:2px}.bx{padding:18px}#app header .logo span{display:none}.logo-word{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="glow" style="width:640px;height:640px;right:-220px;top:-240px;background:radial-gradient(closest-side,rgba(255,90,31,.42),transparent)"></div>
+<div class="glow" style="width:500px;height:500px;left:-260px;top:40%;background:radial-gradient(closest-side,rgba(196,40,10,.28),transparent)"></div>
+
+<!-- Static copies of the forms so Netlify can detect them at deploy. The app posts the same fields. -->
+<form name="project-brief" data-netlify="true" netlify-honeypot="bot-field" hidden>
+<input name="client"><input name="business"><input name="bot-field">
+<textarea name="what_you_do"></textarea><textarea name="why_you"></textarea><textarea name="services"></textarea><textarea name="area"></textarea>
+<textarea name="customers"></textarea><input name="searches"><textarea name="questions"></textarea><input name="action"><input name="booking_system">
+<textarea name="page_1"></textarea><input name="page_1_name"><textarea name="page_2"></textarea><input name="page_2_name"><textarea name="page_3"></textarea><input name="page_3_name">
+<textarea name="page_4"></textarea><input name="page_4_name"><textarea name="page_5"></textarea><input name="page_5_name"><textarea name="page_6"></textarea><input name="page_6_name">
+<textarea name="page_7"></textarea><input name="page_7_name"><textarea name="page_8"></textarea><input name="page_8_name"><textarea name="page_9"></textarea><input name="page_9_name">
+<textarea name="page_10"></textarea><input name="page_10_name"><input name="wording"><input name="style"><input name="colours"><input name="logo">
+<textarea name="sites_liked"></textarea><textarea name="avoid"></textarea><input name="features"><input name="domain_status"><input name="domain"><input name="current_site">
+<input name="gbp"><input name="enquiry_email"><input name="phone"><textarea name="socials"></textarea><input name="deadline"><input name="care"><textarea name="anything_else"></textarea>
+</form>
+<form name="change-request" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="client"><input name="business"><input name="round"><textarea name="changes"></textarea><input name="bot-field"></form>
+<form name="approval" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="client"><input name="business"><input name="approved"><input name="name"><textarea name="note"></textarea><input name="bot-field"></form>
+
+<!-- LOGIN -->
+<section id="login">
+  <div class="l">
+    <a class="logo" href="https://bggwebsitedesign.com"><b>BGG</b>BGG <span>Website Design</span></a>
+    <div>
+      <span class="mono or">Client portal</span>
+      <h1 style="margin:14px 0 20px">Your website,<br><em>start to launch.</em></h1>
+      <div class="perks">
+        <div><i>01</i>See exactly where your project is up to</div>
+        <div><i>02</i>Preview your new site the moment it's ready</div>
+        <div><i>03</i>See every change I've made, round by round</div>
+        <div><i>04</i>Your brief, invoices and documents in one place</div>
+      </div>
+    </div>
+    <span class="mono">Private and encrypted · bggwebsitedesign.com</span>
+  </div>
+  <div class="r">
+    <form id="lf" autocomplete="on">
+      <h2 style="font-size:34px">Log in</h2>
+      <p style="color:var(--mu);margin:8px 0 6px">Use the email you gave me and the access code from my welcome email.</p>
+      <label for="le">Email</label><input id="le" type="email" autocomplete="username" required>
+      <label for="lc">Access code</label><input id="lc" type="password" autocomplete="current-password" placeholder="XXXX-XXXX-XXXX" required>
+      <label class="remember"><input type="checkbox" id="lr" checked> Keep me logged in on this device</label>
+      <button class="btn or" style="width:100%;margin-top:18px" id="lb">Open my portal</button>
+      <div class="err" id="lerr" role="alert"></div>
+      <p style="color:var(--mu);font-size:14px;margin:0">Lost your code? Email <a href="mailto:bggwebsitedesign@gmail.com">bggwebsitedesign@gmail.com</a>.</p>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hide">
+  <header><div class="wrap"><a class="logo" href="#overview"><b>BGG</b><span class="logo-word">BGG Website Design</span></a>
+    <nav class="tabs" id="tabs"></nav><button class="out" id="out">Log out</button></div></header>
+  <main class="wrap" id="view"></main>
+  <footer><div class="wrap">Questions? Email <a href="mailto:bggwebsitedesign@gmail.com">bggwebsitedesign@gmail.com</a>. I reply within 1 working day.</div></footer>
+</section>
+<canvas id="cf" class="hide"></canvas>
+
+<script>
+(function(){
+"use strict";
+var D=null,KEY=null,ID=null,EMAIL="bggwebsitedesign@gmail.com";
+var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return[].slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+var enc=new TextEncoder();
+function b64(s){var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+function hex(buf){return[].map.call(new Uint8Array(buf),function(x){return("0"+x.toString(16)).slice(-2)}).join("")}
+function norm(e,c){return[e.trim().toLowerCase(),c.trim().toUpperCase().replace(/[^A-Z0-9]/g,"")]}
+async function deriveKey(email,code){var salt=new Uint8Array(await crypto.subtle.digest("SHA-256",enc.encode("bgg-salt|"+email))).slice(0,16);
+  var base=await crypto.subtle.importKey("raw",enc.encode(code),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:210000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"])}
+async function fileId(email,code){return hex(await crypto.subtle.digest("SHA-256",enc.encode("bgg-id|"+email+"|"+code))).slice(0,24)}
+async function decrypt(obj){return crypto.subtle.decrypt({name:"AES-GCM",iv:b64(obj.iv)},KEY,b64(obj.ct))}
+async function login(email,code,remember){
+  var n=norm(email,code);ID=await fileId(n[0],n[1]);
+  var r=await fetch("/portal/d/"+ID+".json",{cache:"no-store"});if(!r.ok)throw new Error("nf");
+  KEY=await deriveKey(n[0],n[1]);
+  D=JSON.parse(new TextDecoder().decode(await decrypt(await r.json())));
+  try{(remember?localStorage:sessionStorage).setItem("bgg-portal",JSON.stringify(n))}catch(e){}
+  $("#login").classList.add("hide");$("#app").classList.remove("hide");
+  document.title=D.business+" · Client portal · BGG Website Design";
+  route();
+}
+$("#lf").addEventListener("submit",async function(ev){ev.preventDefault();var b=$("#lb");b.disabled=true;b.textContent="Unlocking…";$("#lerr").textContent="";
+  try{await login($("#le").value,$("#lc").value,$("#lr").checked)}catch(e){$("#lerr").textContent="That email and code don't match. Check my welcome email, or ask me for a new code.";b.disabled=false;b.textContent="Open my portal"}});
+$("#out").onclick=function(){try{localStorage.removeItem("bgg-portal");sessionStorage.removeItem("bgg-portal")}catch(e){}location.hash="";location.reload()};
+
+/* ---------- data helpers ---------- */
+var STAGES=["Deposit & kick-off","Your content","First version","Your changes","Approve & launch","Live"];
+function stage(){return Math.max(1,Math.min(6,D.stage||1))}
+function roundsUsed(){return(D.rounds||[]).length}
+function tabs(){var t=[["overview","Overview"]];if(!D.brief_done)t.push(["brief","Your brief"]);else t.push(["brief","Brief"]);
+  t.push(["preview","Preview"],["changes","Changes"],["content","Content"],["docs","Documents"]);return t}
+function nextAction(){var s=stage();
+  if(D.next_for_you)return[D.next_for_you,null];
+  if(s<=2&&!D.brief_done)return["Fill in your project brief. About 10 minutes, and it shapes everything I design.",["#brief","Start your brief"]];
+  if(s===2)return["Send everything on your content checklist. The clock starts when I have it all.",["#content","See the checklist"]];
+  if(s===3)return["Nothing for you right now. I'm designing and building your site.",D.preview_link?["#preview","Peek at the preview"]:null];
+  if(s===4)return["Your preview is ready. Click through it, then send me one list of changes.",["#preview","Open your preview"]];
+  if(s===5)return["Happy with it? Approve it and pay the balance, and I'll put it live.",["#changes","Approve and launch"]];
+  return["You're live! Send a test enquiry through your contact form and check it arrives.",D.site_link?[D.site_link,"Visit your live site"]:null]}
+function countdown(){var s=stage();
+  if(s>=6){if(!D.launch_date)return["Live","now"];var end=new Date(D.launch_date);end.setDate(end.getDate()+30);var d=Math.ceil((end-new Date())/864e5);return[d>0?d:0,d>0?"days of free fixes left":"Free-fix period ended"]}
+  if(D.target_date){var d2=Math.ceil((new Date(D.target_date)-new Date())/864e5);if(d2>0)return[d2,"days to launch (estimate)"]}
+  return[Math.round((s-1)/5*100)+"%","of the way to launch"]}
+
+/* ---------- views ---------- */
+function vOverview(){var s=stage(),na=nextAction(),cd=countdown(),got=D.received||[],n=D.checklist.filter(function(c){return got.indexOf(c[0])>-1}).length,pct=Math.round(n/D.checklist.length*100),R=34,C=2*Math.PI*R;
+  var track=STAGES.map(function(_,i){return'<i class="'+(i+1<s?"dn":i+1===s?"nw":"")+'"></i>'}).join(""),labels=STAGES.map(function(t,i){return'<span class="'+(i+1===s?"nw":"")+'">'+t+"</span>"}).join("");
+  var btn=na[1]?'<a class="btn lt" href="'+esc(na[1][0])+'"'+(na[1][0].indexOf("http")===0?' target="_blank" rel="noopener"':"")+">"+esc(na[1][1])+" →</a>":"";
+  var ups=(D.updates||[]).slice().reverse().map(function(u){return"<li><time>"+esc(u.date)+"</time>"+esc(u.text)+"</li>"}).join("")||"<li><time>Today</time>Your portal is ready. Updates appear here as we go.</li>";
+  return'<span class="mono or">'+esc(D.business)+" · Updated "+esc(D.updated)+'</span><h1 style="margin:14px 0 0">Hi '+esc(D.first)+',<br><em>'+(s>=6?"you're live!":"here's where we are.")+"</em></h1>"+
+  '<div class="track">'+track+'</div><div class="labels">'+labels+"</div>"+
+  '<div class="grid"><div class="bx or next c8"><div><span class="mono">Step '+s+" of 6 · Next up</span><p>"+esc(na[0])+"</p></div><div>"+btn+'</div></div>'+
+  '<div class="bx count c4"><span class="mono or">'+(s>=6?"Aftercare":"Progress")+'</span><div class="n">'+esc(cd[0])+'</div><span style="color:var(--mu)">'+esc(cd[1])+"</span></div>"+
+  '<div class="bx stat c3"><span class="mono">Package</span><b>'+esc(D.plan)+'</b></div><div class="bx stat c3"><span class="mono">Pages</span><b>'+esc(D.pages_lbl)+'</b></div>'+
+  '<div class="bx stat c3"><span class="mono">Rounds of changes</span><b>'+(D.rounds_total-roundsUsed())+" of "+D.rounds_total+' left</b></div><div class="bx stat c3"><span class="mono">Kick-off</span><b>'+esc(D.kickoff||"To book")+"</b></div>"+
+  '<div class="bx c7"><h3>Updates</h3><ul class="ups">'+ups+"</ul></div>"+
+  '<a class="bx c5 ring" href="#content" style="text-decoration:none"><svg width="96" height="96" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="rgba(244,242,236,.12)" stroke-width="8"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="#ff5a1f" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+(C*pct/100).toFixed(1)+" "+C.toFixed(1)+'" transform="rotate(-90 42 42)"/></svg><div><span class="mono">Content received</span><span class="big">'+n+"/"+D.checklist.length+'</span><span style="color:var(--mu);font-size:14px">See what\'s still needed →</span></div></a></div>'}
+
+function vContent(){var got=D.received||[];
+  var li=D.checklist.map(function(c){return'<li class="'+(got.indexOf(c[0])>-1?"ok":"")+'"><i></i>'+esc(c[1])+"</li>"}).join("");
+  return'<span class="mono or">Content checklist</span><h2 style="margin:12px 0 8px">What I need <em>from you.</em></h2><p style="color:var(--mu);max-width:640px">I tick these off as they arrive. The easiest way: put everything in one shared Google Drive folder and share it with '+EMAIL+'. Please don\'t send passwords; use "invite a user" or "add a manager" instead.</p>'+
+  (D.drive_link?'<a class="btn or" href="'+esc(D.drive_link)+'" target="_blank" rel="noopener" style="margin-top:8px">Open our shared folder →</a>':"")+'<div class="bx" style="margin-top:20px"><ul class="chk" style="margin:0">'+li+"</ul></div>"}
+
+function vDocs(){var rows=(D.docs||[]).map(function(d,i){var t=d.tag?'<span class="tag'+(d.tag==="Paid"?" ok":"")+'">'+esc(d.tag)+"</span>":"";
+  return'<button class="doc" data-doc="'+i+'"><span class="ic">'+esc(d.icon||"PDF")+"</span><b>"+esc(d.name)+"<small>"+esc(d.note||"")+"</small></b>"+t+'<span style="color:var(--mu)">Open →</span></button>'}).join("");
+  return'<span class="mono or">Documents</span><h2 style="margin:12px 0 20px">Everything, <em>in one place.</em></h2><div class="bx">'+rows+"</div>"}
+
+function vPreview(){
+  if(!D.preview_link)return'<span class="mono or">Preview</span><h2 style="margin:12px 0 0">Your preview is <em>on its way.</em></h2><div class="bx empty" style="margin-top:22px"><div class="orb"></div><h3>I\'m designing it now</h3><p style="max-width:440px;margin:10px auto 0">The moment the first version is ready, it appears right here, and you\'ll get an email from me. You\'ll be able to click through it on your phone, tablet or laptop.</p></div>';
+  var f=(D.features||[]).map(function(x,i){return'<button class="fc" data-f="'+i+'"><span class="k">'+(i+1)+"</span><span><b>"+esc(x.title)+"</b><p>"+esc(x.benefit)+'</p><span class="win">'+esc(x.win||"Turns visitors into customers")+"</span></span></button>"}).join("");
+  return'<span class="mono or">Preview · '+esc(D.preview_label||"First version")+'</span><h2 style="margin:12px 0 0">Your new site, <em>live and clickable.</em></h2>'+
+  '<div class="pv-bar"><div class="seg" id="seg"><button data-d="phone">Phone</button><button data-d="tablet">Tablet</button><button data-d="laptop" class="on">Laptop</button></div><a class="btn gh" href="'+esc(D.preview_link)+'" target="_blank" rel="noopener">Open full screen ↗</a></div>'+
+  '<div class="pv-wrap"><div class="stagebox"><div class="device" id="dev"><div class="bar"><i></i><i></i><i></i><span>'+esc(D.domain||D.preview_link)+'</span></div><iframe id="ifr" src="'+esc(D.preview_link)+'" title="Preview of your new website" loading="lazy"></iframe><div class="pins" id="pins"></div></div></div>'+
+  '<div><div class="bx"><span class="mono or">Feature tour</span><h3 style="margin:8px 0 6px">Built to win you customers</h3><p style="color:var(--mu);margin:0 0 14px;font-size:14.5px">Tap a feature to see where it is.</p><div class="feat">'+f+'</div></div><a class="btn or" href="#changes" style="width:100%;margin-top:12px">Request changes or approve →</a></div></div>'}
+
+function vChanges(){var used=roundsUsed(),left=D.rounds_total-used,s=stage();
+  var meter='<div class="meter" aria-label="'+left+' rounds left">'+Array.from({length:D.rounds_total},function(_,i){return'<i class="'+(i<used?"u":"")+'"></i>'}).join("")+"</div>";
+  var rounds=(D.rounds||[]).slice().reverse().map(function(r){var done=r.items.filter(function(i){return i.status==="done"}).length;
+    return'<div class="bx round"><div class="hd"><div><span class="mono or">Round '+r.n+" · "+esc(r.date||"")+'</span><h3 style="margin-top:4px">'+(done===r.items.length?"All "+done+" changes made":done+" of "+r.items.length+" changes made")+'</h3></div><span class="tag'+(done===r.items.length?" ok":"")+'">'+(done===r.items.length?"Done":"In progress")+"</span></div>"+
+    r.items.map(function(i){return'<div class="chg '+esc(i.status)+'"><span class="st"></span><div><b>'+esc(i.text)+"</b>"+(i.note?"<small>"+esc(i.note)+"</small>":"")+'</div><span class="mono">'+(i.status==="done"?"Changed":i.status==="doing"?"Working on it":"Queued")+"</span></div>"}).join("")+"</div>"}).join("");
+  var form=s>=3&&s<6&&left>0&&D.preview_link?'<div class="bx" style="margin-top:14px" id="crbox"><span class="mono or">Round '+(used+1)+' · Your list</span><h3 style="margin:6px 0 4px">Request changes</h3><p style="color:var(--mu);margin:0 0 14px;font-size:14.5px">Put everything for this round in one list. One line per change is perfect. Fixing my own mistakes never uses up a round.</p><textarea id="crt" rows="7" placeholder="1. Make the phone number bigger on the homepage&#10;2. Swap the second photo for the one of the counter&#10;3. ..."></textarea><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn or" id="crs">Send round '+(used+1)+" changes</button></div></div>":"";
+  var appr=s>=4&&s<6&&D.preview_link?'<div class="bx or" style="margin-top:14px" id="apbox"><span class="mono">Happy with it?</span><h2 style="margin:8px 0 6px;color:#fff">Approve and launch.</h2><p style="margin:0 0 6px;max-width:560px">When you approve, I\'ll send the balance invoice ('+esc(D.balance)+') and put your site live once it\'s paid.</p><label class="check-row" style="color:#fff"><input type="checkbox" id="apc"> I\'ve checked everything, including spelling, prices, contact details and opening hours, and I approve the website to go live.</label><input type="text" id="apn" placeholder="Your full name" style="background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.3);max-width:360px"><div style="margin-top:14px"><button class="btn lt" id="aps">Approve my website</button></div></div>':"";
+  return'<span class="mono or">Changes</span><h2 style="margin:12px 0 8px">Every change, <em>tracked.</em></h2><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:14px 0 6px">'+meter+'<span style="color:var(--mu)">'+left+" of "+D.rounds_total+" rounds of changes left</span></div>"+
+  (rounds||'<div class="bx empty" style="padding:40px 20px;margin-top:14px"><h3>No changes yet</h3><p style="margin:8px 0 0">When you send a round of changes, you\'ll see each one here, ticked off as I make it.</p></div>')+form+appr}
+
+/* ---------- brief wizard ---------- */
+var STY=[["Clean and simple","#ffffff","#121210","#2f6bff","Geist"],["Warm and friendly","#f6e7d8","#3b2414","#d9692b","Geist"],["Bold and modern","#0d0d0d","#ffffff","#c6ff3d","Bricolage Grotesque"],["Premium and elegant","#14110d","#f1e6d2","#c9a45c","Georgia"],["Calm and natural","#e7ece3","#26372b","#7c9a6e","Georgia"],["Fun and playful","#ffe14d","#1b1b1b","#ff4d8d","Bricolage Grotesque"]];
+function chips(n,o,m){return'<div class="opts">'+o.map(function(x){return'<label><input type="'+(m?"checkbox":"radio")+'" name="'+n+'" value="'+esc(x)+'"><span>'+esc(x)+"</span></label>"}).join("")+"</div>"}
+function q(l,f,h){return'<div class="q"><label>'+l+(h?"<small>"+h+"</small>":"")+f+"</label></div>"}
+function qg(l,f,h){return'<div class="q"><div class="lab">'+l+(h?"<small>"+h+"</small>":"")+"</div>"+f+"</div>"}
+function ta(n,p,r){return'<textarea name="'+n+'" rows="'+(r||4)+'" placeholder="'+esc(p||"")+'"></textarea>'}
+function inp(n,t,p,v){return'<input type="'+(t||"text")+'" name="'+n+'" placeholder="'+esc(p||"")+'" value="'+esc(v||"")+'">'}
+function vBrief(){
+  if(D.brief_done)return'<span class="mono or">Project brief</span><div class="bx sent" style="margin-top:20px"><div class="tick"></div><h2>Brief received.</h2><p style="color:var(--mu);margin:10px 0 0">Thank you! I\'m using your answers to plan your site. If anything changes, just email me.</p></div>';
+  var pages=(D.pages&&D.pages.length?D.pages:["Home"]).slice(0,10);
+  var pq=pages.map(function(p,i){return q(esc(p),ta("page_"+(i+1),"What should go on your "+p+" page?",3))+'<input type="hidden" name="page_'+(i+1)+'_name" value="'+esc(p)+'">'}).join("");
+  var sty='<div class="styles">'+STY.map(function(s){return'<label><input type="checkbox" name="style" value="'+s[0]+'"><span class="sw"><span class="p" style="background:'+s[1]+";color:"+s[2]+'"><b style="font-family:\''+s[4]+'\',serif">Aa</b><i style="background:'+s[3]+'"></i></span><span class="nm">'+s[0]+"</span></span></label>"}).join("")+"</div>";
+  var P=[["Let's start with you","What you do, in your own words. Don't overthink it; I'll turn it into great copy.",q("What does your business do?",ta("what_you_do","As you'd explain it to a new customer"))+q("Why do people choose you?",ta("why_you","Experience, speed, price, the personal touch, awards…"),"This becomes the heart of your homepage.")+'<div class="two">'+q("Main services or products",ta("services","Your top 3 to 6",3))+q("Where do you work?",ta("area","Towns you cover, or online, UK-wide",3))+"</div>"],
+   ["Your customers","The better I know them, the more your site speaks to them.",q("Who are your best customers?",ta("customers","Who they are and what they need"))+q("What would they type into Google?",inp("searches","text","e.g. office catering near me"))+q("What do they ask before they buy?",ta("questions","These become your FAQs",3))],
+   ["The one action","Every page will point people to this.",qg("What should every visitor do?",chips("action",["Call me","Book online","Send an enquiry","Visit in person","Buy online","WhatsApp me"]))+q("Already using a booking or ordering system?",inp("booking_system","text","e.g. Fresha, Calendly, or none"))],
+   ["Your pages","A few lines each is plenty. Bullet points are fine.",pq+qg("Who writes the words?",chips("wording",["I'll send my own","Rough notes, please polish them","Please write them (£39.99 a page)"]))],
+   ["The vibe","Pick up to three. This steers the fonts, colours and feel.",qg("Which of these feels like you?",sty)+'<div class="two">'+q("Brand colours",inp("colours","text","e.g. forest green and cream"))+qg("Your logo",chips("logo",["I have one","I need one (£99.99)","Text is fine"]))+"</div>"+q("Websites you love (any industry)",ta("sites_liked","Links, and what you like about each",3))+q("Anything you'd hate to see?",ta("avoid","",2))],
+   ["The practical bits","Nearly there.",qg("Features you need",chips("features",["Contact form","Online booking","Gallery","Reviews","Map","Social links","Payments","Newsletter"],true))+'<div class="two">'+qg("Domain name",chips("domain_status",["I own one","I need one","Not sure"]))+q("Which domain, and who is it with?",inp("domain","text","mybusiness.co.uk with GoDaddy",D.domain))+"</div>"+'<div class="two">'+q("Current website",inp("current_site","url","https://"))+qg("On Google Maps?",chips("gbp",["Yes","No","Not sure"]))+"</div>"+'<div class="two">'+q("Enquiries go to",inp("enquiry_email","email","",D.email))+q("Phone for the call button",inp("phone","tel"))+"</div>"+q("Social media links",ta("socials","Just the links, never log-ins",2))+'<div class="two">'+q("Any deadline?",inp("deadline","date"),"Only a real date, like an opening day.")+qg("Care plan after launch?",chips("care",["Essential, £10/mo","Priority, £25/mo","Not now","Tell me more"]))+"</div>"+q("Anything else?",ta("anything_else","",3))],
+   ["Check and send","Here's what you've told me. Tap Back to change anything.",'<div class="review" id="rv"></div>']];
+  return'<span class="mono or">Your project brief</span><h2 style="margin:12px 0 20px">Tell me about <em>your business.</em></h2><div class="bx"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap"><span class="mono" id="wzc"></span><div class="dots" id="dots">'+P.map(function(){return"<i></i>"}).join("")+'</div></div><form id="bf" novalidate>'+
+  P.map(function(p,i){return'<div class="panel'+(i?"":" on")+'"><h2 style="font-size:clamp(28px,5vw,40px)">'+p[0]+"</h2><p>"+p[1]+"</p>"+p[2]+"</div>"}).join("")+
+  '<div class="wz-nav"><button type="button" class="btn gh" id="wb">Back</button><span class="mono" id="wsv">Saves as you go</span><button type="button" class="btn or" id="wn">Next</button></div></form></div>'}
+function bindBrief(){var f=$("#bf");if(!f)return;var P=$$(".panel",f),Dt=$$("#dots i"),cur=0,K="bgg-brief-"+ID;
+  function data(){var d={};new FormData(f).forEach(function(v,k){(d[k]=d[k]||[]).push(v)});return d}
+  function save(){try{localStorage.setItem(K,JSON.stringify({d:data(),s:cur}))}catch(e){}}
+  function review(){var d=data(),o="";P.slice(0,-1).forEach(function(p){$$(".q",p).forEach(function(qq){var l=qq.querySelector("label,.lab"),t=l&&l.firstChild?l.firstChild.textContent:"",ns={};$$("[name]",qq).forEach(function(el){if(el.type!=="hidden")ns[el.name]=1});
+    Object.keys(ns).forEach(function(n){var v=(d[n]||[]).filter(Boolean).join(", ");o+="<div><span>"+esc(t)+"</span>"+(v?esc(v):"<em>Not answered</em>")+"</div>"})})});$("#rv").innerHTML=o}
+  function show(i){cur=Math.max(0,Math.min(P.length-1,i));P.forEach(function(p,j){p.classList.toggle("on",j===cur)});Dt.forEach(function(d,j){d.className=j<cur?"dn":j===cur?"on":""});
+    $("#wb").style.visibility=cur?"visible":"hidden";$("#wn").textContent=cur===P.length-1?"Send my brief":cur===P.length-2?"Review":"Next";$("#wzc").textContent="Step "+(cur+1)+" of "+P.length;if(cur===P.length-1)review();save()}
+  var s=null;try{s=JSON.parse(localStorage.getItem(K)||"null")}catch(e){}
+  if(s&&s.d)Object.keys(s.d).forEach(function(k){$$('[name="'+k+'"]',f).forEach(function(el){if(el.type==="hidden")return;if(el.type==="checkbox"||el.type==="radio")el.checked=s.d[k].indexOf(el.value)>-1;else el.value=s.d[k][0]||""})});
+  $$("input[name=style]",f).forEach(function(el){el.addEventListener("change",function(){if($$("input[name=style]:checked",f).length>3)el.checked=false})});
+  f.addEventListener("input",save);f.addEventListener("change",save);
+  $("#wb").onclick=function(){show(cur-1);window.scrollTo({top:0})};
+  $("#wn").onclick=function(){if(cur<P.length-1){show(cur+1);window.scrollTo({top:0});return}
+    var fd=new FormData(f);fd.append("form-name","project-brief");fd.append("client",D.slug);fd.append("business",D.business);
+    post(fd,$("#wn"),"Sending…").then(function(){try{localStorage.removeItem(K)}catch(e){}f.parentNode.innerHTML='<div class="sent"><div class="tick"></div><h2>Brief sent!</h2><p style="color:var(--mu);margin:10px 0 0">It\'s with me now. I\'ll read it before our kick-off call.</p></div>';confetti()})};
+  show(s&&s.s||0)}
+function post(fd,btn,label){var old=btn.textContent;btn.disabled=true;btn.textContent=label;
+  return fetch("/__forms.html",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(fd).toString()})
+  .then(function(r){if(!r.ok)throw 0}).catch(function(e){btn.disabled=false;btn.textContent=old;alert("That didn't send. Please try again, or email "+EMAIL+".");throw e})}
+
+/* ---------- bindings ---------- */
+function bindPreview(){var dev=$("#dev");if(!dev)return;var ifr=$("#ifr"),stageEl=dev.parentNode;
+  var size={phone:[390,780],tablet:[768,900],laptop:[1280,800]},cur="laptop";
+  function fit(){if(!document.body.contains(dev))return;var w=size[cur][0],h=size[cur][1],pad=cur==="phone"?24:0,max=stageEl.clientWidth-(window.innerWidth<900?28:52)-pad,sc=Math.min(1,max/w);
+    dev.className="device"+(cur==="phone"?" phone":"");dev.style.width=w*sc+pad+"px";ifr.style.width=w+"px";ifr.style.height=h+"px";ifr.style.transform="scale("+sc+")";ifr.style.transformOrigin="0 0";
+    var ph=cur==="phone"?24:38;dev.style.height=h*sc+ph+"px";pins()}
+  function pins(){var p=$("#pins");if(!p)return;p.innerHTML=(D.features||[]).map(function(x,i){if(x[cur]==null&&x.x==null)return"";var pos=x[cur]||[x.x,x.y];return'<button class="pin" data-f="'+i+'" style="left:'+pos[0]+"%;top:"+pos[1]+'%" aria-label="Feature '+(i+1)+'">'+(i+1)+"</button>"}).join("");
+    $$(".pin",p).forEach(function(b){b.onclick=function(){sel(+b.dataset.f)}})}
+  function sel(i){$$(".fc").forEach(function(c){c.classList.toggle("on",+c.dataset.f===i)});$$(".pin").forEach(function(c){c.classList.toggle("on",+c.dataset.f===i)})}
+  $$("#seg button").forEach(function(b){b.onclick=function(){$$("#seg button").forEach(function(x){x.classList.toggle("on",x===b)});cur=b.dataset.d;fit()}});
+  $$(".fc").forEach(function(c){c.onclick=function(){sel(+c.dataset.f)}});
+  if(window.innerWidth<600){cur="phone";$$("#seg button").forEach(function(x){x.classList.toggle("on",x.dataset.d==="phone")})}
+  fit();if(window._bggFit)window.removeEventListener("resize",window._bggFit);window._bggFit=fit;window.addEventListener("resize",fit)}
+function bindChanges(){var s=$("#crs");if(s)s.onclick=function(){var t=$("#crt").value.trim();if(!t){$("#crt").focus();return}
+    var fd=new FormData();fd.append("form-name","change-request");fd.append("client",D.slug);fd.append("business",D.business);fd.append("round",roundsUsed()+1);fd.append("changes",t);
+    post(fd,s,"Sending…").then(function(){$("#crbox").innerHTML='<div class="sent"><div class="tick"></div><h3>Round '+(roundsUsed()+1)+' sent</h3><p style="color:var(--mu);margin:8px 0 0">Got it. Each change will appear above as I make it.</p></div>'})};
+  var a=$("#aps");if(a)a.onclick=function(){if(!$("#apc").checked||!$("#apn").value.trim()){alert("Please tick the box and type your name to approve.");return}
+    var fd=new FormData();fd.append("form-name","approval");fd.append("client",D.slug);fd.append("business",D.business);fd.append("approved","yes, "+new Date().toISOString());fd.append("name",$("#apn").value.trim());
+    post(fd,a,"Approving…").then(function(){$("#apbox").innerHTML='<div class="sent"><div class="tick"></div><h2 style="color:#fff">Approved. Let\'s launch!</h2><p style="margin:8px 0 0">Your balance invoice is on its way. Your site goes live as soon as it\'s paid.</p></div>';confetti()})}}
+function bindDocs(){$$("[data-doc]").forEach(function(b){b.onclick=async function(){var d=D.docs[+b.dataset.doc],w=window.open("","_blank");
+    try{var r=await fetch("/portal/d/"+ID+"-"+d.file+".json",{cache:"no-store"});var buf=await decrypt(await r.json());var url=URL.createObjectURL(new Blob([buf],{type:"application/pdf"}));
+      if(w)w.location=url;else location.href=url}catch(e){if(w)w.close();alert("Couldn't open that document. Please email "+EMAIL+".")}}})}
+
+/* ---------- router ---------- */
+var ICONS={overview:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',brief:'<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',preview:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',changes:'<path d="M4 12l5 5L20 6"/>',content:'<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>',docs:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>'};
+function ICO(k){return'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[k]+"</svg>"}
+var VIEWS={overview:vOverview,brief:vBrief,preview:vPreview,changes:vChanges,content:vContent,docs:vDocs};
+function route(){if(!D)return;var h=(location.hash||"#overview").slice(1);if(!VIEWS[h])h="overview";
+  $("#tabs").innerHTML=tabs().map(function(t){var dot=(t[0]==="brief"&&!D.brief_done&&stage()<=2)||(t[0]==="preview"&&D.preview_new)?'<span class="dot"></span>':"";return'<a href="#'+t[0]+'" class="'+(t[0]===h?"on":"")+'">'+ICO(t[0])+"<span>"+t[1]+"</span>"+dot+"</a>"}).join("");
+  var v=$("#view");v.innerHTML='<div class="view">'+VIEWS[h]()+"</div>";window.scrollTo({top:0});
+  bindBrief();bindPreview();bindChanges();bindDocs();
+  if(stage()>=6&&!sessionStorage.getItem("bgg-cf")){sessionStorage.setItem("bgg-cf",1);confetti()}}
+window.addEventListener("hashchange",route);
+
+/* ---------- confetti ---------- */
+function confetti(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;var c=$("#cf");c.classList.remove("hide");var x=c.getContext("2d"),W=c.width=innerWidth,H=c.height=innerHeight,
+  P=Array.from({length:160},function(){return{x:W/2,y:H/3,vx:(Math.random()-.5)*14,vy:Math.random()*-12-4,r:Math.random()*6+3,c:["#ff5a1f","#ff8a52","#f4f2ec","#28c840","#febc2e"][Math.random()*5|0],a:Math.random()*6}}),t=0;
+  (function f(){x.clearRect(0,0,W,H);P.forEach(function(p){p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r,-p.r/2,p.r*2,p.r);x.restore()});
+   if(++t<160)requestAnimationFrame(f);else c.classList.add("hide")})()}
+
+/* ---------- auto login: saved device, or #login= link from the QR code ---------- */
+(async function(){var m=location.hash.match(/^#login=([^&]+)/),creds=null;
+  if(m){try{creds=atob(decodeURIComponent(m[1])).split("|")}catch(e){}history.replaceState(null,"","/portal/#overview")}
+  if(!creds){try{creds=JSON.parse(localStorage.getItem("bgg-portal")||sessionStorage.getItem("bgg-portal")||"null")}catch(e){}}
+  if(creds){$("#le").value=creds[0];try{await login(creds[0],creds[1],true)}catch(e){$("#lerr").textContent="Please log in with your email and access code."}}
+})();
+})();
+</script>
+</body>
+</html>
