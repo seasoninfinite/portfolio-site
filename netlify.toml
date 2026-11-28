@@ -5,6 +5,13 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# The *.netlify.app address must never show a second copy of the site to Google: send it to the real domain.
+[[redirects]]
+  from = "https://bgg-website-design.netlify.app/*"
+  to = "https://bggwebsitedesign.com/:splat"
+  status = 301
+  force = true
+
 # Client portal: a static app in public/portal (BGG Onboarding Kit). Serve it at /portal and /portal/.
 [[redirects]]
   from = "/portal"
