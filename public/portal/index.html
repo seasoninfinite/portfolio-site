@@ -157,6 +157,14 @@ nav.tabs a .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-
 .panel>p{color:var(--mu);margin:8px 0 22px;max-width:620px}
 .q{margin:0 0 20px}.q>label,.q>.lab{display:block;font-weight:600;margin-bottom:8px}.q small{display:block;font-weight:400;color:var(--mu);font-size:14px;margin-top:2px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stars{display:flex;gap:6px;margin:6px 0 14px}.stars button{background:none;border:0;padding:4px;cursor:pointer;font-size:34px;line-height:1;color:rgba(244,242,236,.22);transition:transform .15s,color .15s;min-width:44px;min-height:44px}
+.stars button.on{color:#ffc83d}.stars button:hover{transform:scale(1.12)}
+.rsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.rsteps div{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px}
+.rsteps b{display:block;font-size:15px;margin:6px 0 4px;color:#fff}.rsteps p{margin:0;font-size:13.5px;opacity:.9}.rsteps .n{font:700 12px/1 ui-monospace,monospace;opacity:.8}
+.small{font-size:13px;line-height:1.55;margin:0;padding-left:18px}.small li{margin:4px 0}
+#refbox input[type=text]{background:rgba(0,0,0,.22);border-color:rgba(255,255,255,.4);color:#fff}#refbox input::placeholder{color:rgba(255,255,255,.8)}
+.ref-amt{font-size:56px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#fff}
+@media(max-width:700px){.rsteps{grid-template-columns:1fr}}
 .opts{display:flex;flex-wrap:wrap;gap:8px}.opts label{position:relative;cursor:pointer}
 .opts input,.styles input{position:absolute;opacity:0;pointer-events:none}
 .opts span{display:inline-flex;align-items:center;min-height:46px;padding:10px 16px;border-radius:999px;border:1px solid var(--ln);background:rgba(255,255,255,.03);font-size:15px;transition:.15s}
@@ -273,7 +281,7 @@ var STAGES=["Deposit & kick-off","Your content","First version","Your changes","
 function stage(){return Math.max(1,Math.min(6,D.stage||1))}
 function roundsUsed(){return(D.rounds||[]).length}
 function tabs(){var t=[["overview","Overview"]];if(!D.brief_done)t.push(["brief","Your brief"]);else t.push(["brief","Brief"]);
-  t.push(["preview","Preview"],["changes","Changes"],["content","Content"],["docs","Documents"]);return t}
+  t.push(["preview","Preview"],["changes","Changes"],["content","Content"],["docs","Documents"],["reviews","Reviews"]);return t}
 function nextAction(){var s=stage();
   if(D.next_for_you)return[D.next_for_you,null];
   if(s<=2&&!D.brief_done)return["Fill in your project brief. About 10 minutes, and it shapes everything I design.",["#brief","Start your brief"]];
@@ -439,14 +447,62 @@ function bindDocs(){$$("[data-doc]").forEach(function(b){b.onclick=async functio
     try{var r=await fetch("/portal/d/"+ID+"-"+d.file+".json",{cache:"no-store"});var buf=await decrypt(await r.json());var url=URL.createObjectURL(new Blob([buf],{type:"application/pdf"}));
       if(w)w.location=url;else location.href=url}catch(e){if(w)w.close();alert("Couldn't open that document. Please email "+EMAIL+".")}}})}
 
+/* ---------- reviews & referrals (deliberately separate: reviews are never rewarded, DMCC Act 2024) ---------- */
+var REF_AMT = 35;
+function vReviews(){var s=stage(),open=s>=5,first=(D.client_name||"").split(" ")[0];
+  var stars=[1,2,3,4,5].map(function(n){return'<button type="button" data-st="'+n+'" aria-label="'+n+' star'+(n>1?"s":"")+'">★</button>'}).join("");
+  var review=open?
+   '<div class="bx" id="rvbox"><span class="mono or">Your review</span><h3 style="margin:8px 0 6px">How was it, honestly?</h3>'+
+   '<p style="color:var(--mu);margin:0 0 12px;font-size:14.5px">Good or bad, I want to hear it. It helps me get better, and it helps other small businesses decide. <b style="color:var(--tx)">There\'s no reward for reviews</b>, and what you write never affects your price or support.</p>'+
+   '<label class="mono" style="color:var(--mu)">Your rating</label><div class="stars" id="stars">'+stars+'</div>'+
+   '<label class="mono" style="color:var(--mu)" for="rvt">Your review</label>'+
+   '<textarea id="rvt" rows="6" placeholder="A few lines is perfect. For example:&#10;• What was your website like before?&#10;• What was it like working with me?&#10;• What has changed since your new site went live?"></textarea>'+
+   '<div class="two" style="margin-top:12px"><input type="text" id="rvn" placeholder="Your name" value="'+esc(D.client_name||"")+'"><input type="text" id="rvb" placeholder="Your business" value="'+esc(D.business||"")+'"></div>'+
+   '<label class="check-row"><input type="checkbox" id="rvp"> BGG Website Design can show my review on bggwebsitedesign.com and its social media, with my first name and business name. (Optional. I can ask for it to be taken down at any time.)</label>'+
+   '<div style="display:flex;justify-content:flex-end"><button class="btn or" id="rvs">Send my review</button></div></div>'
+   :'<div class="bx empty"><span class="mono or">Your review</span><h3 style="margin:8px 0 6px">This opens when your site is approved</h3><p style="color:var(--mu);margin:0;font-size:14.5px">That way you\'re reviewing the finished website, not a work in progress.</p></div>';
+  var ref='<div class="bx or" id="refbox" style="margin-top:14px"><span class="mono">Refer a business</span>'+
+   '<div style="display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;margin:10px 0 4px"><div class="ref-amt">£'+REF_AMT+' off</div><p style="margin:0 0 6px;max-width:420px;font-size:15.5px">your final payment for every business you send my way that buys a website.</p></div>'+
+   '<div class="rsteps"><div><span class="n">01</span><b>Tell them about me</b><p>Send their details below (with their OK), or ask them to mention <strong style="color:#fff">'+esc(D.business||"your business")+'</strong> when they get in touch.</p></div>'+
+   '<div><span class="n">02</span><b>They buy a website</b><p>Any package, from the £125 One Page site. It counts once they\'ve paid their deposit.</p></div>'+
+   '<div><span class="n">03</span><b>You get £'+REF_AMT+'</b><p>£'+REF_AMT+' comes off your balance invoice. Already paid? I\'ll send you £'+REF_AMT+' back.</p></div></div>'+
+   '<div id="refform"><div class="two"><input type="text" id="rfb" placeholder="Their business name"><input type="text" id="rfn" placeholder="Their name"></div>'+
+   '<div class="two" style="margin-top:10px"><input type="text" id="rfc" placeholder="Their email or phone number"><input type="text" id="rfx" placeholder="Anything I should know? (optional)"></div>'+
+   '<label class="check-row" style="color:#fff"><input type="checkbox" id="rfk"> They\'ve said it\'s OK for Ben to get in touch with them.</label>'+
+   '<div><button class="btn lt" id="rfs">Send referral</button></div></div>'+
+   '<details style="margin-top:16px"><summary style="cursor:pointer;font-weight:600">The small print (it\'s short)</summary><ul class="small" style="margin-top:10px">'+
+   '<li>You get £'+REF_AMT+' for each new client you refer who pays a deposit on any BGG website package.</li>'+
+   '<li>They need to be new to BGG (not already talking to me) and pay their deposit within 6 months of your referral.</li>'+
+   '<li>If your balance is still to pay, £'+REF_AMT+' comes off it. If you\'ve already paid, or your referral buys later, I send you £'+REF_AMT+' by bank transfer within 7 days of their deposit.</li>'+
+   '<li>Referring yourself, or another business you own, doesn\'t count.</li>'+
+   '<li>It\'s completely separate from reviews: you never need to leave a review to get it, and reviews are never rewarded.</li>'+
+   '<li>I may change this offer for future referrals, but anyone you\'ve already referred keeps your £'+REF_AMT+'.</li></ul></details></div>';
+  return'<span class="mono or">Reviews &amp; referrals</span><h2 style="margin:12px 0 0">Thank you'+(first?", "+esc(first):"")+'. <em>Spread the word?</em></h2>'+
+   '<p style="color:var(--mu);margin:10px 0 18px;max-width:620px">Two things that help a one-person business more than anything: an honest review, and telling a business owner you know. They\'re separate. Do either, both, or neither.</p>'+
+   '<div class="grid"><div class="c7">'+review+'</div><div class="c5">'+
+   '<div class="bx"><span class="mono or">Why it matters</span><p style="color:var(--mu);margin:10px 0 0;font-size:14.5px">Most of my work comes from word of mouth. A few honest lines from you tell other small businesses what working with me is really like, far better than I can.</p></div></div></div>'+ref}
+function bindReviews(){var box=$("#stars"),rating=0;
+  if(box){var paint=function(n){$$("#stars button").forEach(function(b){b.classList.toggle("on",+b.dataset.st<=n)})};
+    $$("#stars button").forEach(function(b){b.onclick=function(){rating=+b.dataset.st;paint(rating)};b.onmouseenter=function(){paint(+b.dataset.st)};b.onmouseleave=function(){paint(rating)}})}
+  var rs=$("#rvs");if(rs)rs.onclick=function(){var t=$("#rvt").value.trim();if(!rating){alert("Please pick a star rating.");return}if(!t){$("#rvt").focus();return}
+    var fd=new FormData();fd.append("form-name","client-review");fd.append("client",D.slug);fd.append("business",$("#rvb").value.trim());fd.append("name",$("#rvn").value.trim());
+    fd.append("stars",rating);fd.append("review",t);fd.append("permission_to_publish",$("#rvp").checked?"yes":"no");
+    post(fd,rs,"Sending…").then(function(){var g=D.google_review_link?'<p style="margin:14px 0 0">Would you also post it on Google? It helps local businesses find me.</p><a class="btn or" style="margin-top:12px" href="'+esc(D.google_review_link)+'" target="_blank" rel="noopener">Post on Google ↗</a>':"";
+      $("#rvbox").innerHTML='<div class="sent"><div class="tick"></div><h3>Thank you</h3><p style="color:var(--mu);margin:8px 0 0">That genuinely means a lot. I read every one.</p>'+g+"</div>"})};
+  var rf=$("#rfs");if(rf)rf.onclick=function(){var b=$("#rfb").value.trim(),c=$("#rfc").value.trim();if(!b||!c){alert("Please add their business name and an email or phone number.");return}
+    if(!$("#rfk").checked){alert("Please tick to confirm they're happy for Ben to get in touch.");return}
+    var fd=new FormData();fd.append("form-name","referral");fd.append("client",D.slug);fd.append("referred_by",D.business);fd.append("their_business",b);
+    fd.append("their_name",$("#rfn").value.trim());fd.append("their_contact",c);fd.append("note",$("#rfx").value.trim());fd.append("consent","yes");
+    post(fd,rf,"Sending…").then(function(){$("#refform").innerHTML='<div class="sent"><div class="tick"></div><h3 style="color:#fff">Thank you!</h3><p style="margin:8px 0 0">I\'ll get in touch with '+esc(b)+' and let you know if they go ahead. Your £'+REF_AMT+' is tracked from today.</p></div>'})}}
+
 /* ---------- router ---------- */
-var ICONS={overview:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',brief:'<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',preview:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',changes:'<path d="M4 12l5 5L20 6"/>',content:'<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>',docs:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>'};
+var ICONS={overview:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',brief:'<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',preview:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',changes:'<path d="M4 12l5 5L20 6"/>',content:'<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>',docs:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>',reviews:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'};
 function ICO(k){return'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[k]+"</svg>"}
-var VIEWS={overview:vOverview,brief:vBrief,preview:vPreview,changes:vChanges,content:vContent,docs:vDocs};
+var VIEWS={overview:vOverview,brief:vBrief,preview:vPreview,changes:vChanges,content:vContent,docs:vDocs,reviews:vReviews};
 function route(){if(!D)return;var hs=(location.hash||"#overview").slice(1).split("/"),h=hs[0],param=hs[1]||"";if(!VIEWS[h])h="overview";
   $("#tabs").innerHTML=tabs().map(function(t){var dot=(t[0]==="brief"&&!D.brief_done&&stage()<=2)||(t[0]==="preview"&&D.preview_new)?'<span class="dot"></span>':"";return'<a href="#'+t[0]+'" class="'+(t[0]===h?"on":"")+'">'+ICO(t[0])+"<span>"+t[1]+"</span>"+dot+"</a>"}).join("");
   var v=$("#view");v.innerHTML='<div class="view">'+VIEWS[h](param)+"</div>";window.scrollTo({top:0});
-  bindBrief();bindPreview(param);bindChanges();bindDocs();
+  bindBrief();bindPreview(param);bindChanges();bindDocs();bindReviews();
   if(stage()>=6&&!sessionStorage.getItem("bgg-cf")){sessionStorage.setItem("bgg-cf",1);confetti()}}
 window.addEventListener("hashchange",route);
 function isPC(){return matchMedia("(min-width:900px)").matches}
